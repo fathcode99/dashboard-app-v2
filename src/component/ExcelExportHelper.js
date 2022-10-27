@@ -5,7 +5,7 @@ import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
 const ExcelExportHelper = ({ data }) => {
   const createDownLoadData = () => {
     handleExport().then((url) => {
-      
+
       const downloadAnchorNode = document.createElement("a");
       downloadAnchorNode.setAttribute("href", url);
       downloadAnchorNode.setAttribute("download", "student_report.xlsx");
@@ -110,10 +110,6 @@ const ExcelExportHelper = ({ data }) => {
         headerIndexes?.length >= 1
           ? `A${headerIndexes[0] + 1}:G${headerIndexes[0] + 1}`
           : null,
-      theadRange1:
-        headerIndexes?.length >= 2
-          ? `A${headerIndexes[1] + 1}:H${headerIndexes[1] + 1}`
-          : null,
       tFirstColumnRange:
         headerIndexes?.length >= 1
           ? `A${headerIndexes[0] + 1}:A${totalRecords + headerIndexes[0] + 1}`
@@ -121,15 +117,6 @@ const ExcelExportHelper = ({ data }) => {
       tLastColumnRange:
         headerIndexes?.length >= 1
           ? `G${headerIndexes[0] + 1}:G${totalRecords + headerIndexes[0] + 1}`
-          : null,
-
-      tFirstColumnRange1:
-        headerIndexes?.length >= 1
-          ? `A${headerIndexes[1] + 1}:A${totalRecords + headerIndexes[1] + 1}`
-          : null,
-      tLastColumnRange1:
-        headerIndexes?.length >= 1
-          ? `H${headerIndexes[0] + 1}:H${totalRecords + headerIndexes[1] + 1}`
           : null,
     };
 
@@ -145,6 +132,47 @@ const ExcelExportHelper = ({ data }) => {
         });
 
         // sampah.js
+        sheet.column("A").width(15);
+        sheet.column("B").width(15);
+        sheet.column("C").width(15);
+        sheet.column("E").width(15);
+        sheet.column("G").width(15);
+
+        // TITLE
+        sheet.range(dataInfo.titleRange).merged(true).style({
+          bold: true,
+          horizontalAlignment: "center",
+          verticalAlignment: "center",
+        });
+
+        // TEXT ALIGN CENTER SEMUA DATA
+        if (dataInfo.tbodyRange) {
+          sheet.range(dataInfo.tbodyRange).style({
+            horizontalAlignment: "center",
+          });
+        }
+
+        // MEWARNAI SHEET HEAD
+        sheet.range(dataInfo.theadRange).style({
+          fill: "FFFD04",
+          bold: true,
+          horizontalAlignment: "center",
+        });
+
+        // CUSTOMISASI COLUMN PERTAMA
+        if (dataInfo.tFirstColumnRange) {
+          sheet.range(dataInfo.tFirstColumnRange).style({
+            bold: true,
+          });
+        }
+
+        // CUSTOMISASI COLUMN TERAKHIT
+        if (dataInfo.tLastColumnRange) {
+          sheet.range(dataInfo.tLastColumnRange).style({
+            bold: true,
+          });
+        }
+
       });
 
       return workbook
@@ -158,7 +186,7 @@ const ExcelExportHelper = ({ data }) => {
       onClick={() => {
         createDownLoadData();
       }}
-      
+
     >
       Export
     </button>
