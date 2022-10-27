@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const sidebar = () => {
     return (
@@ -15,26 +16,31 @@ const sidebar = () => {
             </div>
             <div className='min-w-[40px] md:w-[200px] flex flex-col min-h-screen fixed justify-center '>
                 <div className="w-full sidebar flex flex-col gap-8 ">
-                    <div className='sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
-                        <span class="material-symbols-rounded text-white"> grid_view </span>
-                        <span className="hidden lg:block text-white font-thin ml-4">Dashboard</span>
-                    </div>
-                    <div className='sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
-                        <span class="material-symbols-rounded text-white"> groups </span>
-                        <span className="hidden lg:block text-white font-thin ml-4">Members</span>
-                    </div>
+                    <Link to="/">
+                        <div className='cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
+                            <span class="material-symbols-rounded text-white"> grid_view </span>
+                            <span className="hidden md:block text-white font-thin ml-4">Dashboard</span>
+                        </div>
+                    </Link>
+
+                    <Link to="/members">
+                        <div className='cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
+                            <span class="material-symbols-rounded text-white"> groups </span>
+                            <span className="hidden md:block text-white font-thin ml-4">Members</span>
+                        </div>
+                    </Link>
                     <div className='sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
                         <span class="material-symbols-rounded text-white"> paid </span>
-                        <span className="hidden lg:block text-white font-thin ml-4">Earnings</span>
+                        <span className="hidden md:block text-white font-thin ml-4">Earnings</span>
                     </div>
                     <div className='sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
                         <span class="material-symbols-rounded text-white"> sms </span>
-                        <span className="hidden lg:block text-white font-thin ml-4">Message</span>
-                        <span className='message-count hidden'>26</span>
+                        <span className="hidden md:block text-white font-thin ml-4">Message</span>
+                        
                     </div>
                     <div className='sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
                         <span class="material-symbols-rounded text-white"> logout </span>
-                        <span className="hidden lg:block text-white font-thin ml-4">Logout</span>
+                        <span className="hidden md:block text-white font-thin ml-4">Logout</span>
                     </div>
                 </div>
             </div>

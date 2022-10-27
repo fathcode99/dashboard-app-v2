@@ -2,10 +2,9 @@ import React from 'react'
 
 const navbar = () => {
     return (
-        <div className='flex items-center justify-between m-2'>
-            <div className='bg-neutral-800 rounded-md flex items-center border border-sky-500 w-1/2'>
-                <input type="search" className='outline-none bg-transparent w-full' />
-                <span class="material-symbols-rounded text-sky-500 text-sm mr-2">search</span>
+        <div className='flex items-center justify-between m-2 border-b border-sky-500 py-2'>
+            <div className='text-xl font-bold text-white'>
+                Creative.Dev
             </div>
             <div className='flex items-center'>
                 <div className='text-white text-sm font-thin mr-2'>Hello, <span className='text-sky-500 font-medium'>admin</span> </div>
