@@ -23,12 +23,20 @@ const sidebar = () => {
                         </div>
                     </Link>
 
-                    <Link to="/members">
+                    <Link to="/tutors">
                         <div className='cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
-                            <span class="material-symbols-rounded text-white"> groups </span>
-                            <span className="hidden md:block text-white font-thin ml-4">Members</span>
+                        <span class="material-symbols-rounded text-white">supervised_user_circle</span>
+                            <span className="hidden md:block text-white font-thin ml-4">Tutors</span>
                         </div>
                     </Link>
+
+                    <Link to="/students">
+                        <div className='cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
+                            <span class="material-symbols-rounded text-white"> groups </span>
+                            <span className="hidden md:block text-white font-thin ml-4">Students</span>
+                        </div>
+                    </Link>
+
                     <div className='sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
                         <span class="material-symbols-rounded text-white"> paid </span>
                         <span className="hidden md:block text-white font-thin ml-4">Earnings</span>
