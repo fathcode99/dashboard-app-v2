@@ -115,8 +115,6 @@ const Students = () => {
     setPage(page - 1)
   }
 
-  console.log("refresh")
-
   return (
     <div className='flex'>
       <div className='flex'>
@@ -131,29 +129,29 @@ const Students = () => {
             <div className='flex gap-2 mr-2'>
               <form onSubmit={handleSubmit} className='bg-neutral-800 rounded-md flex items-center border border-sky-500 w-1/3 mb-2 h-8'>
                 <input onChange={handleSearchName} type="text" placeholder='By Name' className='outline-none bg-transparent w-full ml-2 text-white font-thin text-sm' />
-                <span class="material-symbols-rounded text-sky-500 text-sm mx-2 cursor-pointer">search</span>
+                <span className="material-symbols-rounded text-sky-500 text-sm mx-2 cursor-pointer">search</span>
               </form>
 
               <form onSubmit={handleSubmit} className='bg-neutral-800 rounded-md flex items-center border border-sky-500 w-1/3 mb-2 h-8'>
                 <input onChange={handleSearchGender} type="text" placeholder='By Gender' className='outline-none bg-transparent w-full ml-2 text-white font-thin text-sm' />
-                <span class="material-symbols-rounded text-sky-500 text-sm mx-2 cursor-pointer">search</span>
+                <span className="material-symbols-rounded text-sky-500 text-sm mx-2 cursor-pointer">search</span>
               </form>
 
               <div className='flex'>
                 <button onClick={handleActive} className='text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-l-md px-2' >
                   {statusActive ?
-                    <span class="material-symbols-rounded text-sky-500 text-base mr-1">check_circle</span>
+                    <span className="material-symbols-rounded text-sky-500 text-base mr-1">check_circle</span>
                     :
-                    <span class="material-symbols-rounded text-base mr-1">radio_button_unchecked</span>
+                    <span className="material-symbols-rounded text-base mr-1">radio_button_unchecked</span>
                   }
                   Active
                 </button>
 
                 <button onClick={handleInactive} className='text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-r-md px-2'>
                   {statusInactive ?
-                    <span class="material-symbols-rounded text-sky-500 text-base mr-1">check_circle</span>
+                    <span className="material-symbols-rounded text-sky-500 text-base mr-1">check_circle</span>
                     :
-                    <span class="material-symbols-rounded text-base mr-1">radio_button_unchecked</span>
+                    <span className="material-symbols-rounded text-base mr-1">radio_button_unchecked</span>
                   }
                   Inactive
                 </button>

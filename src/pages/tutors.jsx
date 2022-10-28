@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 
 const url = "http://localhost:2000/tutors"
 
-const Members = () => {
+const Tutors = () => {
     // default data
     const [dataMembers, setDataMembers] = useState([])
 
@@ -209,18 +209,18 @@ const Members = () => {
                             <div className='flex'>
                                 <button onClick={handleActive} className='text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-l-md px-2' >
                                     {statusActive ?
-                                        <span class="material-symbols-rounded text-sky-500 text-base mr-1">check_circle</span>
+                                        <span className="material-symbols-rounded text-sky-500 text-base mr-1">check_circle</span>
                                         :
-                                        <span class="material-symbols-rounded text-base mr-1">radio_button_unchecked</span>
+                                        <span className="material-symbols-rounded text-base mr-1">radio_button_unchecked</span>
                                     }
                                     Active
                                 </button>
 
                                 <button onClick={handleInactive} className='text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-r-md px-2'>
                                     {statusInactive ?
-                                        <span class="material-symbols-rounded text-sky-500 text-base mr-1">check_circle</span>
+                                        <span className="material-symbols-rounded text-sky-500 text-base mr-1">check_circle</span>
                                         :
-                                        <span class="material-symbols-rounded text-base mr-1">radio_button_unchecked</span>
+                                        <span className="material-symbols-rounded text-base mr-1">radio_button_unchecked</span>
                                     }
                                     Inactive
                                 </button>
@@ -228,12 +228,12 @@ const Members = () => {
 
                             <div>
                                 <button onClick={onFilter} className='text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-md px-1'>
-                                    <span class="material-symbols-rounded text-white">filter_alt</span>
+                                    <span className="material-symbols-rounded text-white">filter_alt</span>
                                 </button>
                             </div>
                             <div>
                                 <button onClick={onResetFilter} className='text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-md px-1'>
-                                    <span class="material-symbols-rounded text-white">filter_alt_off</span>
+                                    <span className="material-symbols-rounded text-white">filter_alt_off</span>
                                 </button>
                             </div>
                         </div>
@@ -319,4 +319,4 @@ const Members = () => {
     )
 }
 
-export default Members
+export default Tutors

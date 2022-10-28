@@ -17,7 +17,7 @@ const Home = () => {
       {
         stateAdmin.username ?
 
-          <div div className='flex' >
+          <div className='flex' >
             <div className='flex'>
               <Sidebar />
             </div>
