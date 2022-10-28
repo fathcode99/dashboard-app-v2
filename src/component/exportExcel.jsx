@@ -5,7 +5,6 @@ import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
 const ExcelExportHelper = ({ data }) => {
     const createDownLoadData = () => {
         handleExport().then((url) => {
-
             const downloadAnchorNode = document.createElement("a");
             downloadAnchorNode.setAttribute("href", url);
             downloadAnchorNode.setAttribute("download", "data_members.xlsx");
