@@ -2,7 +2,7 @@ import React from 'react'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-const widgetC = () => {
+const WidgetC = () => {
     const percentage = 66;
     return (
         <div className='w-full bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] flex flex-col'>
@@ -25,4 +25,4 @@ const widgetC = () => {
     )
 }
 
-export default widgetC
+export default WidgetC

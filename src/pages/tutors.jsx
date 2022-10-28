@@ -48,7 +48,7 @@ const Members = () => {
                 setMaxPage(Math.ceil(res.data.length / rowPerPage))
                 
             })
-    }, [])
+    }, [rowPerPage])
 
     // button handler status
     const handleActive = () => {

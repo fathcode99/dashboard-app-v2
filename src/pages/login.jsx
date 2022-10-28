@@ -6,13 +6,7 @@ import { Navigate } from 'react-router-dom'
 const url = "http://localhost:2000"
 
 const Login = () => {
-    // const [dataAdmin, setDataAdmin] = useState()
     const [toHome, setToHome] = useState(false)
-
-    // useEffect(() => {
-    //     axios.get(`${url}/admin`)
-    //         .then(res => setDataAdmin(res.data))
-    // }, [])
 
     let refUsername = useRef()
     let refPassword = useRef()
@@ -21,7 +15,6 @@ const Login = () => {
         let username = refUsername.current.value
         let password = refPassword.current.value
 
-        // const login = dataAdmin.filter(data => data.username === valueUsername && data.password === valuePassword)
         axios.get(`${url}/admin?username=${username}&password=${password}`)
         .then(res => {
             if (res.data.length === 0) {
@@ -36,7 +29,7 @@ const Login = () => {
     }
 
     if (toHome) {
-        return <Navigate to = "/tutors" />
+        return <Navigate to = "/" />
     }
 
     return (
@@ -47,19 +40,19 @@ const Login = () => {
                     Admin Login
                 </div>
 
-                <form action="">
+                <div >
                     <div className='flex flex-col'>
-                        <label htmlFor="" className='text-white text-xs'>Username</label>
+                        <label className='text-white text-xs'>Username</label>
                         <input type="text" placeholder='Input username' ref={refUsername}
                             className='mt-2 outline-none bg-transparent border-b border-sky-500 text-white text-sm font-thin' />
                     </div>
 
                     <div className='flex flex-col mt-4'>
-                        <label htmlFor="" className='text-white text-xs'>Password ID</label>
+                        <label className='text-white text-xs'>Password ID</label>
                         <input type="text" placeholder='Input password Id' ref={refPassword}
                             className='mt-2 outline-none bg-transparent border-b border-sky-500 text-white text-sm font-thin' />
                     </div>
-                </form>
+                </div>
 
                 <button
                     onClick={onLogin}

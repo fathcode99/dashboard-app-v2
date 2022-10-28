@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const sidebar = () => {
+const Sidebar = () => {
     return (
         <div className='min-w-[40px] md:w-[200px] flex flex-col bg-neutral-800 min-h-screen'>
             <div>
@@ -18,36 +18,36 @@ const sidebar = () => {
                 <div className="w-full sidebar flex flex-col gap-8 ">
                     <Link to="/">
                         <div className='cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
-                            <span class="material-symbols-rounded text-white"> grid_view </span>
+                            <span className="material-symbols-rounded text-white"> grid_view </span>
                             <span className="hidden md:block text-white font-thin ml-4">Dashboard</span>
                         </div>
                     </Link>
 
                     <Link to="/tutors">
                         <div className='cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
-                        <span class="material-symbols-rounded text-white">supervised_user_circle</span>
+                        <span className="material-symbols-rounded text-white">supervised_user_circle</span>
                             <span className="hidden md:block text-white font-thin ml-4">Tutors</span>
                         </div>
                     </Link>
 
                     <Link to="/students">
                         <div className='cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
-                            <span class="material-symbols-rounded text-white"> groups </span>
+                            <span className="material-symbols-rounded text-white"> groups </span>
                             <span className="hidden md:block text-white font-thin ml-4">Students</span>
                         </div>
                     </Link>
 
                     <div className='sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
-                        <span class="material-symbols-rounded text-white"> paid </span>
+                        <span className="material-symbols-rounded text-white"> paid </span>
                         <span className="hidden md:block text-white font-thin ml-4">Earnings</span>
                     </div>
                     <div className='sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
-                        <span class="material-symbols-rounded text-white"> sms </span>
+                        <span className="material-symbols-rounded text-white"> sms </span>
                         <span className="hidden md:block text-white font-thin ml-4">Message</span>
                         
                     </div>
                     <div className='sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
-                        <span class="material-symbols-rounded text-white"> logout </span>
+                        <span className="material-symbols-rounded text-white"> logout </span>
                         <span className="hidden md:block text-white font-thin ml-4">Logout</span>
                     </div>
                 </div>
@@ -56,4 +56,4 @@ const sidebar = () => {
     )
 }
 
-export default sidebar
+export default Sidebar
