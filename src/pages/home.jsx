@@ -15,7 +15,7 @@ const home = () => {
       <div className='flex flex-col md:m-8'>
         <Navbar />
         <div className='text-white text-lg font-bold m-2'>Dashboard</div>
-        <div className='grid grid-cols-2 gap-2 m-2'>
+        <div className='grid grid-cols-2 md:grid-cols-4 gap-2 m-2'>
           <Widget />
           <Widget />
           <Widget />
