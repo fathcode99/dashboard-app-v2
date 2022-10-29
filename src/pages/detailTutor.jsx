@@ -17,6 +17,8 @@ const DetailTutor = () => {
 
   const [totalFeeTutor, setTotalFeeTutor] = useState()
 
+  const [isModalMessage, setIsModalMessage] = useState(false)
+
   useEffect(() => {
     async function fetchData() {
       const request = await axios.get(`${url}/${id}`)
@@ -32,8 +34,9 @@ const DetailTutor = () => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataRincian])
+  }, [])
 
+  // total fee tutor
   const getTotalFee = () => {
     let feeTotal = 0
     for (let index = 0; index < dataRincian.length; index++) {
@@ -42,6 +45,7 @@ const DetailTutor = () => {
     setTotalFeeTutor(feeTotal)
   }
 
+  // delete data
   const onDelete = () => {
     axios.delete(`${url}/${id}`)
       .then(res => {
@@ -49,6 +53,7 @@ const DetailTutor = () => {
       })
   }
 
+  // update edit data
   let refName = useRef()
   let refBirth = useRef()
   let refAddress = useRef()
@@ -58,7 +63,6 @@ const DetailTutor = () => {
   let refStatus = useRef()
 
   const onDone = () => {
-
     let valueName = refName.current.value
     let valueAddress = refAddress.current.value
     let valueBirth = refBirth.current.value
@@ -83,12 +87,34 @@ const DetailTutor = () => {
       })
   }
 
+  // modal message
+  let defaultMessage = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo cupiditate sint, totam rem ipsa ex!"
+  let refMessage = useRef()
+  const closeModal = () => {
+    setIsModalMessage(false)
+  }
+  const onMessage = () => {
+    let messageNotif = refMessage.current.value
+    
+    let dataNotif = dataTutor.notif
+    dataNotif.push({messageNotif})
+
+    let message = {
+      notif: dataNotif
+    }
+    axios.patch(`${url}/${id}`, message)
+      .then(res => {
+        setIsModalMessage(false)
+      })
+  }
+
+
   return (
     <div className='flex'>
       <div className="flex">
         <Sidebar />
       </div>
-      <div className="flex flex-col md:m-8 w-full min-h-screen">
+      <div className="flex flex-col md:m-8 w-full min-h-screen relative">
         <Navbar />
         <div className='text-white font-bold text-xl m-2 '>Detail Data Tutor</div>
         {
@@ -180,7 +206,7 @@ const DetailTutor = () => {
                   <div className='text-sky-500 font-thin text-right text-7xl'>$ {totalFeeTutor}</div>
                   <p className='text-white font-thin text-right text-sm'>Lorem ipsum dolor sit amet, <br /> consectetur adipisicing elit. Quo cupiditate sint, totam rem ipsa ex!</p>
                   <div className='flex justify-end mt-3'>
-                    <button className='drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] bg-neutral-700 rounded px-2 py-1 w-fit flex items-center text-white text-sm font-thin hover:bg-sky-500'>
+                    <button onClick={() => setIsModalMessage(!isModalMessage)} className='drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] bg-neutral-700 rounded px-2 py-1 w-fit flex items-center text-white text-sm font-thin hover:bg-sky-500'>
                       <span className=" material-symbols-rounded text-white font-thin"> chat </span>
                       <span>Send Message</span>
                     </button>
@@ -275,6 +301,33 @@ const DetailTutor = () => {
                 </button>
               </Link>
             </div>
+        }
+
+        {
+          isModalMessage ?
+            <div className='absolute backdrop-blur-sm w-full h-full bg-neutral-700 bg-opacity-70 flex justify-center items-center'>
+              <div className='flex flex-col w-[75%] bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] py-3'>
+                <div className='flex justify-between'>
+                  <div className='text-white'>Send Message</div>
+                  <button onClick={closeModal}>
+                    <span class="hover:text-rose-500 material-symbols-rounded text-white">
+                      close
+                    </span>
+                  </button>
+                </div>
+
+                <textarea ref={refMessage} type="text" className=' break-words text-white font-thin text-sm rounded-md p-2 bg-transparent outline-none border border-sky-500 '
+                  defaultValue={defaultMessage} />
+
+                <button
+                  onClick={onMessage}
+                  className='hover:bg-sky-500 text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-md px-2 w-fit mt-2'>
+                  Send
+                </button>
+              </div>
+            </div>
+            :
+            ""
         }
       </div>
 
