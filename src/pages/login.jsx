@@ -56,7 +56,7 @@ const Login = () => {
 
                 <button
                     onClick={onLogin}
-                    className='mt-3 text-white px-2 text-sm font-thin hover:bg-sky-500 w-fit drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] bg-neutral-700 rounded'>
+                    className='mt-3 text-white px-2 py-1 text-sm font-thin hover:bg-sky-500 w-fit drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] bg-neutral-700 rounded'>
                     Login
                 </button>
                 <div className='text-white text-xs font-thin mt-6'>

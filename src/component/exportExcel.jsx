@@ -188,7 +188,7 @@ const ExcelExportHelper = ({ data }) => {
             onClick={() => {
                 createDownLoadData();
             }}
-            className='cursor-pointer bg-neutral-800 rounded-md flex justify-center items-center border border-sky-500 w-8 mb-2 h-8 p-2'>
+            className='hover:bg-sky-500 cursor-pointer bg-neutral-800 rounded-md flex justify-center items-center border border-sky-500 w-8 mb-2 h-8 p-2'>
             <span className="material-symbols-rounded text-white">description</span>
         </div>
     );

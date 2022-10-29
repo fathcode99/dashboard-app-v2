@@ -1,104 +1,36 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import axios from 'axios'
 
 import Sidebar from '../component/sidebar'
 import Navbar from '../component/navbar'
 import ExportExcel from '../component/exportExcel'
+import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+
 
 const url = "http://localhost:2000/students"
 
 const Students = () => {
-  const [dataMembers, setDataMembers] = useState([])
+  const stateStudents = useSelector((state => state.studentsReducer))
+  // console.log(stateStudents.data)
 
-  // data filter result
-  const [resultSearch, setResultSearch] = useState([])
-  const [filterName, setFilterName] = useState([])
-  const [filterGender, setFilterGender] = useState([])
+  // default data
+  const [dataMembers, setDataMembers] = useState(stateStudents.data)
 
-  // sort
-  const [sortName, setSortName] = useState(false)
+  // data renders
+  const [dataRenders, setDataRenders] = useState(stateStudents.data)
+
+  // button value
   const [statusActive, setStatusActive] = useState(false)
   const [statusInactive, setStatusInactive] = useState(false)
 
-  useEffect(() => {
-    getData()
-  }, []);
-
-  const getData = async () => {
-    return await axios.get(url)
-      .then(res => {
-        setDataMembers(res.data)
-        setResultSearch(res.data)
-        setMaxPage(Math.ceil(res.data.length / rowPerPage))
-      })
-  }
-
-  // handle filter search
-  const handleSubmit = (e) => e.preventDefault()
-  const handleSearchName = (e) => {
-    if (!e.target.value) return setResultSearch(dataMembers)
-
-    const resultName = dataMembers.filter(dataMember => dataMember.first_name.toLowerCase().includes(e.target.value.toLowerCase()))
-    setFilterName(resultName)
-    setResultSearch(resultName)
-  }
-
-  const handleSearchGender = (e) => {
-    if (!e.target.value) return setResultSearch(filterName)
-
-    const resultGender = filterName.filter(dataMember => dataMember.gender.toLowerCase().includes(e.target.value.toLowerCase()))
-    setFilterGender(resultGender)
-    setResultSearch(resultGender)
-  }
-
-  // handle status
-  const handleActive = () => {
-    if (statusActive === false) {
-      setStatusActive(!statusActive)
-      setResultSearch(dataMembers.filter((item) => item.status === "Active"))
-      if (statusInactive === true) {
-        setStatusInactive(false)
-      } else {
-        setStatusInactive(false)
-      }
-    } else {
-      setStatusActive(!statusActive)
-      setResultSearch(dataMembers)
-    }
-  }
-  const handleInactive = () => {
-    if (statusInactive === false) {
-      setStatusInactive(!statusInactive)
-      setResultSearch(dataMembers.filter((item) => item.status === "Inactive"))
-      if (statusActive === true) {
-        setStatusActive(false)
-      } else {
-        setStatusActive(false)
-      }
-    } else {
-      setStatusInactive(!statusInactive)
-      setResultSearch(dataMembers)
-    }
-  }
-
   // handle sort
-  const handleSortName = async (e) => {
-    if (sortName === false) {
-      return await axios.get(`${url}?_sort=first_name&_order=asc`)
-        .then(res => {
-          setDataMembers(res.data)
-          setResultSearch(res.data)
-          setSortName(!sortName)
-        })
-    } else {
-      return await axios.get(`${url}?_sort=first_name&_order=desc`)
-        .then(res => {
-          setDataMembers(res.data)
-          setResultSearch(res.data)
-          setSortName(!sortName)
-        })
-    }
-  }
+  const [sortName, setSortName] = useState(false)
+  const [sortStatus, setSortStatus] = useState(false)
+
+  // value input
+  let refFilterName = useRef()
+  let refFilterCity = useRef()
 
   // pagination
   const [page, setPage] = useState(1)
@@ -106,7 +38,7 @@ const Students = () => {
 
   let rowPerPage = 20
   let startRow = (page - 1) * rowPerPage
-  let sliceTable = resultSearch.slice(startRow, startRow + rowPerPage)
+  let sliceTable = dataRenders.slice(startRow, startRow + rowPerPage)
 
   const onNext = () => {
     setPage(page + 1)
@@ -114,6 +46,172 @@ const Students = () => {
   const onPrev = () => {
     setPage(page - 1)
   }
+
+  useEffect(() => {
+    setDataMembers(stateStudents.data)
+    setDataRenders(dataMembers)
+    setMaxPage(Math.ceil(dataRenders.length / rowPerPage))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stateStudents.data, dataMembers, rowPerPage])
+
+
+  // button handler status
+  const handleActive = () => {
+    setStatusActive(!statusActive)
+    if (statusInactive) {
+      setStatusInactive(!statusInactive)
+    }
+  }
+  const handleInactive = () => {
+    setStatusInactive(!statusInactive)
+    if (statusActive) {
+      setStatusActive(!statusActive)
+    }
+  }
+
+  // filter
+  const onFilter = () => {
+    let valueFilterName = refFilterName.current.value
+    let valueFilterCity = refFilterCity.current.value
+
+    // 01. f f f f
+    if (valueFilterName === "" && valueFilterCity === "" && statusActive === false && statusInactive === false) {
+      setDataRenders(dataMembers)
+      setMaxPage(Math.ceil(dataMembers.length / rowPerPage))
+    }
+
+    // 02. t f f f
+    else if (valueFilterName && valueFilterCity === "" && statusActive === false && statusInactive === false) {
+      const resultFilter = dataMembers.filter(dataMember => dataMember.tutorName.toLowerCase().includes(valueFilterName.toLowerCase()))
+      setDataRenders(resultFilter)
+      setMaxPage(Math.ceil(resultFilter.length / rowPerPage))
+    }
+
+    // 03. f t f f
+    else if (valueFilterName === "" && valueFilterCity && statusActive === false && statusInactive === false) {
+      const resultFilter = dataMembers.filter(dataMember => dataMember.regional.toLowerCase().includes(valueFilterCity.toLowerCase()))
+      setDataRenders(resultFilter)
+      setMaxPage(Math.ceil(resultFilter.length / rowPerPage))
+    }
+
+    // 04. f f t f
+    else if (valueFilterName === "" && valueFilterCity === "" && statusActive === true && statusInactive === false) {
+      const resultFilter = dataMembers.filter((item) => item.status === "Active")
+      setDataRenders(resultFilter)
+      setMaxPage(Math.ceil(resultFilter.length / rowPerPage))
+    }
+
+    // 05. f f f t
+    else if (valueFilterName === "" && valueFilterCity === "" && statusActive === false && statusInactive === true) {
+      const resultFilter = dataMembers.filter((item) => item.status === "Inactive")
+      setDataRenders(resultFilter)
+      setMaxPage(Math.ceil(resultFilter.length / rowPerPage))
+    }
+
+    // 06. t t f f
+    else if (valueFilterName && valueFilterCity && statusActive === false && statusInactive === false) {
+      const filterName = dataMembers.filter(dataMember => dataMember.tutorName.toLowerCase().includes(valueFilterName.toLowerCase()))
+      const resultFilter = filterName.filter(dataMember => dataMember.regional.toLowerCase().includes(valueFilterCity.toLowerCase()))
+      setDataRenders(resultFilter)
+      setMaxPage(Math.ceil(resultFilter.length / rowPerPage))
+    }
+
+    // 07. t f t f
+    else if (valueFilterName && valueFilterCity === "" && statusActive === true && statusInactive === false) {
+      const filterStatus = dataMembers.filter((item) => item.status === "Active")
+      const resultFilter = filterStatus.filter(dataMember => dataMember.tutorName.toLowerCase().includes(valueFilterName.toLowerCase()))
+      setDataRenders(resultFilter)
+      setMaxPage(Math.ceil(resultFilter.length / rowPerPage))
+    }
+
+    // 08. t f f t
+    else if (valueFilterName && valueFilterCity === "" && statusActive === false && statusInactive === true) {
+      const filterStatus = dataMembers.filter((item) => item.status === "Inactive")
+      const resultFilter = filterStatus.filter(dataMember => dataMember.tutorName.toLowerCase().includes(valueFilterName.toLowerCase()))
+      setDataRenders(resultFilter)
+      setMaxPage(Math.ceil(resultFilter.length / rowPerPage))
+    }
+
+    // 09. f t f t
+    else if (valueFilterName === "" && valueFilterCity && statusActive === false && statusInactive === true) {
+      const filterStatus = dataMembers.filter((item) => item.status === "Inactive")
+      const resultFilter = filterStatus.filter(dataMember => dataMember.regional.toLowerCase().includes(valueFilterCity.toLowerCase()))
+      setDataRenders(resultFilter)
+      setMaxPage(Math.ceil(resultFilter.length / rowPerPage))
+    }
+
+    // 10. f t t f
+    else if (valueFilterName === "" && valueFilterCity && statusActive === true && statusInactive === false) {
+      const filterStatus = dataMembers.filter((item) => item.status === "Active")
+      const resultFilter = filterStatus.filter(dataMember => dataMember.regional.toLowerCase().includes(valueFilterCity.toLowerCase()))
+      setDataRenders(resultFilter)
+      setMaxPage(Math.ceil(resultFilter.length / rowPerPage))
+    }
+
+    // 11. t t t f
+    else if (valueFilterName && valueFilterCity && statusActive === true && statusInactive === false) {
+      const filterStatus = dataMembers.filter((item) => item.status === "Active")
+      const filterName = filterStatus.filter(dataMember => dataMember.tutorName.toLowerCase().includes(valueFilterName.toLowerCase()))
+      const resultFilter = filterName.filter(dataMember => dataMember.regional.toLowerCase().includes(valueFilterCity.toLowerCase()))
+      setDataRenders(resultFilter)
+      setMaxPage(Math.ceil(resultFilter.length / rowPerPage))
+    }
+
+    // 12.  t t f t
+    else if (valueFilterName && valueFilterCity && statusActive === false && statusInactive === true) {
+      const filterStatus = dataMembers.filter((item) => item.status === "Inactive")
+      const filterName = filterStatus.filter(dataMember => dataMember.tutorName.toLowerCase().includes(valueFilterName.toLowerCase()))
+      const resultFilter = filterName.filter(dataMember => dataMember.regional.toLowerCase().includes(valueFilterCity.toLowerCase()))
+      setDataRenders(resultFilter)
+      setMaxPage(Math.ceil(resultFilter.length / rowPerPage))
+    }
+
+    // console.log(valueFilterName, valueFilterCity, statusActive, statusInactive)
+  }
+
+  // reset filter
+  const onResetFilter = () => {
+    setDataRenders(dataMembers)
+    setMaxPage(Math.ceil(dataMembers.length / rowPerPage))
+    if (statusActive) {
+      setStatusActive(!statusActive)
+    } else if (statusInactive) {
+      setStatusInactive(!statusInactive)
+    }
+  }
+
+  // handle sort
+  const handleSortName = async (e) => {
+    if (sortName === false) {
+      return await axios.get(`${url}?_sort=studentsName&_order=asc`)
+        .then(res => {
+          setDataRenders(res.data)
+          setSortName(!sortName)
+        })
+    } else {
+      return await axios.get(`${url}?_sort=studentsName&_order=desc`)
+        .then(res => {
+          setDataRenders(res.data)
+          setSortName(!sortName)
+        })
+    }
+  }
+  const handleSortStatus = async (e) => {
+    if (sortStatus === false) {
+      return await axios.get(`${url}?_sort=status&_order=asc`)
+        .then(res => {
+          setDataRenders(res.data)
+          setSortStatus(!sortStatus)
+        })
+    } else {
+      return await axios.get(`${url}?_sort=status&_order=desc`)
+        .then(res => {
+          setDataRenders(res.data)
+          setSortStatus(!sortStatus)
+        })
+    }
+  }
+
 
   return (
     <div className='flex'>
@@ -124,17 +222,17 @@ const Students = () => {
         <Navbar />
         <div className='text-white font-bold text-xl m-2'>Data Students</div>
         <div className='m-2'>
+
+          {/* filter table */}
           <div className='text-white text-sm my-2'>Filter Setting :</div>
-          <div className='flex justify-between w-full'>
+          <div className='flex justify-between w-full flex-wrap'>
             <div className='flex gap-2 mr-2'>
-              <form onSubmit={handleSubmit} className='bg-neutral-800 rounded-md flex items-center border border-sky-500 w-1/3 mb-2 h-8'>
-                <input onChange={handleSearchName} type="text" placeholder='By Name' className='outline-none bg-transparent w-full ml-2 text-white font-thin text-sm' />
-                <span className="material-symbols-rounded text-sky-500 text-sm mx-2 cursor-pointer">search</span>
+              <form className='bg-neutral-800 rounded-md flex items-center border border-sky-500 w-1/3 mb-2 h-8'>
+                <input ref={refFilterName} type="text" placeholder='By Name' className='outline-none bg-transparent w-full ml-2 text-white font-thin text-sm' />
               </form>
 
-              <form onSubmit={handleSubmit} className='bg-neutral-800 rounded-md flex items-center border border-sky-500 w-1/3 mb-2 h-8'>
-                <input onChange={handleSearchGender} type="text" placeholder='By Gender' className='outline-none bg-transparent w-full ml-2 text-white font-thin text-sm' />
-                <span className="material-symbols-rounded text-sky-500 text-sm mx-2 cursor-pointer">search</span>
+              <form className='bg-neutral-800 rounded-md flex items-center border border-sky-500 w-1/3 mb-2 h-8'>
+                <input ref={refFilterCity} type="text" placeholder='By Regional' className='outline-none bg-transparent w-full ml-2 text-white font-thin text-sm' />
               </form>
 
               <div className='flex'>
@@ -156,36 +254,53 @@ const Students = () => {
                   Inactive
                 </button>
               </div>
+
+              <div>
+                <button onClick={onFilter} className='text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-md px-1'>
+                  <span className="material-symbols-rounded text-white">filter_alt</span>
+                </button>
+              </div>
+              <div>
+                <button onClick={onResetFilter} className='text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-md px-1'>
+                  <span className="material-symbols-rounded text-white">filter_alt_off</span>
+                </button>
+              </div>
             </div>
-            {/* <div className='cursor-pointer bg-neutral-800 rounded-md flex justify-center items-center border border-sky-500 w-8 mb-2 h-8 p-2'>
-                        <span className="material-symbols-rounded text-white">description</span>
-                        </div> */}
+
             <ExportExcel data={dataMembers} />
           </div>
 
           <div className='text-white text-sm my-2'>Data Results :</div>
-          <table className='w-full'>
+
+          <table className='table-auto w-full'>
             <thead className='h-8'>
               <tr className='text-sm text-white font-thin bg-sky-500 h-full'>
                 <th className='font-medium '>No.</th>
-                <th className='font-medium flex items-center h-8 justify-between'>
-                  First Name
+                <th className='font-medium flex items-center h-8 justify-between w-fit'>
+                  Name
 
                   {/* sort button */}
                   <span onClick={handleSortName} className="material-symbols-rounded cursor-pointer text-white">
                     {sortName ? "expand_more" : "expand_less"}
                   </span>
                 </th>
-                <th className='font-medium hidden md:table-cell'>Last Name</th>
-                <th className='font-medium hidden md:table-cell'>Email</th>
-                <th className='font-medium hidden md:table-cell'>Gender</th>
-                <th className='font-medium'>Payment</th>
-                <th className='font-medium'>Status</th>
+
+                <th className='font-medium hidden md:table-cell'>Address</th>
+                <th className='font-medium'>Regional</th>
+                <th className='hidden md:table-cell font-medium'>Gender</th>
+                <th className='font-medium flex items-center h-8 justify-between'>
+                  Status
+
+                  {/* sort button */}
+                  <span onClick={handleSortStatus} className="material-symbols-rounded cursor-pointer text-white">
+                    {sortStatus ? "expand_more" : "expand_less"}
+                  </span>
+                </th>
                 <th className='font-medium'>Action</th>
               </tr>
             </thead>
 
-            {resultSearch.length === 0 ? (
+            {dataMembers.length === 0 ? (
               <tbody>
                 <tr className='text-white font-thin w-full'>
                   <td style={{ colSpan: "8" }}>
@@ -199,18 +314,20 @@ const Students = () => {
                   <tbody key={index} className="text-white font-thin text-sm">
                     <tr className={index % 2 === 0 ? "bg-neutral-800 h-8" : "bg-neutral-900 h-8"} >
                       <td className='text-center'>{item.id}</td>
-                      <td>{item.first_name}</td>
-                      <td className='hidden md:table-cell'>{item.last_name}</td>
-                      <td className='hidden md:table-cell'>{item.email}</td>
-                      <td className='hidden md:table-cell'>{item.gender}</td>
-                      <td>{item.fee}</td>
+
+                      <td className='hidden md:table-cell'>{item.studentsName}</td>
+                      <td className='hidden md:table-cell'>{item.address}</td>
+                      <td>{item.regional}</td>
+                      <td>{item.gender}</td>
                       <td className={item.status === "Active" ? "text-lime-600 text-center" : "text-rose-600 text-center"}>
                         {item.status}
                       </td>
                       <td className='flex justify-center items-center h-8'>
-                        <button className='text-white bg-neutral-800 text-sm flex justify-center items-center h-6 border border-sky-500 rounded-md px-2'>
-                          View
-                        </button>
+                        <Link to={`/tutors/${item.id}`}>
+                          <button className='text-white bg-neutral-800 text-sm flex justify-center items-center h-6 border border-sky-500 rounded-md px-2'>
+                            View
+                          </button>
+                        </Link>
                       </td>
                     </tr>
                   </tbody>

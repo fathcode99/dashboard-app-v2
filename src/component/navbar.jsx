@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux'
 const Navbar = () => {
     const stateAdmin = useSelector((state => state.usersReducer))
 
-    return (
-        <div className='flex items-center justify-between m-2 border-b border-sky-500 py-2'>
-            <div className='text-xl font-bold text-white'>
+    return ( 
+        <div className=' flex items-center justify-between border-b border-sky-500 p-2 bg-neutral-900 w-[100%]'>
+            <div className='text-3xl font-bold text-white'>
                 Creative.Dev
             </div>
             <div className='flex items-center'>
