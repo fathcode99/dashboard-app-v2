@@ -203,34 +203,34 @@ const Tutors = () => {
             </div>
             <div className='flex flex-col md:m-8 w-full min-h-screen'>
                 <Navbar />
-                <div className='text-white font-bold text-xl m-2 '>Data Tutors</div>
+                <div className='dark:text-white font-bold text-xl m-2 '>Data Tutors</div>
                 <div className='m-2'>
 
                     {/* filter table */}
-                    <div className='text-white text-sm my-2'>Filter Setting :</div>
+                    <div className='dark:text-white text-sm my-2'>Filter Setting :</div>
 
                     <div className='flex gap-1 md:gap-2 mb-3 flex-wrap w-full'>
-                        <form className='bg-neutral-800 rounded-md flex items-center border w-full md:w-1/3 border-sky-500 mb-2 h-8'>
-                            <input ref={refFilterName} type="text" placeholder='By Name' className='outline-none bg-transparent w-full ml-2 text-white font-thin text-sm' />
+                        <form className='dark:bg-neutral-800 rounded-md flex items-center border w-full md:w-1/3 border-slate-800 dark:border-sky-500 mb-2 h-8'>
+                            <input ref={refFilterName} type="text" placeholder='By Name' className='outline-none bg-transparent w-full ml-2 dark:text-white font-thin text-sm' />
                         </form>
 
-                        <form className='bg-neutral-800 rounded-md flex items-center border w-full md:w-1/3 border-sky-500 mb-2 h-8'>
-                            <input ref={refFilterCity} type="text" placeholder='By Regional' className='outline-none bg-transparent w-full ml-2 text-white font-thin text-sm' />
+                        <form className='dark:bg-neutral-800 rounded-md flex items-center border w-full md:w-1/3 border-slate-800 dark:border-sky-500 mb-2 h-8'>
+                            <input ref={refFilterCity} type="text" placeholder='By Regional' className='outline-none bg-transparent w-full ml-2 dark:text-white font-thin text-sm' />
                         </form>
 
                         <div className='flex'>
-                            <button onClick={handleActive} className='text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-l-md px-2' >
+                            <button onClick={handleActive} className='dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-l-md px-2' >
                                 {statusActive ?
-                                    <span className="material-symbols-rounded text-sky-500 text-base mr-1">check_circle</span>
+                                    <span className="material-symbols-rounded dark:text-sky-500 text-base mr-1">check_circle</span>
                                     :
                                     <span className="material-symbols-rounded text-base mr-1">radio_button_unchecked</span>
                                 }
                                 Active
                             </button>
 
-                            <button onClick={handleInactive} className='text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-r-md px-2'>
+                            <button onClick={handleInactive} className='dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-r-md px-2'>
                                 {statusInactive ?
-                                    <span className="material-symbols-rounded text-sky-500 text-base mr-1">check_circle</span>
+                                    <span className="material-symbols-rounded dark:text-sky-500 text-base mr-1">check_circle</span>
                                     :
                                     <span className="material-symbols-rounded text-base mr-1">radio_button_unchecked</span>
                                 }
@@ -239,28 +239,28 @@ const Tutors = () => {
                         </div>
 
                         <div>
-                            <button onClick={onFilter} className='text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-md px-1'>
-                                <span className="material-symbols-rounded text-white">filter_alt</span>
+                            <button onClick={onFilter} className='dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-md px-1'>
+                                <span className="material-symbols-rounded ">filter_alt</span>
                             </button>
                         </div>
                         <div>
-                            <button onClick={onResetFilter} className='text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-md px-1'>
-                                <span className="material-symbols-rounded text-white">filter_alt_off</span>
+                            <button onClick={onResetFilter} className='dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-md px-1'>
+                                <span className="material-symbols-rounded ">filter_alt_off</span>
                             </button>
                         </div>
                     </div>
 
-                    <div className='flex flex-col bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]'>
+                    <div className='flex flex-col dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]'>
                         <div className='flex justify-between items-center'>
-                            <div className='text-white text-sm mb-2'>Data Results :</div>
-                            <div className='flex text-white gap-2 text-sm justify-end items-center'>
+                            <div className='dark:text-white text-sm mb-2'>Data Results :</div>
+                            <div className='flex dark:text-white gap-2 text-sm justify-end items-center'>
                                 <span>Export to Excel:</span>
                                 <ExportExcel data={dataMembers} />
                             </div>
                         </div>
                         <table className='w-full'>
                             <thead className='h-8'>
-                                <tr className='text-sm text-white font-thin bg-sky-500 h-full'>
+                                <tr className='text-sm text-white font-thin dark:bg-sky-500 bg-slate-900 h-full'>
                                     <th className='font-medium border-r '>No.</th>
                                     <th className='font-medium flex items-center h-8 justify-center border-r'>
                                         Name
@@ -289,8 +289,8 @@ const Tutors = () => {
                             ) : (
                                 sliceTable.map((item, index) => {
                                     return (
-                                        <tbody key={index} className="text-white font-thin text-sm ">
-                                            <tr className={index % 2 === 0 ? "bg-neutral-800 h-8" : "bg-neutral-900 h-8"} >
+                                        <tbody key={index} className="dark:text-white font-thin text-sm ">
+                                            <tr className={index % 2 === 0 ? "dark:bg-neutral-800 bg-slate-200 h-8" : "dark:bg-neutral-900 bg-slate-300 h-8"} >
                                                 <td className='text-center border-r'>{item.id}</td>
 
                                                 <td className='border-r px-2'>{item.tutorName}</td>
@@ -301,7 +301,7 @@ const Tutors = () => {
                                                 </td>
                                                 <td className='flex justify-center items-center h-8 '>
                                                     <Link to={`/tutors/${item.id}`}>
-                                                        <button className='text-white bg-neutral-800 text-sm flex justify-center items-center h-6 border border-sky-500 rounded-md px-2'>
+                                                        <button className='dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2'>
                                                             View
                                                         </button>
                                                     </Link>
@@ -317,13 +317,13 @@ const Tutors = () => {
                             <button
                                 onClick={onPrev}
                                 disabled={page === 1 ? true : false}
-                                className='text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-l-md px-2'>
+                                className='dark:text-white bg-slate-200 dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-l-md px-2'>
                                 Prev
                             </button>
                             <button
                                 onClick={onNext}
                                 disabled={page === maxPage ? true : false}
-                                className='text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-r-md px-2'>
+                                className='dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-r-md px-2'>
                                 Next
                             </button>
                         </div>

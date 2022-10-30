@@ -62,50 +62,50 @@ const AddTutor = () => {
             </div>
             <div className="flex flex-col md:m-8 w-full min-h-screen m-2">
                 <Navbar />
-                <div className='text-white font-bold text-xl m-2 '>Add New Tutors</div>
-                <div className="flex flex-col bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+                <div className='dark:text-white font-bold text-xl m-2 '>Add New Tutors</div>
+                <div className="flex flex-col bg-slate-200 dark:bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                     <div className='flex flex-col'>
-                        <label className='text-white text-sm'>Full Name</label>
+                        <label className='dark:text-white text-sm'>Full Name</label>
                         <input type="text" placeholder='Full Name' ref={refName}
-                            className='mt-2 outline-none bg-transparent border-b border-sky-500 text-white text-sm font-thin' />
+                            className='mt-2 outline-none bg-transparent border-b dark:border-sky-500 border-slate-900 text-white text-sm font-thin' />
                     </div>
 
                     <div className='flex flex-col mt-4'>
-                        <label className='text-white text-sm'>Address</label>
+                        <label className='dark:text-white text-sm'>Address</label>
                         <input type="text" placeholder='Address' ref={refAddress}
-                            className='mt-2 outline-none bg-transparent border-b border-sky-500 text-white text-sm font-thin' />
+                            className='mt-2 outline-none bg-transparent border-b dark:border-sky-500 border-slate-900 text-white text-sm font-thin' />
                     </div>
 
                     <div className='flex flex-col mt-4'>
-                        <label className='text-white text-sm'>Date Birth</label>
+                        <label className='dark:text-white text-sm'>Date Birth</label>
                         <input type="text" placeholder='Date' ref={refBirth}
-                            className='mt-2 outline-none bg-transparent border-b border-sky-500 text-white text-sm font-thin' />
+                            className='mt-2 outline-none bg-transparent border-b dark:border-sky-500 border-slate-900 text-white text-sm font-thin' />
                     </div>
 
                     <div className='flex flex-col mt-4'>
-                        <label className='text-white text-sm'>Gender</label>
+                        <label className='dark:text-white text-sm'>Gender</label>
                         <input type="text" placeholder='Male / Female' ref={refGender}
-                            className='mt-2 outline-none bg-transparent border-b border-sky-500 text-white text-sm font-thin' />
+                            className='mt-2 outline-none bg-transparent border-b dark:border-sky-500 border-slate-900 text-white text-sm font-thin' />
                     </div>
 
                     <div className='flex flex-col mt-4'>
-                        <label className='text-white text-sm'>Phone</label>
+                        <label className='dark:text-white text-sm'>Phone</label>
                         <input type="text" placeholder='Number' ref={refPhone}
-                            className='mt-2 outline-none bg-transparent border-b border-sky-500 text-white text-sm font-thin' />
+                            className='mt-2 outline-none bg-transparent border-b dark:border-sky-500 border-slate-900 text-white text-sm font-thin' />
                     </div>
 
                     <div className='flex flex-col mt-4'>
-                        <label className='text-white text-sm'>Regional</label>
+                        <label className='dark:text-white text-sm'>Regional</label>
                         <input type="text" placeholder='Regional' ref={refRegional}
-                            className='mt-2 outline-none bg-transparent border-b border-sky-500 text-white text-sm font-thin' />
+                            className='mt-2 outline-none bg-transparent border-b dark:border-sky-500 border-slate-900 text-white text-sm font-thin' />
                     </div>
 
                     <button
                         onClick={onSubmit}
-                        className='mt-3 text-white px-2 py-1 text-sm font-thin hover:bg-sky-500 w-fit drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] bg-neutral-700 rounded'>
+                        className='mt-3 dark:text-white px-2 py-1 text-sm font-thin hover:bg-sky-500 dark:hover:bg-sky-500 w-fit drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] bg-slate-300 dark:bg-neutral-700 rounded'>
                         Submit
                     </button>
-                    <div className='text-white text-xs font-thin mt-6'>
+                    <div className='dark:text-white text-xs font-thin mt-6'>
                         Note : Lorem ipsum, dolor sit amet consectetur adipisicing.
                     </div>
                 </div>

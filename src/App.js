@@ -42,10 +42,17 @@ const App = () => {
         })
       })
 
+    const theme = localStorage.getItem('theme')
+    if (theme === 'light') {
+      document.documentElement.classList.remove('dark')
+    } else if (theme === 'dark') {
+      document.documentElement.classList.add('dark')
+    }
+
   }, [dispatch])
 
   return (
-    <div className='bg-neutral-900 font-rubik'>
+    <div className='dark:bg-neutral-900 font-rubik bg-slate-100'>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/tutors' element={<Tutors />} />

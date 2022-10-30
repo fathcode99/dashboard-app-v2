@@ -23,7 +23,7 @@ const Home = () => {
             </div>
             <div className='flex flex-col md:m-8 w-full'>
               <Navbar />
-              <div className='text-white text-lg font-bold m-2'>Dashboard</div>
+              <div className='dark:text-white text-lg font-bold m-2'>Dashboard</div>
               <div className='grid grid-cols-2 md:grid-cols-4 gap-2 m-2'>
                 <Widget />
                 <Widget />

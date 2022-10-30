@@ -18,6 +18,7 @@ const DetailTutor = () => {
   const [totalFeeTutor, setTotalFeeTutor] = useState()
 
   const [isModalMessage, setIsModalMessage] = useState(false)
+  const [isModalDelete, setIsModalDelete] = useState(false)
 
   useEffect(() => {
     async function fetchData() {
@@ -43,14 +44,6 @@ const DetailTutor = () => {
       feeTotal = feeTotal = parseFloat(dataRincian[0].detailFeeStudent[index].feeTm).toFixed(3)
     }
     setTotalFeeTutor(feeTotal)
-  }
-
-  // delete data
-  const onDelete = () => {
-    axios.delete(`${url}/${id}`)
-      .then(res => {
-        setDataTutor({})
-      })
   }
 
   // update edit data
@@ -95,9 +88,9 @@ const DetailTutor = () => {
   }
   const onMessage = () => {
     let messageNotif = refMessage.current.value
-    
+
     let dataNotif = dataTutor.notif
-    dataNotif.push({messageNotif})
+    dataNotif.push({ messageNotif })
 
     let message = {
       notif: dataNotif
@@ -108,6 +101,17 @@ const DetailTutor = () => {
       })
   }
 
+  // modal delete
+  const onValidDeleteYes = () => {
+    axios.delete(`${url}/${id}`)
+      .then(res => {
+        setDataTutor({})
+        setIsModalDelete(false)
+      })
+  }
+  const onValidDeleteNo = () => {
+    setIsModalDelete(false)
+  }
 
   return (
     <div className='flex'>
@@ -116,7 +120,7 @@ const DetailTutor = () => {
       </div>
       <div className="flex flex-col md:m-8 w-full min-h-screen relative">
         <Navbar />
-        <div className='text-white font-bold text-xl m-2 '>Detail Data Tutor</div>
+        <div className='dark:text-white font-bold text-xl m-2 '>Detail Data Tutor</div>
         {
           dataTutor.tutorName ?
 
@@ -125,74 +129,79 @@ const DetailTutor = () => {
 
                 {/* data diri */}
                 {isEdit ?
-                  <div className='flex flex-col w-full bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]'>
+                  <div className='flex flex-col w-full dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]'>
                     <div className='flex gap-3 relative'>
                       <div className='w-1/3 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]'>
                         <img src="https://www.stepstherapy.com.au/wp-content/uploads/2020/05/Natalie-square-profile-picture-1024x1024.jpg" alt="profile" />
                       </div>
                       <div className='flex flex-col w-full justify-center'>
-                        <input ref={refName} className='text-white font-medium bg-transparent text-xl outline-none border-b border-sky-500' defaultValue={dataTutor.tutorName} />
-                        <input ref={refBirth} className='text-white font-thin text-sm bg-transparent outline-none border-b border-sky-500' defaultValue={dataTutor.dateBirth} />
+                        <input ref={refName} className='dark:text-white font-medium bg-transparent text-xl outline-none border-b border-sky-500' defaultValue={dataTutor.tutorName} />
+                        <input ref={refBirth} className='dark:text-white font-thin text-sm bg-transparent outline-none border-b border-sky-500' defaultValue={dataTutor.dateBirth} />
                         <div className='italic font-thin text-sky-500 text-sm mt-3'>Address</div>
-                        <input ref={refAddress} className='text-white font-thin text-sm bg-transparent outline-none border-b border-sky-500' defaultValue={dataTutor.address} />
+                        <input ref={refAddress} className='dark:text-white font-thin text-sm bg-transparent outline-none border-b border-sky-500' defaultValue={dataTutor.address} />
 
                         <div className='flex gap-4'>
                           <div className='w-full'>
                             <div className='italic font-thin text-sky-500 text-sm mt-3'>Date Join</div>
-                            <input ref={refDateJoin} className='text-white font-thin bg-transparent text-sm outline-none border-b border-sky-500' defaultValue={dataTutor.dateJoin} />
+                            <input ref={refDateJoin} className='dark:text-white font-thin bg-transparent text-sm outline-none border-b border-sky-500' defaultValue={dataTutor.dateJoin} />
                             <div className='italic font-thin text-sky-500 text-sm mt-3'>Phone</div>
-                            <input ref={refPhone} className='text-white font-thin bg-transparent text-sm outline-none border-b border-sky-500' defaultValue={dataTutor.phone} />
+                            <input ref={refPhone} className='dark:text-white font-thin bg-transparent text-sm outline-none border-b border-sky-500' defaultValue={dataTutor.phone} />
                           </div>
                           <div className='w-full'>
                             <div className='italic font-thin text-sky-500 text-sm mt-3'>Gender</div>
-                            <input ref={refGender} className='text-white font-thin bg-transparent text-sm outline-none border-b border-sky-500' defaultValue={dataTutor.gender} />
+                            <input ref={refGender} className='dark:text-white font-thin bg-transparent text-sm outline-none border-b border-sky-500' defaultValue={dataTutor.gender} />
                             <div className='italic font-thin text-sky-500 text-sm mt-3'>Status</div>
-                            <input ref={refStatus} className={`text-white font-thin bg-transparent text-sm outline-none border-b border-sky-500`} defaultValue={dataTutor.status} />
-                          </div>
-                        </div>
-                      </div>
-
-                      <button onClick={onDone} className='hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] bg-neutral-700 rounded h-6 w-6 absolute top-0 right-0'>
-                        <span className="material-symbols-rounded text-white font-thin"> done </span>
-                      </button>
-                    </div>
-                  </div>
-
-                  :
-
-                  <div className='flex flex-col w-full bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]'>
-                    <div className='flex gap-3 relative'>
-                      <div className='w-1/3 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]'>
-                        <img src="https://www.stepstherapy.com.au/wp-content/uploads/2020/05/Natalie-square-profile-picture-1024x1024.jpg" alt="profile" />
-                      </div>
-                      <div className='flex flex-col w-full justify-center'>
-                        <div className='text-white font-medium text-xl'>{dataTutor.tutorName}</div>
-                        <div className='text-white font-thin text-sm'>{dataTutor.dateBirth}</div>
-                        <div className='italic font-thin text-sky-500 text-sm mt-3'>Address</div>
-                        <div className='text-white font-thin text-sm'>{dataTutor.address}</div>
-
-                        <div className='flex w-full gap-4'>
-                          <div className='w-full'>
-                            <div className='italic font-thin text-sky-500 text-sm mt-3'>Date Join</div>
-                            <div className='text-white font-thin text-sm'>{dataTutor.dateJoin}</div>
-                            <div className='italic font-thin text-sky-500 text-sm mt-3'>Phone</div>
-                            <div className='text-white font-thin text-sm'>{dataTutor.phone}</div>
-                          </div>
-                          <div className="w-full">
-                            <div className='italic font-thin text-sky-500 text-sm mt-3'>Gender</div>
-                            <div className='text-white font-thin text-sm'>{dataTutor.gender}</div>
-                            <div className='italic font-thin text-sky-500 text-sm mt-3'>Status</div>
-                            <div className={`text-white font-thin text-sm`}>{dataTutor.status}</div>
+                            <input ref={refStatus} className={`dark:text-white font-thin bg-transparent text-sm outline-none border-b border-sky-500`} defaultValue={dataTutor.status} />
                           </div>
                         </div>
                       </div>
 
                       <div className='absolute top-0 right-0 flex gap-2'>
-                        <button onClick={() => setIsEdit(!isEdit)} className='hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] bg-neutral-700 rounded h-6 w-6 '>
-                          <span className="material-symbols-rounded text-white font-thin"> edit </span>
+                      <button onClick={onDone} className='hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] dark:bg-neutral-700 bg-slate-300 rounded h-6 w-6'>
+                        <span className="material-symbols-rounded dark:text-white font-thin"> done </span>
+                      </button>
+                      <button onClick={() => setIsEdit(false)} className='hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] dark:bg-neutral-700 bg-slate-300 rounded h-6 w-6 '>
+                        <span className="material-symbols-rounded dark:text-white font-thin"> cancel </span>
+                      </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  :
+
+                  <div className='flex flex-col w-full dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]'>
+                    <div className='flex gap-3 relative'>
+                      <div className='w-1/3 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]'>
+                        <img src="https://www.stepstherapy.com.au/wp-content/uploads/2020/05/Natalie-square-profile-picture-1024x1024.jpg" alt="profile" />
+                      </div>
+                      <div className='flex flex-col w-full justify-center'>
+                        <div className='dark:text-white font-medium text-xl'>{dataTutor.tutorName}</div>
+                        <div className='dark:text-white font-thin text-sm'>{dataTutor.dateBirth}</div>
+                        <div className='italic font-thin text-sky-500 text-sm mt-3'>Address</div>
+                        <div className='dark:text-white font-thin text-sm'>{dataTutor.address}</div>
+
+                        <div className='flex w-full gap-4'>
+                          <div className='w-full'>
+                            <div className='italic font-thin text-sky-500 text-sm mt-3'>Date Join</div>
+                            <div className='dark:text-white font-thin text-sm'>{dataTutor.dateJoin}</div>
+                            <div className='italic font-thin text-sky-500 text-sm mt-3'>Phone</div>
+                            <div className='dark:text-white font-thin text-sm'>{dataTutor.phone}</div>
+                          </div>
+                          <div className="w-full">
+                            <div className='italic font-thin text-sky-500 text-sm mt-3'>Gender</div>
+                            <div className='dark:text-white font-thin text-sm'>{dataTutor.gender}</div>
+                            <div className='italic font-thin text-sky-500 text-sm mt-3'>Status</div>
+                            <div className={`dark:text-white font-thin text-sm`}>{dataTutor.status}</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className='absolute top-0 right-0 flex gap-2'>
+                        <button onClick={() => setIsEdit(!isEdit)} className='hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] dark:bg-neutral-700 bg-slate-300 rounded h-6 w-6 '>
+                          <span className="material-symbols-rounded dark:text-white font-thin"> edit </span>
                         </button>
-                        <button onClick={onDelete} className='hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] bg-neutral-700 rounded h-6 w-6 '>
-                          <span className="material-symbols-rounded text-white font-thin"> delete </span>
+                        <button onClick={() => setIsModalDelete(true)} className='hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] dark:bg-neutral-700 bg-slate-300 rounded h-6 w-6 '>
+                          <span className="material-symbols-rounded dark:text-white font-thin"> delete </span>
                         </button>
                       </div>
 
@@ -201,13 +210,13 @@ const DetailTutor = () => {
                 }
 
                 {/* payment */}
-                <div className='flex flex-col justify-between w-full bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]'>
-                  <div className='text-white font-thin text-sm'>Payment</div>
+                <div className='flex flex-col justify-between w-full bg-slate-200 dark:bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]'>
+                  <div className='dark:text-white font-thin text-sm'>Payment</div>
                   <div className='text-sky-500 font-thin text-right text-7xl'>$ {totalFeeTutor}</div>
-                  <p className='text-white font-thin text-right text-sm'>Lorem ipsum dolor sit amet, <br /> consectetur adipisicing elit. Quo cupiditate sint, totam rem ipsa ex!</p>
+                  <p className='dark:text-white font-thin text-right text-sm'>Lorem ipsum dolor sit amet, <br /> consectetur adipisicing elit. Quo cupiditate sint, totam rem ipsa ex!</p>
                   <div className='flex justify-end mt-3'>
-                    <button onClick={() => setIsModalMessage(!isModalMessage)} className='drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] bg-neutral-700 rounded px-2 py-1 w-fit flex items-center text-white text-sm font-thin hover:bg-sky-500'>
-                      <span className=" material-symbols-rounded text-white font-thin"> chat </span>
+                    <button onClick={() => setIsModalMessage(!isModalMessage)} className='drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] dark:bg-neutral-700 bg-slate-300 rounded px-2 py-1 w-fit flex items-center dark:text-white text-sm font-thin dark:hover:bg-sky-500 hover:bg-sky-500'>
+                      <span className=" material-symbols-rounded dark:text-white font-thin"> chat </span>
                       <span>Send Message</span>
                     </button>
 
@@ -216,11 +225,11 @@ const DetailTutor = () => {
               </div>
 
               {/* rincian kepengajaran */}
-              <div className='flex flex-col m-2 bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]'>
-                <div className='text-white font-thin text-sm my-3'>Rincian Kepengajaran</div>
+              <div className='flex flex-col m-2 bg-slate-200 dark:bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]'>
+                <div className='dark:text-white font-thin text-sm my-3'>Rincian Kepengajaran</div>
                 <table className='w-full'>
                   <thead className='h-8'>
-                    <tr className='text-sm text-white font-thin bg-sky-500 h-full'>
+                    <tr className='text-sm text-white font-thin bg-slate-900 dark:bg-sky-500 h-full'>
                       <th className='font-medium '>No.</th>
                       <th className='font-medium flex items-center h-8 justify-between'>
                         Students Name
@@ -250,8 +259,8 @@ const DetailTutor = () => {
                   ) : (
                     dataRincian.map((item, index) => {
                       return (
-                        <tbody key={index} className="text-white font-thin text-sm">
-                          <tr className={index % 2 === 0 ? "bg-neutral-800 h-8" : "bg-neutral-900 h-8"} >
+                        <tbody key={index} className="dark:text-white font-thin text-sm">
+                          <tr className={index % 2 === 0 ? "dark:bg-neutral-800 bg-slate-200 h-8" : "dark:bg-neutral-900 bg-slate-300 h-8"} >
                             <td className='text-center'>{index + 1}</td>
                             <td>{item.studentsName}</td>
                             <td className='hidden md:table-cell'>{item.parentsName}</td>
@@ -279,7 +288,7 @@ const DetailTutor = () => {
                             </td>
                             <td className='flex justify-center items-center h-8'>
                               <Link to={`/students/${item.id}`}>
-                                <button className='text-white bg-neutral-800 text-sm flex justify-center items-center h-6 border border-sky-500 rounded-md px-2'>
+                                <button className='dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2'>
                                   View
                                 </button>
                               </Link>
@@ -303,27 +312,58 @@ const DetailTutor = () => {
             </div>
         }
 
+        {/* modal message */}
         {
           isModalMessage ?
-            <div className='absolute backdrop-blur-sm w-full h-full bg-neutral-700 bg-opacity-70 flex justify-center items-center'>
-              <div className='flex flex-col w-[75%] bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] py-3'>
+            <div className='absolute backdrop-blur-sm w-full h-full dark:bg-neutral-700 bg-slate-200 bg-opacity-70 flex justify-center items-center'>
+              <div className='flex flex-col w-[75%] dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] py-3'>
                 <div className='flex justify-between'>
-                  <div className='text-white'>Send Message</div>
+                  <div className='dark:text-white'>Send Message</div>
                   <button onClick={closeModal}>
-                    <span class="hover:text-rose-500 material-symbols-rounded text-white">
+                    <span class="hover:text-rose-500 material-symbols-rounded dark:text-white">
                       close
                     </span>
                   </button>
                 </div>
 
-                <textarea ref={refMessage} type="text" className=' break-words text-white font-thin text-sm rounded-md p-2 bg-transparent outline-none border border-sky-500 '
+                <textarea ref={refMessage} type="text" className=' break-words dark:text-white font-thin text-sm rounded-md p-2 bg-transparent outline-none border dark:border-sky-500 border-slate-900 '
                   defaultValue={defaultMessage} />
 
                 <button
                   onClick={onMessage}
-                  className='hover:bg-sky-500 text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-md px-2 w-fit mt-2'>
+                  className='hover:bg-sky-500 dark:hover:bg-sky-500 dark:text-white dark:bg-neutral-800 bg-slate-300 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-md px-2 w-fit mt-2'>
                   Send
                 </button>
+              </div>
+            </div>
+            :
+            ""
+        }
+
+        {/* modal delete */}
+        {
+          isModalDelete ?
+            <div className='absolute backdrop-blur-sm w-full h-full dark:bg-neutral-700 bg-slate-200 bg-opacity-70 flex justify-center items-center'>
+              <div className='flex flex-col w-[45%] dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] py-3 gap-4 items-center'>
+                <div className='flex justify-between'>
+                  <div className=' text-rose-500'>Delete Data</div>
+                </div>
+                <div className='flex justify-between'>
+                  <div className='dark:text-white font-thin text-sm'>Are you sure ?</div>
+                </div>
+
+                <div className='flex gap-2'>
+                  <button
+                    onClick={onValidDeleteYes}
+                    className='drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] hover:bg-sky-500 dark:hover:bg-sky-500 dark:text-white dark:bg-neutral-800 bg-slate-300 text-sm flex justify-center items-center h-8 border dark:border-sky-500 rounded-md px-2 w-fit mt-2'>
+                    Yes
+                  </button>
+                  <button
+                    onClick={onValidDeleteNo}
+                    className='drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] hover:bg-sky-500 dark:hover:bg-sky-500 dark:text-white dark:bg-neutral-800 bg-slate-300 text-sm flex justify-center items-center h-8 border dark:border-sky-500 rounded-md px-2 w-fit mt-2'>
+                    No
+                  </button>
+                </div>
               </div>
             </div>
             :

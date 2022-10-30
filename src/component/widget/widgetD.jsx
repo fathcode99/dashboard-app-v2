@@ -26,8 +26,8 @@ const WidgetD = () => {
 
 
     return (
-        <div className='w-full bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]'>
-            <div className='text-white font-thin text-sm'>Reviews</div>
+        <div className='w-full dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] dark:text-white'>
+            <div className=' font-thin text-sm'>Reviews</div>
             <div className='w-full h-[200px] flex justify-center '> 
                     <ResponsiveContainer  height="100%">
                         <PieChart >
@@ -48,8 +48,8 @@ const WidgetD = () => {
                         </PieChart>
                     </ResponsiveContainer>  
             </div>
-            <div className='text-white text-sm font-semibold text-center mt-4'>Progress-1</div>
-            <div className='text-center text-white my-2 font-thin text-sm'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, excepturi!</div>
+            <div className=' text-sm font-semibold text-center mt-4'>Progress-1</div>
+            <div className='text-center  my-2 font-thin text-sm'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, excepturi!</div>
         </div>
     )
 }
