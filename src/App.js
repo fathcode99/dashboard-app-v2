@@ -6,6 +6,7 @@ import Tutors from './pages/tutors'
 import Students from './pages/students'
 import DetailTutor from './pages/detailTutor'
 import AddTutor from './pages/addTutor'
+import Login from './pages/login'
 
 import { Routes, Route } from 'react-router-dom'
 import axios from 'axios'
@@ -59,6 +60,7 @@ const App = () => {
         <Route path='/tutors/:id' element={<DetailTutor />} />
         <Route path='/students' element={<Students />} />
         <Route path='/addtutor' element={<AddTutor />} />
+        <Route path='/login' element={<Login />} />
       </Routes>
     </div>
   )

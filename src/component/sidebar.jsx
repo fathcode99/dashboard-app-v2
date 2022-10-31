@@ -1,14 +1,31 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom' 
+import { useState } from 'react'
+import { useEffect } from 'react'
 
-const Sidebar = () => {
+const Sidebar = () => { 
+    const [toLogin, setToLogin] = useState(false)
+    const onLogout = () => {
+        localStorage.removeItem('idUser')
+        setToLogin(true)
+    }
+
+    useEffect(()=> {
+        setToLogin(toLogin)
+    }, [toLogin])
+
+    if (toLogin) {
+        return <Navigate to='/login' />
+    }
+
     return (
-        <div className='min-w-[40px] md:w-[200px] flex flex-col dark:bg-neutral-800 bg-slate-300 min-h-screen drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]'> 
-            <div className='min-w-[40px] md:w-[200px] flex flex-col min-h-screen fixed justify-center dark:text-white'>
+
+        <div className='min-w-[40px] md:w-[200px] flex flex-col dark:bg-neutral-800 bg-slate-300 min-h-screen drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]'>
+            <div className='min-w-[40px] md:w-[200px] flex flex-col min-h-screen justify-center dark:text-white'>
                 <div className="flex justify-center items-center  pb-6">
-                    <span className='font-bold text-center  text-xs  lg:text-5xl lg:mb-5'>LO<br />GO</span>
+                    <span className='font-bold text-center  text-xs  md:text-5xl md:mt-3 md:mb-5'>LO<br />GO</span>
                 </div>
-                <div className="w-full sidebar flex flex-col gap-8 lg:gap-1 ">
+                <div className="w-full sidebar flex flex-col gap-8 lg:gap-1">
                     <span className='hidden md:block  text-sm font-thin text-left pl-4'>Home</span>
                     <Link to="/">
                         <div className='cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4 md:mb-5'>
@@ -58,13 +75,14 @@ const Sidebar = () => {
                     </div>
 
                     {/* logout */}
-                    <div className='sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4 cursor-pointer'>
+                    <div onClick={onLogout} className='sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4 cursor-pointer'>
                         <span className="material-symbols-rounded "> logout </span>
                         <span className="hidden md:block  font-thin ml-4">Logout</span>
                     </div>
                 </div>
             </div>
         </div>
+
     )
 }
 

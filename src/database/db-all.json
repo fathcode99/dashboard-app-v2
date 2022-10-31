@@ -1303,18 +1303,18 @@
   ],
   "tutors": [
     {
-      "id": 2,
-      "tutorName": "Jehanna Pischel",
-      "gender": "Non-binary",
-      "phone": "357-942-7820",
-      "registeredId": "2305896328",
-      "address": "5 Lotheville Lane",
-      "dateBirth": "10/17/1997",
-      "dateJoin": "4/27/2022",
+      "id": 1,
+      "tutorName": "Sauveur Stockey",
+      "gender": "Male",
+      "phone": "463-980-7107",
+      "registeredId": "0982413963",
+      "address": "7 Tomscot Way",
+      "dateBirth": "3/21/1997",
+      "dateJoin": "4/20/2022",
       "feeTutor": null,
-      "regional": "Dubna",
-      "img": "http://dummyimage.com/300x300.png/ff4444/ffffff",
-      "status": "false",
+      "regional": "Swindon",
+      "img": "http://dummyimage.com/300x300.png/dddddd/000000",
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -1328,15 +1328,56 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
+            }
+          ]
+        }
+      ],
+      "notif": []
+    },
+    {
+      "id": 2,
+      "tutorName": "Jehanna Pischel",
+      "gender": "Non-binary",
+      "phone": "357-942-7820",
+      "registeredId": "2305896328",
+      "address": "5 Lotheville Lane",
+      "dateBirth": "10/17/1997",
+      "dateJoin": "4/27/2022",
+      "feeTutor": null,
+      "regional": "Dubna",
+      "img": "http://dummyimage.com/300x300.png/ff4444/ffffff",
+      "status": "Inactive",
+      "detailFeeTutor": [
+        {
+          "id": 1,
+          "studentsName": "Berny Cheyenne",
+          "parentsName": "Deeyn Coverlyn",
+          "gender": "Female",
+          "phone": "422-624-6106",
+          "registeredId": "8381626846",
+          "address": "2756 Hoffman Court",
+          "dateBirth": "4/21/1997",
+          "feeStudent": "",
+          "regional": "Blagoevgrad",
+          "img": "http://dummyimage.com/300x300.png/dddddd/000000",
+          "status": "Active",
+          "detailFeeStudent": [
+            {
+              "dateTm": "3/8/2022",
+              "feeTm": "2.1"
+            },
+            {
+              "dateTm": "4/9/2022",
+              "feeTm": "2.4"
             }
           ]
         }
@@ -1355,7 +1396,7 @@
       "feeTutor": null,
       "regional": "Esuk Oron",
       "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -1369,15 +1410,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -1396,7 +1437,7 @@
       "feeTutor": null,
       "regional": "Limoges",
       "img": "http://dummyimage.com/300x300.png/cc0000/ffffff",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -1410,15 +1451,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -1437,7 +1478,7 @@
       "feeTutor": null,
       "regional": "Ban Mo",
       "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -1451,15 +1492,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -1478,7 +1519,7 @@
       "feeTutor": null,
       "regional": "Balangkayan",
       "img": "http://dummyimage.com/300x300.png/5fa2dd/ffffff",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -1492,15 +1533,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -1519,7 +1560,7 @@
       "feeTutor": null,
       "regional": "Cape Coast",
       "img": "http://dummyimage.com/300x300.png/cc0000/ffffff",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -1533,15 +1574,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -1560,7 +1601,7 @@
       "feeTutor": null,
       "regional": "Turirejo",
       "img": "http://dummyimage.com/300x300.png/5fa2dd/ffffff",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -1574,15 +1615,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -1601,7 +1642,7 @@
       "feeTutor": null,
       "regional": "Polyarnyy",
       "img": "http://dummyimage.com/300x300.png/ff4444/ffffff",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -1615,15 +1656,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -1642,7 +1683,7 @@
       "feeTutor": null,
       "regional": "Salekhard",
       "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -1656,15 +1697,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -1683,7 +1724,7 @@
       "feeTutor": null,
       "regional": "Koba",
       "img": "http://dummyimage.com/300x300.png/ff4444/ffffff",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -1697,15 +1738,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -1724,7 +1765,7 @@
       "feeTutor": null,
       "regional": "Santo Tomé",
       "img": "http://dummyimage.com/300x300.png/ff4444/ffffff",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -1738,15 +1779,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -1765,7 +1806,7 @@
       "feeTutor": null,
       "regional": "Lomintsevskiy",
       "img": "http://dummyimage.com/300x300.png/cc0000/ffffff",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -1779,15 +1820,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -1806,7 +1847,7 @@
       "feeTutor": null,
       "regional": "Lukou",
       "img": "http://dummyimage.com/300x300.png/5fa2dd/ffffff",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -1820,15 +1861,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -1847,7 +1888,7 @@
       "feeTutor": null,
       "regional": "Norrtälje",
       "img": "http://dummyimage.com/300x300.png/cc0000/ffffff",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -1861,15 +1902,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -1888,7 +1929,7 @@
       "feeTutor": null,
       "regional": "Liqiao",
       "img": "http://dummyimage.com/300x300.png/5fa2dd/ffffff",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -1902,15 +1943,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -1929,7 +1970,7 @@
       "feeTutor": null,
       "regional": "Nanggela",
       "img": "http://dummyimage.com/300x300.png/ff4444/ffffff",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -1943,15 +1984,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -1970,7 +2011,7 @@
       "feeTutor": null,
       "regional": "Pereira",
       "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -1984,15 +2025,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2011,7 +2052,7 @@
       "feeTutor": null,
       "regional": "Tanjungagung",
       "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2025,15 +2066,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2052,7 +2093,7 @@
       "feeTutor": null,
       "regional": "Kota Bharu",
       "img": "http://dummyimage.com/300x300.png/5fa2dd/ffffff",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2066,15 +2107,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2093,7 +2134,7 @@
       "feeTutor": null,
       "regional": "Hezhi",
       "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2107,15 +2148,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2134,7 +2175,7 @@
       "feeTutor": null,
       "regional": "Mohale’s Hoek",
       "img": "http://dummyimage.com/300x300.png/5fa2dd/ffffff",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2148,15 +2189,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2175,7 +2216,7 @@
       "feeTutor": null,
       "regional": "Zabrze",
       "img": "http://dummyimage.com/300x300.png/ff4444/ffffff",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2189,15 +2230,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2216,7 +2257,7 @@
       "feeTutor": null,
       "regional": "Duogongma",
       "img": "http://dummyimage.com/300x300.png/5fa2dd/ffffff",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2230,15 +2271,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2257,7 +2298,7 @@
       "feeTutor": null,
       "regional": "Pyay",
       "img": "http://dummyimage.com/300x300.png/cc0000/ffffff",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2271,15 +2312,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2298,7 +2339,7 @@
       "feeTutor": null,
       "regional": "Kadengan",
       "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2312,15 +2353,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2339,7 +2380,7 @@
       "feeTutor": null,
       "regional": "San Antonio",
       "img": "http://dummyimage.com/300x300.png/ff4444/ffffff",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2353,15 +2394,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2380,7 +2421,7 @@
       "feeTutor": null,
       "regional": "Zákynthos",
       "img": "http://dummyimage.com/300x300.png/ff4444/ffffff",
-      "status": "true",
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2394,15 +2435,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2421,7 +2462,7 @@
       "feeTutor": null,
       "regional": "Qujiang",
       "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2435,15 +2476,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2462,7 +2503,7 @@
       "feeTutor": null,
       "regional": "Jenggawah",
       "img": "http://dummyimage.com/300x300.png/cc0000/ffffff",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2476,15 +2517,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2503,7 +2544,7 @@
       "feeTutor": null,
       "regional": "La Quebrada",
       "img": "http://dummyimage.com/300x300.png/5fa2dd/ffffff",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2517,15 +2558,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2544,7 +2585,7 @@
       "feeTutor": null,
       "regional": "Nyzhnya Krynka",
       "img": "http://dummyimage.com/300x300.png/cc0000/ffffff",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2558,15 +2599,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2585,7 +2626,7 @@
       "feeTutor": null,
       "regional": "Karanganyar",
       "img": "http://dummyimage.com/300x300.png/ff4444/ffffff",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2599,15 +2640,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2626,7 +2667,7 @@
       "feeTutor": null,
       "regional": "Kalynivka",
       "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2640,15 +2681,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2667,7 +2708,7 @@
       "feeTutor": null,
       "regional": "Xiqiao",
       "img": "http://dummyimage.com/300x300.png/ff4444/ffffff",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2681,15 +2722,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2708,7 +2749,7 @@
       "feeTutor": null,
       "regional": "Wang Chan",
       "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2722,15 +2763,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2749,7 +2790,7 @@
       "feeTutor": null,
       "regional": "Arroio Grande",
       "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2763,15 +2804,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2790,7 +2831,7 @@
       "feeTutor": null,
       "regional": "Metsavan",
       "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2804,15 +2845,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2831,7 +2872,7 @@
       "feeTutor": null,
       "regional": "Malakwal City",
       "img": "http://dummyimage.com/300x300.png/cc0000/ffffff",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2845,15 +2886,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2872,7 +2913,7 @@
       "feeTutor": null,
       "regional": "Miguel Aleman",
       "img": "http://dummyimage.com/300x300.png/5fa2dd/ffffff",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2886,15 +2927,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2913,7 +2954,7 @@
       "feeTutor": null,
       "regional": "Māmu Kānjan",
       "img": "http://dummyimage.com/300x300.png/5fa2dd/ffffff",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2927,15 +2968,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2954,7 +2995,7 @@
       "feeTutor": null,
       "regional": "Luis Donaldo Colosio",
       "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -2968,15 +3009,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -2995,7 +3036,7 @@
       "feeTutor": null,
       "regional": "Qal‘ah-ye Shāhī",
       "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -3009,15 +3050,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -3036,7 +3077,7 @@
       "feeTutor": null,
       "regional": "Lerrnanist",
       "img": "http://dummyimage.com/300x300.png/5fa2dd/ffffff",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -3050,15 +3091,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -3077,7 +3118,7 @@
       "feeTutor": null,
       "regional": "Doroslovo",
       "img": "http://dummyimage.com/300x300.png/5fa2dd/ffffff",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -3091,15 +3132,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -3118,7 +3159,7 @@
       "feeTutor": null,
       "regional": "Rio Novo do Sul",
       "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -3132,15 +3173,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -3159,7 +3200,7 @@
       "feeTutor": null,
       "regional": "Kari",
       "img": "http://dummyimage.com/300x300.png/cc0000/ffffff",
-      "status": false,
+      "status": "Inactive",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -3173,15 +3214,15 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
             }
           ]
         }
@@ -3200,7 +3241,7 @@
       "feeTutor": null,
       "regional": "Selínia",
       "img": "http://dummyimage.com/300x300.png/5fa2dd/ffffff",
-      "status": true,
+      "status": "Active",
       "detailFeeTutor": [
         {
           "id": 1,
@@ -3214,15 +3255,97 @@
           "feeStudent": "",
           "regional": "Blagoevgrad",
           "img": "http://dummyimage.com/300x300.png/dddddd/000000",
-          "status": true,
+          "status": "Active",
           "detailFeeStudent": [
             {
               "dateTm": "3/8/2022",
-              "feeTm": "$2.1"
+              "feeTm": "2.1"
             },
             {
               "dateTm": "4/9/2022",
-              "feeTm": "$2.4"
+              "feeTm": "2.4"
+            }
+          ]
+        }
+      ],
+      "notif": []
+    },
+    {
+      "id": 49,
+      "tutorName": "Nolana Doerffer",
+      "gender": "Female",
+      "phone": "970-899-3973",
+      "registeredId": "1324495316",
+      "address": "8084 Hansons Lane",
+      "dateBirth": "3/27/1997",
+      "dateJoin": "11/1/2021",
+      "feeTutor": null,
+      "regional": "Koreiz",
+      "img": "http://dummyimage.com/300x300.png/5fa2dd/ffffff",
+      "status": "Inactive",
+      "detailFeeTutor": [
+        {
+          "id": 1,
+          "studentsName": "Berny Cheyenne",
+          "parentsName": "Deeyn Coverlyn",
+          "gender": "Female",
+          "phone": "422-624-6106",
+          "registeredId": "8381626846",
+          "address": "2756 Hoffman Court",
+          "dateBirth": "4/21/1997",
+          "feeStudent": "",
+          "regional": "Blagoevgrad",
+          "img": "http://dummyimage.com/300x300.png/dddddd/000000",
+          "status": "Active",
+          "detailFeeStudent": [
+            {
+              "dateTm": "3/8/2022",
+              "feeTm": "2.1"
+            },
+            {
+              "dateTm": "4/9/2022",
+              "feeTm": "2.4"
+            }
+          ]
+        }
+      ],
+      "notif": []
+    },
+    {
+      "id": 50,
+      "tutorName": "Grover Cottier",
+      "gender": "Male",
+      "phone": "927-774-1891",
+      "registeredId": "5133892942",
+      "address": "7066 Manley Pass",
+      "dateBirth": "6/17/1997",
+      "dateJoin": "10/19/2022",
+      "feeTutor": null,
+      "regional": "Changkeng",
+      "img": "http://dummyimage.com/300x300.png/ff4444/ffffff",
+      "status": "Active",
+      "detailFeeTutor": [
+        {
+          "id": 1,
+          "studentsName": "Berny Cheyenne",
+          "parentsName": "Deeyn Coverlyn",
+          "gender": "Female",
+          "phone": "422-624-6106",
+          "registeredId": "8381626846",
+          "address": "2756 Hoffman Court",
+          "dateBirth": "4/21/1997",
+          "feeStudent": "",
+          "regional": "Blagoevgrad",
+          "img": "http://dummyimage.com/300x300.png/dddddd/000000",
+          "status": "Active",
+          "detailFeeStudent": [
+            {
+              "dateTm": "3/8/2022",
+              "feeTm": "2.1"
+            },
+            {
+              "dateTm": "4/9/2022",
+              "feeTm": "2.4"
             }
           ]
         }
@@ -3232,7 +3355,7 @@
   ],
   "admin": [
     {
-      "id": 1,
+      "id":1,
       "username": "fath",
       "password": "123"
     }

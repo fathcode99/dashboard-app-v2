@@ -8,7 +8,7 @@ const Navbar = () => {
 
     useEffect(() => {
         const theme = localStorage.getItem('theme')
-        setThemeLocal(themeLocal)
+        
         if (theme === 'light') {
             document.documentElement.classList.remove('dark')
         } else if (theme === 'dark') {
@@ -19,17 +19,17 @@ const Navbar = () => {
     const onDark = () => {
         localStorage.removeItem('theme', 'light')
         localStorage.setItem('theme', 'dark')
-        setThemeLocal(true)
+        setThemeLocal(!themeLocal)
     }
     const onLight = () => {
         localStorage.removeItem('theme', 'dark')
         localStorage.setItem('theme', 'light')
-        setThemeLocal(false)
+        setThemeLocal(!themeLocal)
     }
 
     return (
-        <div className=' flex items-center justify-between border-b border-neutral-900 dark:border-sky-500 p-2 dark:bg-neutral-900 w-[100%]'>
-            <div className='text-3xl font-bold dark:text-white text-neutral-900'>
+        <div className=' flex items-center justify-between border-b border-neutral-900 dark:border-sky-500 p-2 dark:bg-neutral-900'>
+            <div className='text-xl md:text-3xl font-bold dark:text-white text-neutral-900'>
                 Creative.Dev
             </div>
             <div className='flex items-center'>
