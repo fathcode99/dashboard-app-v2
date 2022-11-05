@@ -4,6 +4,6 @@
 
 @layer {
     .sidebar-btn-hover {
-        @apply hover:bg-neutral-700 w-full flex items-center justify-center py-1 
+        @apply dark:hover:bg-neutral-700 hover:bg-slate-400 w-full flex items-center justify-center py-1 
     };
 }

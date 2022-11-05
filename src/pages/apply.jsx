@@ -7,10 +7,10 @@ import ExportExcel from "../component/exportExcel";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const url = "https://admin.menujudigital.com/api/datapengajar";
+const url = "https://admin.menujudigital.com/api/apply";
 
 const Tutors = () => {
-  const stateTutors = useSelector((state) => state.tutorsReducer);
+  const stateTutors = useSelector((state) => state.applyReducer);
   const navigate = useNavigate()
 
   // default data
@@ -339,7 +339,7 @@ const Tutors = () => {
       <div className="flex flex-col md:m-8 w-full min-h-screen">
         <Navbar />
         <div className="dark:text-white font-bold text-xl m-2 ">
-          Data Tutors
+         DATA APPLY
         </div>
         <div className="m-2">
           {/* filter table */}
@@ -483,7 +483,7 @@ const Tutors = () => {
                           {item.email}
                         </td>
                         <td className="flex justify-center items-center h-8 ">
-                          <Link to={`/tutors/${item.id}`}>
+                          <Link to={`/datapengajars/${item.id}`}>
                             <button className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2">
                               View
                             </button>

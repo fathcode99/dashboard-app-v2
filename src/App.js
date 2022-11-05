@@ -1,69 +1,80 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from "react";
 
 // import pages
-import Home from './pages/home'
-import Tutors from './pages/tutors'
-import Students from './pages/students'
-import DetailTutor from './pages/detailTutor'
-import AddTutor from './pages/addTutor'
-import Login from './pages/login'
+import Home from "./pages/home";
+import Tutors from "./pages/tutors";
+import Students from "./pages/students";
+import DetailTutor from "./pages/detailTutor";
+import Login from "./pages/login";
+import Apply from "./pages/apply"
 
-import { Routes, Route } from 'react-router-dom'
-import axios from 'axios'
-import { useDispatch } from 'react-redux'
+import axios from "axios";
+import { Routes, Route } from "react-router-dom";
+// import axios from 'axios'
+import { useDispatch } from "react-redux";
 
-const url = 'http://localhost:2000'
+const url = "https://admin.menujudigital.com/api";
 
 const App = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    let id = localStorage.getItem('idUser')
-    axios.get(`${url}/admin/${id}`)
-      .then(res => {
+    let token = localStorage.getItem("token");
+    axios
+      .get(`${url}/datapengajar`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
         dispatch({
-          type: 'GET_DATA_ADMIN',
+          type: "GET_DATA_TUTORS",
           payload: res.data,
-        })
-      })
+        });
+      });
 
-    axios.get(`${url}/tutors`)
-      .then(res => {
+    axios
+      .get(`${url}/apply`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
         dispatch({
-          type: 'GET_DATA_TUTORS',
-          payload: res.data
-        })
-      })
+          type: "GET_DATA_APPLY",
+          payload: res.data,
+        });
+      });
 
-    axios.get(`${url}/students`)
-      .then(res => {
-        dispatch({
-          type: 'GET_DATA_STUDENTS',
-          payload: res.data
-        })
-      })
+    // axios.get(`${url}/students`)
+    //   .then(res => {
+    //     dispatch({
+    //       type: 'GET_DATA_STUDENTS',
+    //       payload: res.data
+    //     })
+    //   })
 
-    const theme = localStorage.getItem('theme')
-    if (theme === 'light') {
-      document.documentElement.classList.remove('dark')
-    } else if (theme === 'dark') {
-      document.documentElement.classList.add('dark')
+    const theme = localStorage.getItem("theme");
+    if (theme === "light") {
+      document.documentElement.classList.remove("dark");
+    } else if (theme === "dark") {
+      document.documentElement.classList.add("dark");
     }
-
-  }, [dispatch])
+  }, [dispatch]);
 
   return (
-    <div className='dark:bg-neutral-900 font-rubik bg-slate-100'>
+    <div className="dark:bg-neutral-900 font-rubik bg-slate-100">
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/tutors' element={<Tutors />} />
-        <Route path='/tutors/:id' element={<DetailTutor />} />
-        <Route path='/students' element={<Students />} />
-        <Route path='/addtutor' element={<AddTutor />} />
-        <Route path='/login' element={<Login />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/tutors" element={<Tutors />} />
+        <Route path="/tutors/:id" element={<DetailTutor />} />
+        <Route path="/apply" element={<Apply />} />
+        
+        <Route path="/students" element={<Students />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

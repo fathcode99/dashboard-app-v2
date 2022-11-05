@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react'
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useState } from 'react' 
 
-const Navbar = () => {
-    const stateAdmin = useSelector((state => state.usersReducer))
+const Navbar = () => { 
     const [themeLocal, setThemeLocal] = useState(false)
 
     useEffect(() => {
@@ -42,7 +40,7 @@ const Navbar = () => {
                     </button>
                 </div>
 
-                <div className='dark:text-white text-neutral-900 text-sm font-thin mr-2'>Hello, <span className='text-sky-500 font-medium'>{stateAdmin.username}</span> </div>
+                <div className='dark:text-white text-neutral-900 text-sm font-thin mr-2'>Hello, <span className='text-sky-500 font-medium'>admin</span> </div>
                 <div className='w-8 h-8 rounded-full overflow-hidden bg-neutral-100'>
                     <img src="https://www.stepstherapy.com.au/wp-content/uploads/2020/05/Natalie-square-profile-picture-1024x1024.jpg" alt="profile-1" className='w-full h-full' />
                 </div>
