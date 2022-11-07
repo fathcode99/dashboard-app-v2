@@ -9,73 +9,122 @@ import { Link } from "react-router-dom";
 const url = "https://admin.menujudigital.com/api";
 
 const DetailTutor = () => {
+  let token = localStorage.getItem("token");
   const { id } = useParams();
 
   const [dataTutor, setDataTutor] = useState({});
-  // const [dataRincian, setDataRincian] = useState([])
+  const [dataBiaya, setDataBiaya] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
-
-  // const [totalFeeTutor, setTotalFeeTutor] = useState();
+  const [isIndexEdit, setIsIndexEdit] = useState(null);
 
   const [isModalMessage, setIsModalMessage] = useState(false);
   const [isModalDelete, setIsModalDelete] = useState(false);
 
+  // edit data tutor
+  const [namaPengajar, setNamaPengajar] = useState("");
+  const [idPengajar, setIdPengajar] = useState("");
+  const [email, setEmail] = useState("");
+  const [asalKampus, setAsalKampus] = useState("");
+  const [mapel, setMapel] = useState("");
+  const [telp, setTelp] = useState("");
+  const [namaBank, setNamaBank] = useState("");
+  const [rekBank, setRekBank] = useState("");
+  const [anBank, setAnBank] = useState("");
+
   useEffect(() => {
-    async function fetchData() {
-      const request = await axios.get(`${url}/datapengajar/${id}`);
-      setDataTutor(request.data);
-      console.log(request.data)
-    }
-    fetchData();
-    // if (dataRincian === 0) {
-    //   console.log('kosong')
-    // } else {
-    //   getTotalFee()
-    // }
+    axios
+      .get(`${url}/datapengajar/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setDataTutor(res.data);
+      });
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    axios
+      .get(`${url}/biaya`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setDataBiaya(res.data);
+      });
+  }, [id, token]);
 
-  // // total fee tutor
-  // const getTotalFee = () => {
-  //   let feeTotal = 0
-  //   for (let index = 0; index < dataRincian.length; index++) {
-  //     feeTotal = feeTotal = parseFloat(dataRincian[0].detailFeeStudent[index].feeTm).toFixed(3)
-  //   }
-  //   setTotalFeeTutor(feeTotal)
-  // }
+  // filter data rincian
+  let idTutor = dataTutor.id_pengajar;
+  let filterDataBiaya;
+  if (dataBiaya) {
+    filterDataBiaya = dataBiaya.filter((data) => data.id_pengajar === idTutor);
+  }
 
-  // update edit data
-  let refName = useRef();
-  let refBirth = useRef();
-  let refAddress = useRef();
-  let refDateJoin = useRef();
-  let refGender = useRef();
-  let refPhone = useRef();
-  let refStatus = useRef();
+  //menghitung total fee
+  let totalFee = 0;
+  for (let i = 0; i < filterDataBiaya.length; i++) {
+    totalFee += +filterDataBiaya[i].fee_pengajar;
+  }
 
   const onDone = () => {
-    let valueName = refName.current.value;
-    let valueAddress = refAddress.current.value;
-    let valueBirth = refBirth.current.value;
-    let valueGender = refGender.current.value;
-    let valuePhone = refPhone.current.value;
-    let valueStatus = refStatus.current.value;
-    let valueDateJoin = refDateJoin.current.value;
-
     let updateData = {
-      tutorName: valueName,
-      gender: valueGender,
-      phone: valuePhone,
-      address: valueAddress,
-      dateBirth: valueBirth,
-      dateJoin: valueDateJoin,
-      status: valueStatus,
+      nama_pengajar: namaPengajar,
+      id_pengajar: idPengajar,
+      email: email,
+      asal_kampus: asalKampus,
+      mapel: mapel,
+      no_telp: telp,
+      nama_bank: namaBank,
+      rek_bank: rekBank,
+      an_rek_bank: anBank,
     };
-    axios.patch(`${url}/${id}`, updateData).then((res) => {
-      setIsEdit(!isEdit);
-      setDataTutor(res.data);
-    });
+    axios
+      .put(`${url}/datapengajar/${id}/update`, updateData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        axios
+          .get(`${url}/datapengajar/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            setDataTutor(res.data);
+          });
+      });
+    setIsEdit(!isEdit);
+  };
+
+  //edit data rincian
+  let refEditRealisasi = useRef();
+  const onEditDataRincian = (id) => {
+    let dataEdit = refEditRealisasi.current.value;
+    axios
+      .put(
+        `${url}/biaya/${id}/update`,
+        { realisasi_fee_pengajar: dataEdit },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        axios
+          .get(`${url}/biaya`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            setDataBiaya(res.data);
+          });
+      });
+    setIsIndexEdit(null);
+    setDataBiaya(dataBiaya);
   };
 
   // modal message
@@ -101,13 +150,47 @@ const DetailTutor = () => {
 
   // modal delete
   const onValidDeleteYes = () => {
-    axios.delete(`${url}/datapengajar/${id}/delete`).then((res) => {
-      setDataTutor({});
-      setIsModalDelete(false);
-    });
+    axios
+      .delete(`${url}/datapengajar/${id}/delete`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setDataTutor({});
+        setIsModalDelete(false);
+      });
   };
-  const onValidDeleteNo = () => {
-    setIsModalDelete(false);
+
+  // DELETE RINCIAN
+  // delete data biaya / rincian
+  const [idRincian, setIdRincian] = useState("");
+  const [isModalDeleteRincian, setIsModalDeleteRincian] = useState(false);
+  const onDeleteRincian = (id) => {
+    setIdRincian(id);
+    setIsModalDeleteRincian(true);
+  };
+
+  // modal delete biaya / rincian
+  const onValidDeleteRincian = () => {
+    axios
+      .delete(`${url}/biaya/${idRincian}/delete`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        axios
+          .get(`${url}/biaya`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            setDataBiaya(res.data);
+          });
+      });
+    setIsModalDeleteRincian(false);
   };
 
   return (
@@ -122,10 +205,10 @@ const DetailTutor = () => {
         </div>
         {dataTutor.nama_pengajar ? (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 m-2">
-              {/* data diri */}
+            <div className="grid grid-cols-1 md:flex gap-4 m-2">
+              {/* data tutor */}
               {isEdit ? (
-                <div className="flex flex-col w-full dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+                <div className="flex flex-col w-full md:w=3/4 dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                   <div className="flex gap-3 relative">
                     <div className="w-1/3 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                       <img
@@ -133,66 +216,103 @@ const DetailTutor = () => {
                         alt="profile"
                       />
                     </div>
+
                     <div className="flex flex-col w-full justify-center">
                       <input
-                        ref={refName}
-                        className="dark:text-white font-medium bg-transparent text-xl outline-none border-b border-sky-500"
-                        defaultValue={dataTutor.tutorName}
-                      />
-                      <input
-                        ref={refBirth}
-                        className="dark:text-white font-thin text-sm bg-transparent outline-none border-b border-sky-500"
-                        defaultValue={dataTutor.dateBirth}
-                      />
-                      <div className="italic font-thin text-sky-500 text-sm mt-3">
-                        Address
-                      </div>
-                      <input
-                        ref={refAddress}
-                        className="dark:text-white font-thin text-sm bg-transparent outline-none border-b border-sky-500"
-                        defaultValue={dataTutor.address}
+                        onChange={(e) => setNamaPengajar(e.target.value)}
+                        type="text"
+                        defaultValue={dataTutor.nama_pengajar}
+                        className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
                       />
 
-                      <div className="flex gap-4">
+                      <div className="font-thin text-sm">
+                        <span className="dark:text-white">ID : </span>
+                        <input
+                          type="text"
+                          onChange={(e) => setIdPengajar(e.target.value)}
+                          defaultValue={dataTutor.id_pengajar}
+                          className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                        <div className="italic font-thin text-sky-500 text-sm mt-3">
+                          Email
+                        </div>
+                        <input
+                          type="text"
+                          onChange={(e) => setEmail(e.target.value)}
+                          defaultValue={dataTutor.email}
+                          className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                        />
+
+                        <div className="italic font-thin text-sky-500 text-sm mt-3">
+                          Asal Kampus
+                        </div>
+                        <input
+                          onChange={(e) => setAsalKampus(e.target.value)}
+                          type="text"
+                          defaultValue={dataTutor.asal_kampus}
+                          className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                        />
+
                         <div className="w-full">
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
-                            Date Join
+                            Mapel
                           </div>
                           <input
-                            ref={refDateJoin}
-                            className="dark:text-white font-thin bg-transparent text-sm outline-none border-b border-sky-500"
-                            defaultValue={dataTutor.dateJoin}
+                            onChange={(e) => setMapel(e.target.value)}
+                            type="text"
+                            defaultValue={dataTutor.mapel}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
                           />
+                        </div>
+
+                        <div>
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
                             Phone
                           </div>
                           <input
-                            ref={refPhone}
-                            className="dark:text-white font-thin bg-transparent text-sm outline-none border-b border-sky-500"
-                            defaultValue={dataTutor.phone}
+                            onChange={(e) => setTelp(e.target.value)}
+                            type="text"
+                            defaultValue={dataTutor.no_telp}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
                           />
                         </div>
+
                         <div className="w-full">
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
-                            Gender
+                            Nama Bank
                           </div>
                           <input
-                            ref={refGender}
-                            className="dark:text-white font-thin bg-transparent text-sm outline-none border-b border-sky-500"
-                            defaultValue={dataTutor.gender}
+                            onChange={(e) => setNamaBank(e.target.value)}
+                            type="text"
+                            defaultValue={dataTutor.nama_bank}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
                           />
+                        </div>
+
+                        <div>
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
-                            Status
+                            Rek Bank
                           </div>
                           <input
-                            ref={refStatus}
-                            className={`dark:text-white font-thin bg-transparent text-sm outline-none border-b border-sky-500`}
-                            defaultValue={dataTutor.status}
+                            onChange={(e) => setRekBank(e.target.value)}
+                            type="text"
+                            defaultValue={dataTutor.rek_bank}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                          />
+                          <input
+                            onChange={(e) => setAnBank(e.target.value)}
+                            type="text"
+                            defaultValue={`a/n ${dataTutor.an_rek_bank}`}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
                           />
                         </div>
                       </div>
                     </div>
 
+                    {/* button editing */}
                     <div className="absolute top-0 right-0 flex gap-2">
                       <button
                         onClick={onDone}
@@ -216,7 +336,7 @@ const DetailTutor = () => {
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col w-full dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+                <div className="flex flex-col w-full  dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                   <div className="flex gap-3 relative">
                     <div className="w-1/3 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                       <img
@@ -226,50 +346,69 @@ const DetailTutor = () => {
                     </div>
                     <div className="flex flex-col w-full justify-center">
                       <div className="dark:text-white font-medium text-xl">
-                        {dataTutor.tutorName}
+                        {dataTutor.nama_pengajar}
                       </div>
                       <div className="dark:text-white font-thin text-sm">
-                        {dataTutor.dateBirth}
-                      </div>
-                      <div className="italic font-thin text-sky-500 text-sm mt-3">
-                        Address
-                      </div>
-                      <div className="dark:text-white font-thin text-sm">
-                        {dataTutor.address}
+                        ID : {dataTutor.id_pengajar}
                       </div>
 
-                      <div className="flex w-full gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-2">
                         <div className="w-full">
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
-                            Date Join
+                            Email
                           </div>
                           <div className="dark:text-white font-thin text-sm">
-                            {dataTutor.dateJoin}
+                            {dataTutor.email}
                           </div>
+                        </div>
+
+                        <div>
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Asal Kampus
+                          </div>
+                          <div className="dark:text-white font-thin text-sm">
+                            {dataTutor.asal_kampus}
+                          </div>
+                        </div>
+
+                        <div className="w-full">
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Mapel
+                          </div>
+                          <div className="dark:text-white font-thin text-sm">
+                            {dataTutor.mapel}
+                          </div>
+                        </div>
+                        <div>
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
                             Phone
                           </div>
                           <div className="dark:text-white font-thin text-sm">
-                            {dataTutor.phone}
+                            {dataTutor.no_telp}
                           </div>
                         </div>
+
                         <div className="w-full">
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
-                            Gender
+                            Nama Bank
                           </div>
                           <div className="dark:text-white font-thin text-sm">
-                            {dataTutor.gender}
+                            {dataTutor.nama_bank}
                           </div>
+                        </div>
+
+                        <div>
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
-                            Status
+                            Rek Bank
                           </div>
                           <div className={`dark:text-white font-thin text-sm`}>
-                            {dataTutor.status}
+                            {dataTutor.rek_bank} a/n {dataTutor.an_rek_bank}
                           </div>
                         </div>
                       </div>
                     </div>
 
+                    {/* button edit data tutor */}
                     <div className="absolute top-0 right-0 flex gap-2">
                       <button
                         onClick={() => setIsEdit(!isEdit)}
@@ -295,14 +434,14 @@ const DetailTutor = () => {
               )}
 
               {/* payment */}
-              <div className="flex flex-col justify-between w-full bg-slate-200 dark:bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+              <div className="flex flex-col justify-between md:w-[50%] w-full bg-slate-200 dark:bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                 <div className="dark:text-white font-thin text-sm">Payment</div>
-                <div className="text-sky-500 font-thin text-right text-7xl">
-                  $ 
+                <div className="text-sky-500 font-thin text-right text-5xl md:text-3xl lg:text-5xl">
+                  Rp {totalFee.toLocaleString()}
                 </div>
                 <p className="dark:text-white font-thin text-right text-sm">
                   Lorem ipsum dolor sit amet, <br /> consectetur adipisicing
-                  elit. Quo cupiditate sint, totam rem ipsa ex!
+                  elit.
                 </p>
                 <div className="flex justify-end mt-3">
                   <button
@@ -324,37 +463,44 @@ const DetailTutor = () => {
               <div className="dark:text-white font-thin text-sm my-3">
                 Rincian Kepengajaran
               </div>
+
               <table className="w-full">
                 <thead className="h-8">
                   <tr className="text-sm text-white font-thin bg-slate-900 dark:bg-sky-500 h-full">
-                    <th className="font-medium ">No.</th>
-                    <th className="font-medium flex items-center h-8 justify-between">
-                      Students Name
+                    <th className="font-medium w-8">No.</th>
+                    <th className="font-medium w-8 hidden md:table-cell">ID</th>
+                    <th className="font-medium w-36 px-2 flex items-center h-8 justify-between">
+                      Nama Pengajar
                       {/* sort button
                   <span onClick={handleSortName} className="material-symbols-rounded cursor-pointer text-white">
                     {sortName ? "expand_more" : "expand_less"}
                   </span> */}
                     </th>
-                    <th className="font-medium hidden md:table-cell">
-                      Parents Name
+                    <th className="font-medium w-20 hidden md:table-cell">
+                      Lembur
                     </th>
+                    <th className="font-medium md:table-cell">Fee Pengajar</th>
+                    <th className="font-medium">Fotokopi</th>
                     <th className="font-medium hidden md:table-cell">
-                      Fee Student
+                      Realisasi Fee
                     </th>
-                    <th className="font-medium">Detail Payment</th>
-                    <th className="font-medium">Status</th>
-                    <th className="font-medium">Action</th>
+                    <th className="font-medium w-32 hidden md:table-cell">
+                      Action
+                    </th>
                   </tr>
                 </thead>
 
-                {/* {dataRincian.length === 0 ? (
+                {filterDataBiaya.length === 0 ? (
                   <tbody>
                     <tr className="text-white font-thin w-full">
-                      <td style={{ colSpan: "8" }}>No Data Found</td>
+                      <td></td>
+                      <td></td>
+                      <td>No Data Found</td>
+                      <td></td>
                     </tr>
                   </tbody>
                 ) : (
-                  dataRincian.map((item, index) => {
+                  filterDataBiaya.map((item, index) => {
                     return (
                       <tbody
                         key={index}
@@ -367,53 +513,70 @@ const DetailTutor = () => {
                               : "dark:bg-neutral-900 bg-slate-300 h-8"
                           }
                         >
-                          <td className="text-center">{index + 1}</td>
-                          <td>{item.studentsName}</td>
-                          <td className="hidden md:table-cell">
-                            {item.parentsName}
+                          <td className="text-center border-r dark:border-white">
+                            {index + 1}
                           </td>
-                          <td className="hidden md:table-cell">
-                            $ {totalFeeTutor}
+                          <td className="text-center border-r dark:border-white hidden md:table-cell">
+                            {item.id_pengajar}
                           </td>
-                          <td className="py-2">
-                            <table className="w-full">
-                              <thead>
-                                <tr>
-                                  <td>Date TM</td>
-                                  <td>Fee TM</td>
-                                </tr>
-                              </thead>
-                              {item.detailFeeStudent.map((item2, index) => (
-                                <tbody key={index}>
-                                  <tr>
-                                    <td>{item2.dateTm}</td>
-                                    <td>{item2.feeTm}</td>
-                                  </tr>
-                                </tbody>
-                              ))}
-                            </table>
+                          <td className="border-r dark:border-white px-2">
+                            {item.nama_pengajar}
                           </td>
-                          <td
-                            className={
-                              item.status === "Active"
-                                ? "text-lime-600 text-center"
-                                : "text-rose-600 text-center"
-                            }
-                          >
-                            {item.status}
+                          <td className="text-center border-r dark:border-white hidden md:table-cell">
+                            {item.durasi_lembur} jam
                           </td>
-                          <td className="flex justify-center items-center h-8">
-                            <Link to={`/students/${item.id}`}>
-                              <button className="dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2">
-                                View
+                          <td className="text-center border-r dark:border-white">
+                            Rp {item.fee_pengajar}
+                          </td>
+                          <td className="text-center border-r dark:border-white">
+                            Rp {item.biaya_fotokopi}
+                          </td>
+                          <td className="text-center border-r dark:border-white hidden md:table-cell">
+                            {isIndexEdit === index ? (
+                              <>
+                                <input
+                                  ref={refEditRealisasi}
+                                  type="text"
+                                  defaultValue={item.realisasi_fee_pengajar}
+                                  className="w-20 break-words text-center dark:text-white font-thin text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
+                                />
+                              </>
+                            ) : (
+                              item.realisasi_fee_pengajar
+                            )}
+                          </td>
+                          <td className="hidden justify-center items-center h-8 md:table-cell">
+                            {isIndexEdit === index ? (
+                              <button
+                                onClick={() => onEditDataRincian(item.id)}
+                                className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                              >
+                                Done
                               </button>
-                            </Link>
+                            ) : (
+                              <div className="flex gap-2 justify-center">
+                                <button
+                                  onClick={() => setIsIndexEdit(index)}
+                                  className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                                >
+                                  {" "}
+                                  Edit
+                                </button>
+                                <button
+                                  onClick={() => onDeleteRincian(item.id)}
+                                  className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                                >
+                                  {" "}
+                                  Delete
+                                </button>
+                              </div>
+                            )}
                           </td>
                         </tr>
                       </tbody>
                     );
                   })
-                )} */}
+                )}
               </table>
             </div>
           </>
@@ -481,7 +644,40 @@ const DetailTutor = () => {
                   Yes
                 </button>
                 <button
-                  onClick={onValidDeleteNo}
+                  onClick={() => setIsModalDelete(false)}
+                  className="drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] hover:bg-sky-500 dark:hover:bg-sky-500 dark:text-white dark:bg-neutral-800 bg-slate-300 text-sm flex justify-center items-center h-8 border dark:border-sky-500 rounded-md px-2 w-fit mt-2"
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
+
+        {/* modal delete rincian */}
+        {isModalDeleteRincian ? (
+          <div className="absolute backdrop-blur-sm w-full h-full dark:bg-neutral-700 bg-slate-200 bg-opacity-70 flex justify-center items-center">
+            <div className="flex flex-col w-[45%] dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] py-3 gap-4 items-center">
+              <div className="flex justify-between">
+                <div className=" text-rose-500">Delete Data</div>
+              </div>
+              <div className="flex justify-between">
+                <div className="dark:text-white font-thin text-sm">
+                  Are you sure ?
+                </div>
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={onValidDeleteRincian}
+                  className="drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] hover:bg-sky-500 dark:hover:bg-sky-500 dark:text-white dark:bg-neutral-800 bg-slate-300 text-sm flex justify-center items-center h-8 border dark:border-sky-500 rounded-md px-2 w-fit mt-2"
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={() => setIsModalDeleteRincian(false)}
                   className="drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] hover:bg-sky-500 dark:hover:bg-sky-500 dark:text-white dark:bg-neutral-800 bg-slate-300 text-sm flex justify-center items-center h-8 border dark:border-sky-500 rounded-md px-2 w-fit mt-2"
                 >
                   No

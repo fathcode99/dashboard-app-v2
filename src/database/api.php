@@ -39,6 +39,7 @@ Route::group(
                     Route::get('biaya', [BiayapengajardansiswaController::class, 'index']);
                     Route::put('biaya/{biaya}/update', [BiayapengajardansiswaController::class, 'update']);
                     Route::delete('biaya/{biaya}/delete', [BiayapengajardansiswaController::class, 'destroy']);
+                    
                     Route::get('pengeluaran', [PengeluaranlbbController::class, 'index']);
                     Route::post('pengeluaran', [PengeluaranlbbController::class, 'store']);
                     Route::put('pengeluaran/{pengeluaran}/update', [PengeluaranlbbController::class, 'update']);
@@ -54,7 +55,7 @@ Route::group(
                     Route::delete('selisih/{selisih}/delete', [SelisihController::class, 'destroy']);
 
                     Route::get('apply', [ApplypengajarController::class, 'index']); //sudah
-                    Route::delete('apply/{apply}/delete', [ApplypengajarController::class, 'destroy']); //tidak bisa status 200 tp data tidak terhapus
+                    Route::delete('apply/{apply}/delete', [ApplypengajarController::class, 'destroy']); //
 
                     Route::post('gambar', [GambariklanController::class, 'store']);
                     Route::put('gambar/{gambar}/update', [GambariklanController::class, 'update']);
@@ -72,7 +73,9 @@ Route::group(
         );
         Route::get('logout', [LoginController::class, 'logout']);
         Route::get('biaya/{biaya}', [BiayapengajardansiswaController::class, 'show']);
-        Route::post('biaya', [BiayapengajardansiswaController::class, 'store']);
+
+        Route::post('biaya', [BiayapengajardansiswaController::class, 'store']); //kok jadi ga bisa ?
+
         Route::post('apply', [ApplypengajarController::class, 'store']);
         Route::get('notifypengajar/{notifypengajar}', [NotifypengajarController::class, 'show']);
         Route::get('notifypengajar', [NotifypengajarController::class, 'index']);

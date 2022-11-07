@@ -7,6 +7,7 @@ import Students from "./pages/students";
 import DetailTutor from "./pages/detailTutor";
 import Login from "./pages/login";
 import Apply from "./pages/apply"
+import FeePengajar from "./pages/feePengajar"
 
 import axios from "axios";
 import { Routes, Route } from "react-router-dom";
@@ -45,7 +46,19 @@ const App = () => {
           payload: res.data,
         });
       });
-
+    
+    axios
+      .get(`${url}/biaya`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        dispatch({
+          type: "GET_DATA_BIAYA",
+          payload: res.data,
+        }); 
+      });
     // axios.get(`${url}/students`)
     //   .then(res => {
     //     dispatch({
@@ -69,6 +82,7 @@ const App = () => {
         <Route path="/tutors" element={<Tutors />} />
         <Route path="/tutors/:id" element={<DetailTutor />} />
         <Route path="/apply" element={<Apply />} />
+        <Route path="/feepengajar" element={<FeePengajar />} />
         
         <Route path="/students" element={<Students />} />
         <Route path="/login" element={<Login />} />

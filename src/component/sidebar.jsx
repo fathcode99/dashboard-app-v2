@@ -39,7 +39,7 @@ const Sidebar = () => {
                             <span className="hidden md:block  ml-4">Apply Pengajar</span>
                         </div>
                     </Link>
-                    <Link to="/tutors">
+                    <Link to="/feepengajar">
                         <div className='cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
                             <span className="material-symbols-rounded ">supervised_user_circle</span>
                             <span className="hidden md:block  ml-4">Fee Pengajar</span>

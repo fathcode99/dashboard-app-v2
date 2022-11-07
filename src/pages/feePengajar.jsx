@@ -10,14 +10,14 @@ import { useDispatch, useSelector } from "react-redux";
 const url = "https://admin.menujudigital.com/api";
 
 const Tutors = () => {
-  const stateTutors = useSelector((state) => state.applyReducer);
+  const stateBiaya = useSelector((state) => state.biayaReducer);
   const navigate = useNavigate()
   const dispatch = useDispatch()
   // default data
-  const [dataMembers, setDataMembers] = useState(stateTutors.data);
+  const [dataBiaya, setDataBiaya] = useState(stateBiaya.data);
 
   // data renders
-  const [dataRenders, setDataRenders] = useState(stateTutors.data);
+  const [dataRenders, setDataRenders] = useState(stateBiaya.data);
 
   // button value
   const [statusActive, setStatusActive] = useState(false);
@@ -47,12 +47,12 @@ const Tutors = () => {
   };
 
   useEffect(() => {
-    setDataMembers(stateTutors.data);
-    setDataRenders(dataMembers);
+    setDataBiaya(stateBiaya.data);
+    setDataRenders(dataBiaya);
     setMaxPage(Math.ceil(dataRenders.length / rowPerPage));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stateTutors.data, dataMembers, rowPerPage]);
+  }, [stateBiaya.data, dataBiaya, rowPerPage]);
 
   // button handler status
   const handleActive = () => {
@@ -80,8 +80,8 @@ const Tutors = () => {
       statusActive === false &&
       statusInactive === false
     ) {
-      setDataRenders(dataMembers);
-      setMaxPage(Math.ceil(dataMembers.length / rowPerPage));
+      setDataRenders(dataBiaya);
+      setMaxPage(Math.ceil(dataBiaya.length / rowPerPage));
     }
 
     // 02. t f f f
@@ -91,7 +91,7 @@ const Tutors = () => {
       statusActive === false &&
       statusInactive === false
     ) {
-      const resultFilter = dataMembers.filter((dataMember) =>
+      const resultFilter = dataBiaya.filter((dataMember) =>
         dataMember.tutorName
           .toLowerCase()
           .includes(valueFilterName.toLowerCase())
@@ -107,7 +107,7 @@ const Tutors = () => {
       statusActive === false &&
       statusInactive === false
     ) {
-      const resultFilter = dataMembers.filter((dataMember) =>
+      const resultFilter = dataBiaya.filter((dataMember) =>
         dataMember.regional
           .toLowerCase()
           .includes(valueFilterCity.toLowerCase())
@@ -123,7 +123,7 @@ const Tutors = () => {
       statusActive === true &&
       statusInactive === false
     ) {
-      const resultFilter = dataMembers.filter(
+      const resultFilter = dataBiaya.filter(
         (item) => item.status === "Active"
       );
       setDataRenders(resultFilter);
@@ -137,7 +137,7 @@ const Tutors = () => {
       statusActive === false &&
       statusInactive === true
     ) {
-      const resultFilter = dataMembers.filter(
+      const resultFilter = dataBiaya.filter(
         (item) => item.status === "Inactive"
       );
       setDataRenders(resultFilter);
@@ -151,7 +151,7 @@ const Tutors = () => {
       statusActive === false &&
       statusInactive === false
     ) {
-      const filterName = dataMembers.filter((dataMember) =>
+      const filterName = dataBiaya.filter((dataMember) =>
         dataMember.tutorName
           .toLowerCase()
           .includes(valueFilterName.toLowerCase())
@@ -172,7 +172,7 @@ const Tutors = () => {
       statusActive === true &&
       statusInactive === false
     ) {
-      const filterStatus = dataMembers.filter(
+      const filterStatus = dataBiaya.filter(
         (item) => item.status === "Active"
       );
       const resultFilter = filterStatus.filter((dataMember) =>
@@ -191,7 +191,7 @@ const Tutors = () => {
       statusActive === false &&
       statusInactive === true
     ) {
-      const filterStatus = dataMembers.filter(
+      const filterStatus = dataBiaya.filter(
         (item) => item.status === "Inactive"
       );
       const resultFilter = filterStatus.filter((dataMember) =>
@@ -210,7 +210,7 @@ const Tutors = () => {
       statusActive === false &&
       statusInactive === true
     ) {
-      const filterStatus = dataMembers.filter(
+      const filterStatus = dataBiaya.filter(
         (item) => item.status === "Inactive"
       );
       const resultFilter = filterStatus.filter((dataMember) =>
@@ -229,7 +229,7 @@ const Tutors = () => {
       statusActive === true &&
       statusInactive === false
     ) {
-      const filterStatus = dataMembers.filter(
+      const filterStatus = dataBiaya.filter(
         (item) => item.status === "Active"
       );
       const resultFilter = filterStatus.filter((dataMember) =>
@@ -248,7 +248,7 @@ const Tutors = () => {
       statusActive === true &&
       statusInactive === false
     ) {
-      const filterStatus = dataMembers.filter(
+      const filterStatus = dataBiaya.filter(
         (item) => item.status === "Active"
       );
       const filterName = filterStatus.filter((dataMember) =>
@@ -272,7 +272,7 @@ const Tutors = () => {
       statusActive === false &&
       statusInactive === true
     ) {
-      const filterStatus = dataMembers.filter(
+      const filterStatus = dataBiaya.filter(
         (item) => item.status === "Inactive"
       );
       const filterName = filterStatus.filter((dataMember) =>
@@ -294,8 +294,8 @@ const Tutors = () => {
 
   // reset filter
   const onResetFilter = () => {
-    setDataRenders(dataMembers);
-    setMaxPage(Math.ceil(dataMembers.length / rowPerPage));
+    setDataRenders(dataBiaya);
+    setMaxPage(Math.ceil(dataBiaya.length / rowPerPage));
     if (statusActive) {
       setStatusActive(!statusActive);
     } else if (statusInactive) {
@@ -323,7 +323,6 @@ const Tutors = () => {
   };
 
   // proteksi login 
-
   useEffect(() => {
     const tokenId = localStorage.getItem('token') 
     if (!tokenId) {
@@ -331,24 +330,24 @@ const Tutors = () => {
     }
   }, [navigate])
 
-  // menghapus data apply
+  // menghapus data pembiayaan
   let token = localStorage.getItem("token");
   const deleteApply = (id) => {
     axios
-      .delete(`${url}/apply/${id}/delete`, {
+      .delete(`${url}/biaya/${id}/delete`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
-        axios.get(`${url}/apply`, {
+        axios.get(`${url}/biaya`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then(res => {
           dispatch({
-            type : 'GET_DATA_APPLY',
+            type : 'GET_DATA_BIAYA',
             payload : res.data
           })
         })
@@ -363,9 +362,10 @@ const Tutors = () => {
       <div className="flex flex-col md:m-8 w-full min-h-screen">
         <Navbar />
         <div className="dark:text-white font-bold text-xl m-2 ">
-         Data Apply
+         Data Pembiayaan
         </div>
         <div className="m-2">
+
           {/* filter table */}
           <div className="dark:text-white text-sm my-2">Filter Setting :</div>
 
@@ -447,15 +447,16 @@ const Tutors = () => {
               <div className="dark:text-white text-sm mb-2">Data Results :</div>
               <div className="flex dark:text-white gap-2 text-sm justify-end items-center">
                 <span>Export to Excel:</span>
-                <ExportExcel data={dataMembers} />
+                <ExportExcel data={dataBiaya} />
               </div>
             </div>
             <table className="w-full">
               <thead className="h-8">
                 <tr className="text-sm text-white font-thin dark:bg-sky-500 bg-slate-900 h-full">
                   <th className="font-medium border-r ">No.</th>
+                  <th className="font-medium border-r ">ID Pengajar</th>
                   <th className="font-medium flex items-center h-8 justify-center border-r">
-                    Nama
+                    Nama Pengajar
                     {/* sort button */}
                     <span
                       onClick={handleSortName}
@@ -466,15 +467,26 @@ const Tutors = () => {
                   </th>
 
                   <th className="font-medium hidden md:table-cell border-r">
-                    Asal Kampus
+                    ID Siswa
                   </th>
-                  <th className="font-medium border-r">Telp</th>
-                  <th className="font-medium border-r">Email</th>
+                  <th className="font-medium hidden md:table-cell border-r">
+                    Nama Siswa
+                  </th>
+                  <th className="font-medium hidden md:table-cell border-r">
+                    Nama Ortu
+                  </th>
+                  <th className="font-medium border-r">Biaya Pendaftaran</th>
+                  <th className="font-medium border-r">RBP</th>
+                  <th className="font-medium border-r">Fee Pengajar</th>
+                  <th className="font-medium border-r">RFP</th>
+                  <th className="font-medium border-r">Regional</th>
+                  <th className="font-medium border-r">Tagihan Siswa</th>
+                  <th className="font-medium border-r">RTS</th>
                   <th className="font-medium">Action</th>
                 </tr>
               </thead>
 
-              {dataMembers.length === 0 ? (
+              {dataBiaya.length === 0 ? (
                 <tbody>
                   <tr className="dark:text-white font-thin w-full">
                     <td style={{ colSpan: "8" }}>No Data Found</td>
@@ -496,12 +508,18 @@ const Tutors = () => {
                       >
                         <td className="text-center border-r">{nomer++}</td>
 
+                        <td className="border-r px-2">{item.id_pengajar}</td>
                         <td className="border-r px-2">{item.nama_pengajar}</td>
+                        <td className="border-r px-2">{item.id_siswa}</td>
+                        <td className="border-r px-2">{item.nama_siswa}</td>
                         <td className="hidden md:table-cell border-r px-2">
-                          {item.asal_kampus}
+                          {item.nama_orang_tua}
+                        </td>
+                        <td className="hidden md:table-cell border-r px-2">
+                          {item.biaya_pendaftaran}
                         </td>
                         <td className="border-r text-center">
-                          {item.no_telp}
+                          {item.realisasi_biaya_pendaftaran}
                         </td>
                         <td>
                           {item.email}

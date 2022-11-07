@@ -20,13 +20,11 @@ const Tutors = () => {
   const [dataRenders, setDataRenders] = useState(stateTutors.data);
 
   // button value
-  const [statusActive, setStatusActive] = useState(false);
-  const [statusInactive, setStatusInactive] = useState(false);
   const [sortName, setSortName] = useState(false);
 
   // value input
   let refFilterName = useRef();
-  let refFilterCity = useRef();
+  let refFilterMapel = useRef();
 
   // pagination
   const [page, setPage] = useState(1);
@@ -54,45 +52,27 @@ const Tutors = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateTutors.data, dataMembers, rowPerPage]);
 
-  // button handler status
-  const handleActive = () => {
-    setStatusActive(!statusActive);
-    if (statusInactive) {
-      setStatusInactive(!statusInactive);
-    }
-  };
-  const handleInactive = () => {
-    setStatusInactive(!statusInactive);
-    if (statusActive) {
-      setStatusActive(!statusActive);
-    }
-  };
-
   // filter
   const onFilter = () => {
     let valueFilterName = refFilterName.current.value;
-    let valueFilterCity = refFilterCity.current.value;
+    let valueFilterMapel = refFilterMapel.current.value;
 
-    // 01. f f f f
+    // 01. f f
     if (
       valueFilterName === "" &&
-      valueFilterCity === "" &&
-      statusActive === false &&
-      statusInactive === false
+      valueFilterMapel === ""
     ) {
       setDataRenders(dataMembers);
       setMaxPage(Math.ceil(dataMembers.length / rowPerPage));
     }
 
-    // 02. t f f f
+    // 02. t f
     else if (
       valueFilterName &&
-      valueFilterCity === "" &&
-      statusActive === false &&
-      statusInactive === false
+      valueFilterMapel === ""
     ) {
       const resultFilter = dataMembers.filter((dataMember) =>
-        dataMember.tutorName
+        dataMember.nama_pengajar
           .toLowerCase()
           .includes(valueFilterName.toLowerCase())
       );
@@ -100,221 +80,68 @@ const Tutors = () => {
       setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
     }
 
-    // 03. f t f f
+    // 03. f t
     else if (
       valueFilterName === "" &&
-      valueFilterCity &&
-      statusActive === false &&
-      statusInactive === false
+      valueFilterMapel
     ) {
       const resultFilter = dataMembers.filter((dataMember) =>
-        dataMember.regional
+        dataMember.mapel
           .toLowerCase()
-          .includes(valueFilterCity.toLowerCase())
+          .includes(valueFilterMapel.toLowerCase())
       );
       setDataRenders(resultFilter);
       setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
     }
 
-    // 04. f f t f
-    else if (
-      valueFilterName === "" &&
-      valueFilterCity === "" &&
-      statusActive === true &&
-      statusInactive === false
-    ) {
-      const resultFilter = dataMembers.filter(
-        (item) => item.status === "Active"
-      );
-      setDataRenders(resultFilter);
-      setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
-    }
-
-    // 05. f f f t
-    else if (
-      valueFilterName === "" &&
-      valueFilterCity === "" &&
-      statusActive === false &&
-      statusInactive === true
-    ) {
-      const resultFilter = dataMembers.filter(
-        (item) => item.status === "Inactive"
-      );
-      setDataRenders(resultFilter);
-      setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
-    }
-
-    // 06. t t f f
+    // 04. tt
     else if (
       valueFilterName &&
-      valueFilterCity &&
-      statusActive === false &&
-      statusInactive === false
+      valueFilterMapel
     ) {
       const filterName = dataMembers.filter((dataMember) =>
-        dataMember.tutorName
+        dataMember.nama_pengajar
           .toLowerCase()
           .includes(valueFilterName.toLowerCase())
       );
       const resultFilter = filterName.filter((dataMember) =>
-        dataMember.regional
+        dataMember.mapel
           .toLowerCase()
-          .includes(valueFilterCity.toLowerCase())
+          .includes(valueFilterMapel.toLowerCase())
       );
       setDataRenders(resultFilter);
       setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
     }
 
-    // 07. t f t f
-    else if (
-      valueFilterName &&
-      valueFilterCity === "" &&
-      statusActive === true &&
-      statusInactive === false
-    ) {
-      const filterStatus = dataMembers.filter(
-        (item) => item.status === "Active"
-      );
-      const resultFilter = filterStatus.filter((dataMember) =>
-        dataMember.tutorName
-          .toLowerCase()
-          .includes(valueFilterName.toLowerCase())
-      );
-      setDataRenders(resultFilter);
-      setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
-    }
-
-    // 08. t f f t
-    else if (
-      valueFilterName &&
-      valueFilterCity === "" &&
-      statusActive === false &&
-      statusInactive === true
-    ) {
-      const filterStatus = dataMembers.filter(
-        (item) => item.status === "Inactive"
-      );
-      const resultFilter = filterStatus.filter((dataMember) =>
-        dataMember.tutorName
-          .toLowerCase()
-          .includes(valueFilterName.toLowerCase())
-      );
-      setDataRenders(resultFilter);
-      setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
-    }
-
-    // 09. f t f t
-    else if (
-      valueFilterName === "" &&
-      valueFilterCity &&
-      statusActive === false &&
-      statusInactive === true
-    ) {
-      const filterStatus = dataMembers.filter(
-        (item) => item.status === "Inactive"
-      );
-      const resultFilter = filterStatus.filter((dataMember) =>
-        dataMember.regional
-          .toLowerCase()
-          .includes(valueFilterCity.toLowerCase())
-      );
-      setDataRenders(resultFilter);
-      setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
-    }
-
-    // 10. f t t f
-    else if (
-      valueFilterName === "" &&
-      valueFilterCity &&
-      statusActive === true &&
-      statusInactive === false
-    ) {
-      const filterStatus = dataMembers.filter(
-        (item) => item.status === "Active"
-      );
-      const resultFilter = filterStatus.filter((dataMember) =>
-        dataMember.regional
-          .toLowerCase()
-          .includes(valueFilterCity.toLowerCase())
-      );
-      setDataRenders(resultFilter);
-      setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
-    }
-
-    // 11. t t t f
-    else if (
-      valueFilterName &&
-      valueFilterCity &&
-      statusActive === true &&
-      statusInactive === false
-    ) {
-      const filterStatus = dataMembers.filter(
-        (item) => item.status === "Active"
-      );
-      const filterName = filterStatus.filter((dataMember) =>
-        dataMember.tutorName
-          .toLowerCase()
-          .includes(valueFilterName.toLowerCase())
-      );
-      const resultFilter = filterName.filter((dataMember) =>
-        dataMember.regional
-          .toLowerCase()
-          .includes(valueFilterCity.toLowerCase())
-      );
-      setDataRenders(resultFilter);
-      setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
-    }
-
-    // 12.  t t f t
-    else if (
-      valueFilterName &&
-      valueFilterCity &&
-      statusActive === false &&
-      statusInactive === true
-    ) {
-      const filterStatus = dataMembers.filter(
-        (item) => item.status === "Inactive"
-      );
-      const filterName = filterStatus.filter((dataMember) =>
-        dataMember.tutorName
-          .toLowerCase()
-          .includes(valueFilterName.toLowerCase())
-      );
-      const resultFilter = filterName.filter((dataMember) =>
-        dataMember.regional
-          .toLowerCase()
-          .includes(valueFilterCity.toLowerCase())
-      );
-      setDataRenders(resultFilter);
-      setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
-    }
-
-    // console.log(valueFilterName, valueFilterCity, statusActive, statusInactive)
   };
 
   // reset filter
   const onResetFilter = () => {
     setDataRenders(dataMembers);
     setMaxPage(Math.ceil(dataMembers.length / rowPerPage));
-    if (statusActive) {
-      setStatusActive(!statusActive);
-    } else if (statusInactive) {
-      setStatusInactive(!statusInactive);
-    }
   };
 
   // handle sort
+  let token = localStorage.getItem("token");
   const handleSortName = async (e) => {
     if (sortName === false) {
       return await axios
-        .get(`${url}?_sort=tutorName&_order=asc`)
+        .get(`${url}?_sort=nama_pengajar&_order=asc`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((res) => {
           setDataRenders(res.data);
           setSortName(!sortName);
         });
     } else {
       return await axios
-        .get(`${url}?_sort=tutorName&_order=desc`)
+        .get(`${url}?_sort=nama_pengajar&_order=desc`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((res) => {
           setDataRenders(res.data);
           setSortName(!sortName);
@@ -357,56 +184,21 @@ const Tutors = () => {
 
             <form className="dark:bg-neutral-800 rounded-md flex items-center border w-full md:w-1/3 border-slate-800 dark:border-sky-500 mb-2 h-8">
               <input
-                ref={refFilterCity}
+                ref={refFilterMapel}
                 type="text"
-                placeholder="By Regional"
+                placeholder="By Mapel"
                 className="outline-none bg-transparent w-full ml-2 dark:text-white font-thin text-sm"
               />
             </form>
 
-            <div className="flex">
-              <button
-                onClick={handleActive}
-                className="dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-l-md px-2"
-              >
-                {statusActive ? (
-                  <span className="material-symbols-rounded dark:text-sky-500 text-base mr-1">
-                    check_circle
-                  </span>
-                ) : (
-                  <span className="material-symbols-rounded text-base mr-1">
-                    radio_button_unchecked
-                  </span>
-                )}
-                Active
-              </button>
-
-              <button
-                onClick={handleInactive}
-                className="dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-r-md px-2"
-              >
-                {statusInactive ? (
-                  <span className="material-symbols-rounded dark:text-sky-500 text-base mr-1">
-                    check_circle
-                  </span>
-                ) : (
-                  <span className="material-symbols-rounded text-base mr-1">
-                    radio_button_unchecked
-                  </span>
-                )}
-                Inactive
-              </button>
-            </div>
-
-            <div>
+            
               <button
                 onClick={onFilter}
                 className="dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-md px-1"
               >
                 <span className="material-symbols-rounded ">filter_alt</span>
               </button>
-            </div>
-            <div>
+            
               <button
                 onClick={onResetFilter}
                 className="dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-md px-1"
@@ -415,7 +207,7 @@ const Tutors = () => {
                   filter_alt_off
                 </span>
               </button>
-            </div>
+            
           </div>
 
           <div className="flex flex-col dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
@@ -426,11 +218,14 @@ const Tutors = () => {
                 <ExportExcel data={dataMembers} />
               </div>
             </div>
+
+            {/* TABLE START */}
             <table className="w-full">
               <thead className="h-8">
                 <tr className="text-sm text-white font-thin dark:bg-sky-500 bg-slate-900 h-full">
-                  <th className="font-medium border-r ">No.</th>
-                  <th className="font-medium flex items-center h-8 justify-center border-r">
+                  <th className="font-medium w-8">No.</th>
+                  <th className="font-medium w-8">ID</th>
+                  <th className="font-medium w-36 flex items-center h-8 justify-center">
                     Nama
                     {/* sort button */}
                     <span
@@ -439,14 +234,12 @@ const Tutors = () => {
                     >
                       {sortName ? "expand_more" : "expand_less"}
                     </span>
-                  </th>
-
-                  <th className="font-medium hidden md:table-cell border-r">
-                    Asal Kampus
-                  </th>
-                  <th className="font-medium border-r">Telp</th>
-                  <th className="font-medium border-r">Email</th>
-                  <th className="font-medium">Action</th>
+                  </th> 
+                  <th className="font-medium hidden md:table-cell"> Mapel</th>
+                  <th className="font-medium hidden md:table-cell"> Asal Kampus </th>
+                  <th className="font-medium">Telp</th>
+                  <th className="font-medium w-56">Email</th>
+                  <th className="font-medium w-20">Action</th>
                 </tr>
               </thead>
 
@@ -471,15 +264,19 @@ const Tutors = () => {
                         }
                       >
                         <td className="text-center border-r">{nomer++}</td>
+                        <td className="text-center border-r">{item.id_pengajar}</td>
 
                         <td className="border-r px-2">{item.nama_pengajar}</td>
+                        <td className="hidden md:table-cell border-r px-2 uppercase">
+                          {item.mapel}
+                        </td>
                         <td className="hidden md:table-cell border-r px-2">
                           {item.asal_kampus}
                         </td>
                         <td className="border-r text-center">
                           {item.no_telp}
                         </td>
-                        <td>
+                        <td className="border-r text-center">
                           {item.email}
                         </td>
                         <td className="flex justify-center items-center h-8 ">
