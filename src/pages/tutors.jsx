@@ -11,7 +11,7 @@ const url = "https://admin.menujudigital.com/api/datapengajar";
 
 const Tutors = () => {
   const stateTutors = useSelector((state) => state.tutorsReducer);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // default data
   const [dataMembers, setDataMembers] = useState(stateTutors.data);
@@ -41,7 +41,7 @@ const Tutors = () => {
   };
   const onPrev = () => {
     setPage(page - 1);
-    setNomer(1 + rowPerPage * (page-2));
+    setNomer(1 + rowPerPage * (page - 2));
   };
 
   useEffect(() => {
@@ -58,19 +58,13 @@ const Tutors = () => {
     let valueFilterMapel = refFilterMapel.current.value;
 
     // 01. f f
-    if (
-      valueFilterName === "" &&
-      valueFilterMapel === ""
-    ) {
+    if (valueFilterName === "" && valueFilterMapel === "") {
       setDataRenders(dataMembers);
       setMaxPage(Math.ceil(dataMembers.length / rowPerPage));
     }
 
     // 02. t f
-    else if (
-      valueFilterName &&
-      valueFilterMapel === ""
-    ) {
+    else if (valueFilterName && valueFilterMapel === "") {
       const resultFilter = dataMembers.filter((dataMember) =>
         dataMember.nama_pengajar
           .toLowerCase()
@@ -81,38 +75,27 @@ const Tutors = () => {
     }
 
     // 03. f t
-    else if (
-      valueFilterName === "" &&
-      valueFilterMapel
-    ) {
+    else if (valueFilterName === "" && valueFilterMapel) {
       const resultFilter = dataMembers.filter((dataMember) =>
-        dataMember.mapel
-          .toLowerCase()
-          .includes(valueFilterMapel.toLowerCase())
+        dataMember.mapel.toLowerCase().includes(valueFilterMapel.toLowerCase())
       );
       setDataRenders(resultFilter);
       setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
     }
 
     // 04. tt
-    else if (
-      valueFilterName &&
-      valueFilterMapel
-    ) {
+    else if (valueFilterName && valueFilterMapel) {
       const filterName = dataMembers.filter((dataMember) =>
         dataMember.nama_pengajar
           .toLowerCase()
           .includes(valueFilterName.toLowerCase())
       );
       const resultFilter = filterName.filter((dataMember) =>
-        dataMember.mapel
-          .toLowerCase()
-          .includes(valueFilterMapel.toLowerCase())
+        dataMember.mapel.toLowerCase().includes(valueFilterMapel.toLowerCase())
       );
       setDataRenders(resultFilter);
       setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
     }
-
   };
 
   // reset filter
@@ -149,14 +132,13 @@ const Tutors = () => {
     }
   };
 
-  // proteksi login 
-
+  // proteksi login
   useEffect(() => {
-    const tokenId = localStorage.getItem('token') 
+    const tokenId = localStorage.getItem("token");
     if (!tokenId) {
-      navigate('/login')
+      navigate("/login");
     }
-  }, [navigate])
+  }, [navigate]);
 
   return (
     <div className="flex">
@@ -166,7 +148,11 @@ const Tutors = () => {
       <div className="flex flex-col md:m-8 w-full min-h-screen">
         <Navbar />
         <div className="dark:text-white font-bold text-xl m-2 ">
-          Data Tutors
+          <span>Data Pengajar</span>
+          <div className="flex dark:text-white gap-2 text-sm justify-end items-center">
+            <span>Export to Excel:</span>
+            <ExportExcel data={dataMembers} />
+          </div>
         </div>
         <div className="m-2">
           {/* filter table */}
@@ -191,23 +177,19 @@ const Tutors = () => {
               />
             </form>
 
-            
-              <button
-                onClick={onFilter}
-                className="dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-md px-1"
-              >
-                <span className="material-symbols-rounded ">filter_alt</span>
-              </button>
-            
-              <button
-                onClick={onResetFilter}
-                className="dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-md px-1"
-              >
-                <span className="material-symbols-rounded ">
-                  filter_alt_off
-                </span>
-              </button>
-            
+            <button
+              onClick={onFilter}
+              className="dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-md px-1"
+            >
+              <span className="material-symbols-rounded ">filter_alt</span>
+            </button>
+
+            <button
+              onClick={onResetFilter}
+              className="dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-md px-1"
+            >
+              <span className="material-symbols-rounded ">filter_alt_off</span>
+            </button>
           </div>
 
           <div className="flex flex-col dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
@@ -234,9 +216,12 @@ const Tutors = () => {
                     >
                       {sortName ? "expand_more" : "expand_less"}
                     </span>
-                  </th> 
+                  </th>
                   <th className="font-medium hidden md:table-cell"> Mapel</th>
-                  <th className="font-medium hidden md:table-cell"> Asal Kampus </th>
+                  <th className="font-medium hidden md:table-cell">
+                    {" "}
+                    Asal Kampus{" "}
+                  </th>
                   <th className="font-medium">Telp</th>
                   <th className="font-medium w-56">Email</th>
                   <th className="font-medium w-20">Action</th>
@@ -264,7 +249,9 @@ const Tutors = () => {
                         }
                       >
                         <td className="text-center border-r">{nomer++}</td>
-                        <td className="text-center border-r">{item.id_pengajar}</td>
+                        <td className="text-center border-r">
+                          {item.id_pengajar}
+                        </td>
 
                         <td className="border-r px-2">{item.nama_pengajar}</td>
                         <td className="hidden md:table-cell border-r px-2 uppercase">
@@ -273,12 +260,8 @@ const Tutors = () => {
                         <td className="hidden md:table-cell border-r px-2">
                           {item.asal_kampus}
                         </td>
-                        <td className="border-r text-center">
-                          {item.no_telp}
-                        </td>
-                        <td className="border-r text-center">
-                          {item.email}
-                        </td>
+                        <td className="border-r text-center">{item.no_telp}</td>
+                        <td className="border-r text-center">{item.email}</td>
                         <td className="flex justify-center items-center h-8 ">
                           <Link to={`/tutors/${item.id}`}>
                             <button className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2">
