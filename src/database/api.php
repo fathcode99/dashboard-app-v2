@@ -36,9 +36,9 @@ Route::group(
     ['middleware' => 'auth:sanctum'], function () {
         Route::group(
             ['middleware' => 'isAdmin'], function () {
-                    Route::get('biaya', [BiayapengajardansiswaController::class, 'index']);
-                    Route::put('biaya/{biaya}/update', [BiayapengajardansiswaController::class, 'update']);
-                    Route::delete('biaya/{biaya}/delete', [BiayapengajardansiswaController::class, 'destroy']);
+                    Route::get('biaya', [BiayapengajardansiswaController::class, 'index']); //sudah
+                    Route::put('biaya/{biaya}/update', [BiayapengajardansiswaController::class, 'update']); 
+                    Route::delete('biaya/{biaya}/delete', [BiayapengajardansiswaController::class, 'destroy']); //sudah
                     
                     Route::get('pengeluaran', [PengeluaranlbbController::class, 'index']);
                     Route::post('pengeluaran', [PengeluaranlbbController::class, 'store']);
@@ -47,6 +47,7 @@ Route::group(
                     Route::get('realisasi', [TotalrealisasiController::class, 'index']);
                     Route::post('realisasi', [TotalrealisasiController::class, 'store']);
                     Route::delete('realisasi/{realisasi}/delete', [TotalrealisasiController::class, 'destroy']);
+                    
                     Route::get('totalbiaya', [TotalbiayaController::class, 'index']);
                     Route::post('totalbiaya', [TotalbiayaController::class, 'store']);
                     Route::delete('totalbiaya/{totalbiaya}/delete', [TotalbiayaController::class, 'destroy']);
@@ -55,7 +56,7 @@ Route::group(
                     Route::delete('selisih/{selisih}/delete', [SelisihController::class, 'destroy']);
 
                     Route::get('apply', [ApplypengajarController::class, 'index']); //sudah
-                    Route::delete('apply/{apply}/delete', [ApplypengajarController::class, 'destroy']); //
+                    Route::delete('apply/{apply}/delete', [ApplypengajarController::class, 'destroy']); // sudah
 
                     Route::post('gambar', [GambariklanController::class, 'store']);
                     Route::put('gambar/{gambar}/update', [GambariklanController::class, 'update']);
@@ -67,7 +68,7 @@ Route::group(
                     Route::get('datapengajar', [DatapengajarController::class, 'index']); //bisa sudah
                     Route::delete('datapengajar/{datapengajar}/delete', [DatapengajarController::class, 'destroy']); //bisa
                     
-                    Route::get('dataortusiswa', [DataorangtuadansiswaController::class, 'index']);
+                    Route::get('dataortusiswa', [DataorangtuadansiswaController::class, 'index']); 
                     Route::delete('dataortusiswa/{dataortusiswa}/delete', [DataorangtuadansiswaController::class, 'destroy']);
                 }
         );
@@ -93,8 +94,9 @@ Route::group(
 
         Route::put('datapengajar/{datapengajar}/update', [DatapengajarController::class, 'update']);
 
-        Route::get('dataortusiswa/{dataortusiswa}', [DataorangtuadansiswaController::class, 'show']);
-        Route::post('dataortusiswa', [DataorangtuadansiswaController::class, 'store']);
+        Route::get('dataortusiswa/{dataortusiswa}', [DataorangtuadansiswaController::class, 'show']); 
+        Route::post('dataortusiswa', [DataorangtuadansiswaController::class, 'store']); //tidak bisa
+
         Route::put('dataortusiswa/{dataortusiswa}/update', [DataorangtuadansiswaController::class, 'update']);
     }
 );

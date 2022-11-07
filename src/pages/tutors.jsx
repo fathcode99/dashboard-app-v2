@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import axios from "axios";
+// import axios from "axios";
 
 import Sidebar from "../component/sidebar";
 import Navbar from "../component/navbar";
@@ -7,7 +7,7 @@ import ExportExcel from "../component/exportExcel";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const url = "https://admin.menujudigital.com/api/datapengajar";
+// const url = "https://admin.menujudigital.com/api/datapengajar";
 
 const Tutors = () => {
   const stateTutors = useSelector((state) => state.tutorsReducer);
@@ -20,7 +20,7 @@ const Tutors = () => {
   const [dataRenders, setDataRenders] = useState(stateTutors.data);
 
   // button value
-  const [sortName, setSortName] = useState(false);
+  // const [sortName, setSortName] = useState(false);
 
   // value input
   let refFilterName = useRef();
@@ -121,36 +121,64 @@ const Tutors = () => {
     setMaxPage(Math.ceil(dataMembers.length / rowPerPage));
   };
 
-  // handle sort
-  let token = localStorage.getItem("token");
-  const handleSortName = async (e) => {
-    if (sortName === false) {
-      return await axios
-        .get(`${url}?_sort=nama_pengajar&_order=asc`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          setDataRenders(res.data);
-          setSortName(!sortName);
-        });
-    } else {
-      return await axios
-        .get(`${url}?_sort=nama_pengajar&_order=desc`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          setDataRenders(res.data);
-          setSortName(!sortName);
-        });
+  // short table
+  function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("myTable2");
+    switching = true;
+    // Set the sorting direction to ascending:
+    dir = "asc";
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      rows = table.rows;
+      /* Loop through all table rows (except the
+      first, which contains table headers): */
+      for (i = 1; i < (rows.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Get the two elements you want to compare,
+        one from current row and one from the next: */
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        /* Check if the two rows should switch place,
+        based on the direction, asc or desc: */
+        if (dir === "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        } else if (dir === "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark that a switch has been done: */
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        // Each time a switch is done, increase this count by 1:
+        switchcount ++;
+      } else {
+        /* If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again. */
+        if (switchcount === 0 && dir === "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
     }
-  };
+  }
+
 
   // proteksi login 
-
   useEffect(() => {
     const tokenId = localStorage.getItem('token') 
     if (!tokenId) {
@@ -220,25 +248,25 @@ const Tutors = () => {
             </div>
 
             {/* TABLE START */}
-            <table className="w-full">
+            <table id="myTable2" className="w-full">
               <thead className="h-8">
                 <tr className="text-sm text-white font-thin dark:bg-sky-500 bg-slate-900 h-full">
                   <th className="font-medium w-8">No.</th>
                   <th className="font-medium w-8">ID</th>
-                  <th className="font-medium w-36 flex items-center h-8 justify-center">
+                  <th className="font-medium w-36 flex items-center h-8 justify-center cursor-pointer" onClick={() => sortTable(0)}>
                     Nama
                     {/* sort button */}
-                    <span
+                    {/* <span
                       onClick={handleSortName}
                       className="material-symbols-rounded cursor-pointer text-white ml-2"
                     >
                       {sortName ? "expand_more" : "expand_less"}
-                    </span>
+                    </span> */}
                   </th> 
-                  <th className="font-medium hidden md:table-cell"> Mapel</th>
-                  <th className="font-medium hidden md:table-cell"> Asal Kampus </th>
-                  <th className="font-medium">Telp</th>
-                  <th className="font-medium w-56">Email</th>
+                  <th className="font-medium hidden md:table-cell cursor-pointer" onClick={() => sortTable(1)}> Mapel</th>
+                  <th className="font-medium hidden md:table-cell cursor-pointer" onClick={() => sortTable(2)}> Asal Kampus </th>
+                  <th className="font-medium cursor-pointer" onClick={() => sortTable(3)}>Telp</th>
+                  <th className="font-medium w-56 cursor-pointer" onClick={() => sortTable(4)}>Email</th>
                   <th className="font-medium w-20">Action</th>
                 </tr>
               </thead>

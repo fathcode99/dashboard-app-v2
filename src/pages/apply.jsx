@@ -21,12 +21,11 @@ const Tutors = () => {
 
   // button value
   const [statusActive, setStatusActive] = useState(false);
-  const [statusInactive, setStatusInactive] = useState(false);
-  const [sortName, setSortName] = useState(false);
+  const [statusInactive, setStatusInactive] = useState(false); 
 
   // value input
   let refFilterName = useRef();
-  let refFilterCity = useRef();
+  let refFilterMapel = useRef();
 
   // pagination
   const [page, setPage] = useState(1);
@@ -54,45 +53,28 @@ const Tutors = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateTutors.data, dataMembers, rowPerPage]);
 
-  // button handler status
-  const handleActive = () => {
-    setStatusActive(!statusActive);
-    if (statusInactive) {
-      setStatusInactive(!statusInactive);
-    }
-  };
-  const handleInactive = () => {
-    setStatusInactive(!statusInactive);
-    if (statusActive) {
-      setStatusActive(!statusActive);
-    }
-  };
-
   // filter
-  const onFilter = () => {
+  const onFilter = () => { 
     let valueFilterName = refFilterName.current.value;
-    let valueFilterCity = refFilterCity.current.value;
+    let valueFilterMapel = refFilterMapel.current.value;
 
-    // 01. f f f f
+    // 01. f f
     if (
       valueFilterName === "" &&
-      valueFilterCity === "" &&
-      statusActive === false &&
-      statusInactive === false
+      valueFilterMapel === ""
     ) {
       setDataRenders(dataMembers);
       setMaxPage(Math.ceil(dataMembers.length / rowPerPage));
     }
 
-    // 02. t f f f
+    // 02. t f
     else if (
       valueFilterName &&
-      valueFilterCity === "" &&
-      statusActive === false &&
-      statusInactive === false
+      valueFilterMapel === ""
     ) {
+      setDataRenders(dataMembers);
       const resultFilter = dataMembers.filter((dataMember) =>
-        dataMember.tutorName
+        dataMember.nama_pengajar
           .toLowerCase()
           .includes(valueFilterName.toLowerCase())
       );
@@ -100,196 +82,41 @@ const Tutors = () => {
       setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
     }
 
-    // 03. f t f f
+    // 03. f t
     else if (
       valueFilterName === "" &&
-      valueFilterCity &&
-      statusActive === false &&
-      statusInactive === false
+      valueFilterMapel
     ) {
+      setDataRenders(dataMembers);
       const resultFilter = dataMembers.filter((dataMember) =>
-        dataMember.regional
+        dataMember.mapel
           .toLowerCase()
-          .includes(valueFilterCity.toLowerCase())
+          .includes(valueFilterMapel.toLowerCase())
       );
       setDataRenders(resultFilter);
       setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
     }
 
-    // 04. f f t f
-    else if (
-      valueFilterName === "" &&
-      valueFilterCity === "" &&
-      statusActive === true &&
-      statusInactive === false
-    ) {
-      const resultFilter = dataMembers.filter(
-        (item) => item.status === "Active"
-      );
-      setDataRenders(resultFilter);
-      setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
-    }
-
-    // 05. f f f t
-    else if (
-      valueFilterName === "" &&
-      valueFilterCity === "" &&
-      statusActive === false &&
-      statusInactive === true
-    ) {
-      const resultFilter = dataMembers.filter(
-        (item) => item.status === "Inactive"
-      );
-      setDataRenders(resultFilter);
-      setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
-    }
-
-    // 06. t t f f
+    // 04. tt
     else if (
       valueFilterName &&
-      valueFilterCity &&
-      statusActive === false &&
-      statusInactive === false
+      valueFilterMapel
     ) {
+      setDataRenders(dataMembers);
       const filterName = dataMembers.filter((dataMember) =>
-        dataMember.tutorName
+        dataMember.nama_pengajar
           .toLowerCase()
           .includes(valueFilterName.toLowerCase())
       );
       const resultFilter = filterName.filter((dataMember) =>
-        dataMember.regional
+        dataMember.mapel
           .toLowerCase()
-          .includes(valueFilterCity.toLowerCase())
+          .includes(valueFilterMapel.toLowerCase())
       );
       setDataRenders(resultFilter);
       setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
     }
 
-    // 07. t f t f
-    else if (
-      valueFilterName &&
-      valueFilterCity === "" &&
-      statusActive === true &&
-      statusInactive === false
-    ) {
-      const filterStatus = dataMembers.filter(
-        (item) => item.status === "Active"
-      );
-      const resultFilter = filterStatus.filter((dataMember) =>
-        dataMember.tutorName
-          .toLowerCase()
-          .includes(valueFilterName.toLowerCase())
-      );
-      setDataRenders(resultFilter);
-      setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
-    }
-
-    // 08. t f f t
-    else if (
-      valueFilterName &&
-      valueFilterCity === "" &&
-      statusActive === false &&
-      statusInactive === true
-    ) {
-      const filterStatus = dataMembers.filter(
-        (item) => item.status === "Inactive"
-      );
-      const resultFilter = filterStatus.filter((dataMember) =>
-        dataMember.tutorName
-          .toLowerCase()
-          .includes(valueFilterName.toLowerCase())
-      );
-      setDataRenders(resultFilter);
-      setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
-    }
-
-    // 09. f t f t
-    else if (
-      valueFilterName === "" &&
-      valueFilterCity &&
-      statusActive === false &&
-      statusInactive === true
-    ) {
-      const filterStatus = dataMembers.filter(
-        (item) => item.status === "Inactive"
-      );
-      const resultFilter = filterStatus.filter((dataMember) =>
-        dataMember.regional
-          .toLowerCase()
-          .includes(valueFilterCity.toLowerCase())
-      );
-      setDataRenders(resultFilter);
-      setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
-    }
-
-    // 10. f t t f
-    else if (
-      valueFilterName === "" &&
-      valueFilterCity &&
-      statusActive === true &&
-      statusInactive === false
-    ) {
-      const filterStatus = dataMembers.filter(
-        (item) => item.status === "Active"
-      );
-      const resultFilter = filterStatus.filter((dataMember) =>
-        dataMember.regional
-          .toLowerCase()
-          .includes(valueFilterCity.toLowerCase())
-      );
-      setDataRenders(resultFilter);
-      setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
-    }
-
-    // 11. t t t f
-    else if (
-      valueFilterName &&
-      valueFilterCity &&
-      statusActive === true &&
-      statusInactive === false
-    ) {
-      const filterStatus = dataMembers.filter(
-        (item) => item.status === "Active"
-      );
-      const filterName = filterStatus.filter((dataMember) =>
-        dataMember.tutorName
-          .toLowerCase()
-          .includes(valueFilterName.toLowerCase())
-      );
-      const resultFilter = filterName.filter((dataMember) =>
-        dataMember.regional
-          .toLowerCase()
-          .includes(valueFilterCity.toLowerCase())
-      );
-      setDataRenders(resultFilter);
-      setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
-    }
-
-    // 12.  t t f t
-    else if (
-      valueFilterName &&
-      valueFilterCity &&
-      statusActive === false &&
-      statusInactive === true
-    ) {
-      const filterStatus = dataMembers.filter(
-        (item) => item.status === "Inactive"
-      );
-      const filterName = filterStatus.filter((dataMember) =>
-        dataMember.tutorName
-          .toLowerCase()
-          .includes(valueFilterName.toLowerCase())
-      );
-      const resultFilter = filterName.filter((dataMember) =>
-        dataMember.regional
-          .toLowerCase()
-          .includes(valueFilterCity.toLowerCase())
-      );
-      setDataRenders(resultFilter);
-      setMaxPage(Math.ceil(resultFilter.length / rowPerPage));
-    }
-
-    // console.log(valueFilterName, valueFilterCity, statusActive, statusInactive)
   };
 
   // reset filter
@@ -303,27 +130,63 @@ const Tutors = () => {
     }
   };
 
-  // handle sort
-  const handleSortName = async (e) => {
-    if (sortName === false) {
-      return await axios
-        .get(`${url}?_sort=tutorName&_order=asc`)
-        .then((res) => {
-          setDataRenders(res.data);
-          setSortName(!sortName);
-        });
-    } else {
-      return await axios
-        .get(`${url}?_sort=tutorName&_order=desc`)
-        .then((res) => {
-          setDataRenders(res.data);
-          setSortName(!sortName);
-        });
+  // short table
+  function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("myTable");
+    switching = true;
+    // Set the sorting direction to ascending:
+    dir = "asc";
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      rows = table.rows;
+      /* Loop through all table rows (except the
+      first, which contains table headers): */
+      for (i = 1; i < (rows.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Get the two elements you want to compare,
+        one from current row and one from the next: */
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        /* Check if the two rows should switch place,
+        based on the direction, asc or desc: */
+        if (dir === "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        } else if (dir === "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark that a switch has been done: */
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        // Each time a switch is done, increase this count by 1:
+        switchcount ++;
+      } else {
+        /* If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again. */
+        if (switchcount === 0 && dir === "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
     }
-  };
+  }
 
   // proteksi login 
-
   useEffect(() => {
     const tokenId = localStorage.getItem('token') 
     if (!tokenId) {
@@ -355,6 +218,8 @@ const Tutors = () => {
       });
   }
 
+  
+
   return (
     <div className="flex">
       <div className="flex">
@@ -366,6 +231,7 @@ const Tutors = () => {
          Data Apply
         </div>
         <div className="m-2">
+
           {/* filter table */}
           <div className="dark:text-white text-sm my-2">Filter Setting :</div>
 
@@ -381,46 +247,12 @@ const Tutors = () => {
 
             <form className="dark:bg-neutral-800 rounded-md flex items-center border w-full md:w-1/3 border-slate-800 dark:border-sky-500 mb-2 h-8">
               <input
-                ref={refFilterCity}
+                ref={refFilterMapel}
                 type="text"
-                placeholder="By Regional"
+                placeholder="By Mapel"
                 className="outline-none bg-transparent w-full ml-2 dark:text-white font-thin text-sm"
               />
             </form>
-
-            <div className="flex">
-              <button
-                onClick={handleActive}
-                className="dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-l-md px-2"
-              >
-                {statusActive ? (
-                  <span className="material-symbols-rounded dark:text-sky-500 text-base mr-1">
-                    check_circle
-                  </span>
-                ) : (
-                  <span className="material-symbols-rounded text-base mr-1">
-                    radio_button_unchecked
-                  </span>
-                )}
-                Active
-              </button>
-
-              <button
-                onClick={handleInactive}
-                className="dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-r-md px-2"
-              >
-                {statusInactive ? (
-                  <span className="material-symbols-rounded dark:text-sky-500 text-base mr-1">
-                    check_circle
-                  </span>
-                ) : (
-                  <span className="material-symbols-rounded text-base mr-1">
-                    radio_button_unchecked
-                  </span>
-                )}
-                Inactive
-              </button>
-            </div>
 
             <div>
               <button
@@ -450,26 +282,22 @@ const Tutors = () => {
                 <ExportExcel data={dataMembers} />
               </div>
             </div>
-            <table className="w-full">
+
+            {/* TABLE START */}
+            <table className="w-full" id="myTable">
               <thead className="h-8">
                 <tr className="text-sm text-white font-thin dark:bg-sky-500 bg-slate-900 h-full">
-                  <th className="font-medium border-r ">No.</th>
-                  <th className="font-medium flex items-center h-8 justify-center border-r">
-                    Nama
-                    {/* sort button */}
-                    <span
-                      onClick={handleSortName}
-                      className="material-symbols-rounded cursor-pointer text-white ml-2"
-                    >
-                      {sortName ? "expand_more" : "expand_less"}
-                    </span>
-                  </th>
-
-                  <th className="font-medium hidden md:table-cell border-r">
+                  <th className="font-medium w-8 cursor-pointer" onClick={()=> sortTable(0)}>No.</th>
+                  <th className="font-medium w-8 cursor-pointer" onClick={()=> sortTable(1)}>ID</th>
+                  <th className="font-medium flex items-center h-8 w-32 justify-center cursor-pointer" onClick={()=> sortTable(2)}>
+                    Nama 
+                  </th> 
+                  <th className="font-medium cursor-pointer" onClick={()=> sortTable(3)}>Mapel</th>
+                  <th className="font-medium hidden md:table-cell cursor-pointer" onClick={()=> sortTable(4)}>
                     Asal Kampus
                   </th>
-                  <th className="font-medium border-r">Telp</th>
-                  <th className="font-medium border-r">Email</th>
+                  <th className="font-medium cursor-pointer" onClick={()=> sortTable(5)}>Telp</th>
+                  <th className="font-medium cursor-pointer" onClick={()=> sortTable(6)}>Email</th>
                   <th className="font-medium">Action</th>
                 </tr>
               </thead>
@@ -496,18 +324,19 @@ const Tutors = () => {
                       >
                         <td className="text-center border-r">{nomer++}</td>
 
+                        <td className="border-r px-2 text-center">{item.id_pengajar}</td>
                         <td className="border-r px-2">{item.nama_pengajar}</td>
-                        <td className="hidden md:table-cell border-r px-2">
+                        <td className="border-r px-2 uppercase">{item.mapel}</td>
+                        <td className="border-r px-2 text-center">
                           {item.asal_kampus}
                         </td>
                         <td className="border-r text-center">
                           {item.no_telp}
                         </td>
-                        <td>
+                        <td className="border-r px-2">
                           {item.email}
                         </td>
                         <td className="flex justify-center items-center h-8 ">
-                          
                             <button 
                             onClick={() => deleteApply(item.id)}
                             className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2">

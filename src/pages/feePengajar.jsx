@@ -21,8 +21,7 @@ const Tutors = () => {
 
   // button value
   const [statusActive, setStatusActive] = useState(false);
-  const [statusInactive, setStatusInactive] = useState(false);
-  const [sortName, setSortName] = useState(false);
+  const [statusInactive, setStatusInactive] = useState(false); 
 
   // value input
   let refFilterName = useRef();
@@ -303,25 +302,6 @@ const Tutors = () => {
     }
   };
 
-  // handle sort
-  const handleSortName = async (e) => {
-    if (sortName === false) {
-      return await axios
-        .get(`${url}?_sort=tutorName&_order=asc`)
-        .then((res) => {
-          setDataRenders(res.data);
-          setSortName(!sortName);
-        });
-    } else {
-      return await axios
-        .get(`${url}?_sort=tutorName&_order=desc`)
-        .then((res) => {
-          setDataRenders(res.data);
-          setSortName(!sortName);
-        });
-    }
-  };
-
   // proteksi login 
   useEffect(() => {
     const tokenId = localStorage.getItem('token') 
@@ -332,7 +312,8 @@ const Tutors = () => {
 
   // menghapus data pembiayaan
   let token = localStorage.getItem("token");
-  const deleteApply = (id) => {
+  const onDelete = (id) => {
+    console.log(id)
     axios
       .delete(`${url}/biaya/${id}/delete`, {
         headers: {
@@ -352,6 +333,62 @@ const Tutors = () => {
           })
         })
       });
+  }
+
+  // short table
+  function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("myTable");
+    switching = true;
+    // Set the sorting direction to ascending:
+    dir = "asc";
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      rows = table.rows;
+      /* Loop through all table rows (except the
+      first, which contains table headers): */
+      for (i = 1; i < (rows.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Get the two elements you want to compare,
+        one from current row and one from the next: */
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        /* Check if the two rows should switch place,
+        based on the direction, asc or desc: */
+        if (dir === "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        } else if (dir === "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark that a switch has been done: */
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        // Each time a switch is done, increase this count by 1:
+        switchcount ++;
+      } else {
+        /* If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again. */
+        if (switchcount === 0 && dir === "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
   }
 
   return (
@@ -450,38 +487,20 @@ const Tutors = () => {
                 <ExportExcel data={dataBiaya} />
               </div>
             </div>
-            <table className="w-full">
+
+            <table className="w-full" id="myTable">
               <thead className="h-8">
                 <tr className="text-sm text-white font-thin dark:bg-sky-500 bg-slate-900 h-full">
-                  <th className="font-medium border-r ">No.</th>
-                  <th className="font-medium border-r ">ID Pengajar</th>
-                  <th className="font-medium flex items-center h-8 justify-center border-r">
-                    Nama Pengajar
-                    {/* sort button */}
-                    <span
-                      onClick={handleSortName}
-                      className="material-symbols-rounded cursor-pointer text-white ml-2"
-                    >
-                      {sortName ? "expand_more" : "expand_less"}
-                    </span>
+                  <th className="font-medium border-r w-8">No.</th>
+                  <th className="font-medium border-r w-8 cursor-pointer" onClick={() => sortTable(1)}>ID</th>
+                  <th 
+                  onClick={() => sortTable(2)}
+                  className="font-medium flex items-center h-8 justify-center border-r cursor-pointer">
+                    Nama Pengajar 
                   </th>
-
-                  <th className="font-medium hidden md:table-cell border-r">
-                    ID Siswa
-                  </th>
-                  <th className="font-medium hidden md:table-cell border-r">
-                    Nama Siswa
-                  </th>
-                  <th className="font-medium hidden md:table-cell border-r">
-                    Nama Ortu
-                  </th>
-                  <th className="font-medium border-r">Biaya Pendaftaran</th>
-                  <th className="font-medium border-r">RBP</th>
-                  <th className="font-medium border-r">Fee Pengajar</th>
-                  <th className="font-medium border-r">RFP</th>
-                  <th className="font-medium border-r">Regional</th>
-                  <th className="font-medium border-r">Tagihan Siswa</th>
-                  <th className="font-medium border-r">RTS</th>
+                  <th className="font-medium border-r cursor-pointer" onClick={() => sortTable(3)}>Fee Pengajar</th>
+                  <th className="font-medium border-r cursor-pointer" onClick={() => sortTable(4)}>Realisasi FP</th>
+                  <th className="font-medium border-r cursor-pointer" onClick={() => sortTable(4)}>Biaya Fotocopy</th>
                   <th className="font-medium">Action</th>
                 </tr>
               </thead>
@@ -509,25 +528,13 @@ const Tutors = () => {
                         <td className="text-center border-r">{nomer++}</td>
 
                         <td className="border-r px-2">{item.id_pengajar}</td>
-                        <td className="border-r px-2">{item.nama_pengajar}</td>
-                        <td className="border-r px-2">{item.id_siswa}</td>
-                        <td className="border-r px-2">{item.nama_siswa}</td>
-                        <td className="hidden md:table-cell border-r px-2">
-                          {item.nama_orang_tua}
-                        </td>
-                        <td className="hidden md:table-cell border-r px-2">
-                          {item.biaya_pendaftaran}
-                        </td>
-                        <td className="border-r text-center">
-                          {item.realisasi_biaya_pendaftaran}
-                        </td>
-                        <td>
-                          {item.email}
-                        </td>
-                        <td className="flex justify-center items-center h-8 ">
-                          
+                        <td className="border-r px-2">{item.nama_pengajar}</td> 
+                        <td className="border-r px-2 text-right">Rp {item.fee_pengajar}  </td>
+                        <td className="border-r px-2 text-right">Rp {item.realisasi_fee_pengajar}  </td>
+                        <td className="border-r px-2 text-right">Rp {item.biaya_fotokopi}  </td>
+                        <td className="flex justify-center items-center h-8 "> 
                             <button 
-                            onClick={() => deleteApply(item.id)}
+                            onClick={() => onDelete(item.id)}
                             className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2">
                               Delete
                             </button> 

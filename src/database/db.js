@@ -1,0 +1,22 @@
+{
+    "nama_orang_tua" : "Bambang",
+    "id_siswa" : 21,
+    "nama_siswa" : "Andini",
+    "kelas": "1",
+    "kurikulum" : "KTSP",
+    "alamat" : "Jl. Basuki Rahmat",
+    "kecamatan" : "Pesantren",
+    "kota" : "Kediri",
+    "no_telp" : "0812070034",
+    "email" : "adafdj@gmail.com",
+    "mapel" : "Matematika",
+    "jadwal_les" : "Kamis",
+    "jam_mulai_les" : "14.00",
+    "mulai_les" : "15.00",
+    "jenis_bimble" : "Premium",
+    "gender_tentor" : "Perempuan",
+    "program" : "Calistung",
+    "status_siswa" : "aktif",
+    "regional" : "Kediri",
+    "status_pendaftaran" : "accept"
+}

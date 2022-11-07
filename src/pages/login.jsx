@@ -42,19 +42,6 @@ const Login = () => {
         navigate("/"); 
       });
 
-    // axios.get(`${url}/admin?username=${username}&password=${password}`)
-    //     .then(res => {
-    //         if (res.data.length === 0) {
-    //             setIsModalLogin(true)
-    //         } else {
-    //             dispatch({
-    //                 type: 'GET_DATA_ADMIN',
-    //                 payload: res.data
-    //             })
-    //             localStorage.setItem('idUser', res.data[0].id)
-    //             navigate('/')
-    //         }
-    //     })
   };
 
   return (

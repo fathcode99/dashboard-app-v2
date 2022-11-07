@@ -225,47 +225,53 @@ const DetailTutor = () => {
                         className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
                       />
 
-                      <div className="font-thin text-sm">
-                        <span className="dark:text-white">ID : </span>
+                      <div className="font-thin text-sm flex">
+                        <span className="dark:text-white mr-2">ID : </span>
                         <input
                           type="text"
                           onChange={(e) => setIdPengajar(e.target.value)}
                           defaultValue={dataTutor.id_pengajar}
-                          className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                          className="outline-none bg-transparent border border-sky-500 rounded-sm px-2 dark:text-white font-thin text-base"
                         />
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                        <div className="italic font-thin text-sky-500 text-sm mt-3">
-                          Email
-                        </div>
-                        <input
-                          type="text"
-                          onChange={(e) => setEmail(e.target.value)}
-                          defaultValue={dataTutor.email}
-                          className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
-                        />
-
-                        <div className="italic font-thin text-sky-500 text-sm mt-3">
-                          Asal Kampus
-                        </div>
-                        <input
-                          onChange={(e) => setAsalKampus(e.target.value)}
-                          type="text"
-                          defaultValue={dataTutor.asal_kampus}
-                          className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
-                        />
-
-                        <div className="w-full">
+                        <div>
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
-                            Mapel
+                            Email
                           </div>
                           <input
-                            onChange={(e) => setMapel(e.target.value)}
                             type="text"
-                            defaultValue={dataTutor.mapel}
+                            onChange={(e) => setEmail(e.target.value)}
+                            defaultValue={dataTutor.email}
                             className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
                           />
+                        </div>
+
+                        <div>
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Asal Kampus
+                          </div>
+                          <input
+                            onChange={(e) => setAsalKampus(e.target.value)}
+                            type="text"
+                            defaultValue={dataTutor.asal_kampus}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                          />
+                        </div>
+
+                        <div>
+                          <div className="w-full">
+                            <div className="italic font-thin text-sky-500 text-sm mt-3">
+                              Mapel
+                            </div>
+                            <input
+                              onChange={(e) => setMapel(e.target.value)}
+                              type="text"
+                              defaultValue={dataTutor.mapel}
+                              className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                            />
+                          </div>
                         </div>
 
                         <div>
@@ -296,18 +302,20 @@ const DetailTutor = () => {
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
                             Rek Bank
                           </div>
-                          <input
-                            onChange={(e) => setRekBank(e.target.value)}
-                            type="text"
-                            defaultValue={dataTutor.rek_bank}
-                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
-                          />
-                          <input
-                            onChange={(e) => setAnBank(e.target.value)}
-                            type="text"
-                            defaultValue={`a/n ${dataTutor.an_rek_bank}`}
-                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
-                          />
+                          <div>
+                            <input
+                              onChange={(e) => setRekBank(e.target.value)}
+                              type="text"
+                              defaultValue={dataTutor.rek_bank}
+                              className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                            />
+                            <input
+                              onChange={(e) => setAnBank(e.target.value)}
+                              type="text"
+                              defaultValue={`a/n ${dataTutor.an_rek_bank}`}
+                              className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -471,10 +479,6 @@ const DetailTutor = () => {
                     <th className="font-medium w-8 hidden md:table-cell">ID</th>
                     <th className="font-medium w-36 px-2 flex items-center h-8 justify-between">
                       Nama Pengajar
-                      {/* sort button
-                  <span onClick={handleSortName} className="material-symbols-rounded cursor-pointer text-white">
-                    {sortName ? "expand_more" : "expand_less"}
-                  </span> */}
                     </th>
                     <th className="font-medium w-20 hidden md:table-cell">
                       Lembur
