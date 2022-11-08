@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 
 // import pages
 import Home from "./pages/home";
-import Tutors from "./pages/tutors";
+// import Tutors from "./pages/tutors";
 import Students from "./pages/students";
 import DetailTutor from "./pages/detailTutor";
 import Login from "./pages/login";
 import Apply from "./pages/apply"
 import FeePengajar from "./pages/feePengajar"
-
+import DataPengajar from "./pages/dataPengajar";
 import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 // import axios from 'axios'
@@ -79,7 +79,7 @@ const App = () => {
     <div className="dark:bg-neutral-900 font-rubik bg-slate-100">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/tutors" element={<Tutors />} />
+        <Route path="/tutors" element={<DataPengajar />} />
         <Route path="/tutors/:id" element={<DetailTutor />} />
         <Route path="/apply" element={<Apply />} />
         <Route path="/feepengajar" element={<FeePengajar />} />

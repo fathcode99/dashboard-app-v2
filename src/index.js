@@ -10,7 +10,11 @@ import ReduxThunk from 'redux-thunk'
 import { BrowserRouter } from 'react-router-dom'
 import allReducer from './reducer'
 
+import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const globalState = createStore(allReducer, applyMiddleware(ReduxThunk))
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
