@@ -23,14 +23,13 @@ const Login = () => {
   let refPassword = useRef();
 
   const onLogin = () => {
-    // let password = refPassword.current.value
+    let password = refPassword.current.value
     let email = refUsername.current.value;
     let data = { 
         email: email,
-        username : 'admin',
-        password : ''
+        password : password
     };
-
+    
     axios
       .post(`https://admin.menujudigital.com/api/login`, data)
       .then((res) => {
@@ -41,7 +40,7 @@ const Login = () => {
         localStorage.setItem("token", res.data.token);
         navigate("/"); 
       });
-
+    
   };
 
   return (

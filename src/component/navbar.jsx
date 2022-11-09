@@ -33,10 +33,10 @@ const Navbar = () => {
             <div className='flex items-center'>
                 <div className='flex gap-2 mx-4'>
                     <button onClick={onLight} className="dark:text-white text-neutral-900">
-                        <span class="material-symbols-rounded text-3xl font-thin">brightness_high</span>
+                        <span className="material-symbols-rounded text-3xl font-thin">brightness_high</span>
                     </button>
                     <button onClick={onDark} className="dark:text-white text-neutral-900">
-                        <span class="material-symbols-rounded text-3xl font-thin"> dark_mode </span>
+                        <span className="material-symbols-rounded text-3xl font-thin"> dark_mode </span>
                     </button>
                 </div>
 

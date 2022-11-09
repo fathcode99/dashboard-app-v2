@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import Sidebar from "../component/sidebar";
@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const url = "https://admin.menujudigital.com/api";
 
-const Tutors = () => {
+const KeuanganSiswa = () => {
   const stateBiaya = useSelector((state) => state.biayaReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -51,7 +51,7 @@ const Tutors = () => {
     if (value) {
       const matchDatas = dataBiaya.filter((item) => {
         return (
-          item.nama_pengajar.toLowerCase().includes(value.toLowerCase())
+          item.nama_siswa.toLowerCase().includes(value.toLowerCase())
         );
       });
       setDataRenders(matchDatas);
@@ -96,13 +96,16 @@ const Tutors = () => {
 
   // edit data realisasi
   const [isIndexEdit, setIsIndexEdit] = useState()
-  let refEditRealisasi = useRef();
+  const [realPendaftaran, setRealPendaftaran] = useState(dataBiaya.realisasi_biaya_pendaftaran) 
+  const [realTagihan, setRealTagihan] = useState(dataBiaya.realisasi_tagihan_siswa)
   const onEditDataRincian = (id) => {
-    let dataEdit = refEditRealisasi.current.value;
+    let dataEdit = {
+        realisasi_biaya_pendaftaran : realPendaftaran,
+        realisasi_tagihan_siswa : realTagihan
+    };
     axios
       .put(
-        `${url}/biaya/${id}/update`,
-        { realisasi_fee_pengajar: dataEdit },
+        `${url}/biaya/${id}/update`, dataEdit,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -136,7 +139,7 @@ const Tutors = () => {
       <div className="flex flex-col md:m-8 w-full min-h-screen">
         <Navbar />
         <div className="dark:text-white font-bold text-xl m-2 ">
-          Data Keuangan Pengajar
+          Data Keuangan Siswa
         </div>
         <div className="m-2">
           <div className="flex flex-col dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
@@ -161,20 +164,23 @@ const Tutors = () => {
               <thead className="h-8">
                 <tr className="text-sm text-white font-thin dark:bg-sky-500 bg-slate-900 h-full">
                   <th className="font-medium border-r w-8">No.</th>
-                  <th className="font-medium border-r w-8 cursor-pointer">
+                  <th className="font-medium border-r cursor-pointer">
                     ID
                   </th>
                   <th className="font-medium flex items-center h-8 justify-center border-r cursor-pointer">
-                    Nama Pengajar
+                    Nama Siswa
                   </th>
                   <th className="font-medium border-r cursor-pointer">
-                    Fee Pengajar
+                    Tagihan Siswa
                   </th>
                   <th className="font-medium border-r cursor-pointer">
-                    Realisasi FP
+                    Realisasi TS
                   </th>
                   <th className="font-medium border-r cursor-pointer">
-                    Biaya Fotocopy
+                    Biaya Pndftrn
+                  </th>
+                  <th className="font-medium border-r cursor-pointer">
+                    Realisasi BP
                   </th>
                   <th className="font-medium">Action</th>
                 </tr>
@@ -187,9 +193,7 @@ const Tutors = () => {
                   </tr>
                 </tbody>
               ) : (
-                sliceTable
-                .sort((a, b) => (a.nama_pengajar > b.nama_pengajar ? 1 : -1))
-                .map((item, index) => {
+                sliceTable.map((item, index) => {
                   return (
                     <tbody
                       key={index}
@@ -204,28 +208,43 @@ const Tutors = () => {
                       >
                         <td className="text-center border-r">{nomer++}</td>
 
-                        <td className="border-r px-2">{item.id_pengajar}</td>
-                        <td className="border-r px-2">{item.nama_pengajar}</td>
+                        <td className="border-r px-2">{item.id_siswa}</td>
+                        <td className="border-r px-2">{item.nama_siswa}</td>
                         <td className="border-r px-2 text-right">
-                          Rp {item.fee_pengajar}{" "}
+                          Rp {item.tagihan_siswa}{" "}
                         </td>
                         <td className="border-r px-2 text-right">
                         {isIndexEdit === index ? (
                               <>
                                 <input
-                                  ref={refEditRealisasi}
+                                  onChange={(e) => setRealTagihan(e.target.value)}
                                   type="text"
-                                  defaultValue={item.realisasi_fee_pengajar}
+                                  defaultValue={item.realisasi_tagihan_siswa}
                                   className="w-20 break-words text-center dark:text-white font-thin text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
                                 />
                               </>
                             ) : (
-                              <div> Rp {item.realisasi_fee_pengajar}
+                              <div> Rp {item.realisasi_tagihan_siswa}
                               </div>
                             )}
                         </td>
                         <td className="border-r px-2 text-right">
-                          Rp {item.biaya_fotokopi}{" "}
+                          Rp {item.biaya_pendaftaran}{" "}
+                        </td>
+                        <td className="border-r px-2 text-right">
+                        {isIndexEdit === index ? (
+                              <>
+                                <input
+                                  onChange={(e) => setRealPendaftaran(e.target.value)}
+                                  type="text"
+                                  defaultValue={item.realisasi_biaya_pendaftaran}
+                                  className="w-20 break-words text-center dark:text-white font-thin text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
+                                />
+                              </>
+                            ) : (
+                              <div> Rp {item.realisasi_biaya_pendaftaran}
+                              </div>
+                            )}
                         </td>
                         <td className="flex justify-center items-center h-8 ">
                         {isIndexEdit === index ? (
@@ -283,4 +302,4 @@ const Tutors = () => {
   );
 };
 
-export default Tutors;
+export default KeuanganSiswa;

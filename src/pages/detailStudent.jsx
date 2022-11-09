@@ -17,19 +17,31 @@ const DetailStudent = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [isIndexEdit, setIsIndexEdit] = useState(null);
 
-  const [isModalMessage, setIsModalMessage] = useState(false);
   const [isModalDelete, setIsModalDelete] = useState(false);
 
-  // edit data tutor
-  const [namaPengajar, setNamaPengajar] = useState(dataSiswa.nama_pengajar);
-  const [idPengajar, setIdPengajar] = useState(dataSiswa.id_pengajar);
+  // edit data siswa
+  const [namaSiswa, setNamaSiswa] = useState(dataSiswa.nama_siswa);
+  const [namaOrtu, setNamaOrtu] = useState(dataSiswa.nama_orangtua);
+  const [idSiswa, setIdSiswa] = useState(dataSiswa.id_siswa);
+  const [kelas, setKelas] = useState(dataSiswa.kelas);
+  const [kurikulum, setKurikulum] = useState(dataSiswa.kurikulum);
+  const [alamat, setAlamat] = useState(dataSiswa.alamat);
+  const [kecamatan, setKecamatan] = useState(dataSiswa.kecamatan);
+  const [kota, setKota] = useState(dataSiswa.kota);
   const [email, setEmail] = useState(dataSiswa.email);
-  const [asalKampus, setAsalKampus] = useState(dataSiswa.asal_kampus);
   const [mapel, setMapel] = useState(dataSiswa.mapel);
   const [telp, setTelp] = useState(dataSiswa.no_telp);
-  const [namaBank, setNamaBank] = useState(dataSiswa.nama_bank);
-  const [rekBank, setRekBank] = useState(dataSiswa.rek_bank);
-  const [anBank, setAnBank] = useState(dataSiswa.an_rek_bank);
+  const [jadwal, setJadwal] = useState(dataSiswa.jadwal);
+  const [jam, setJam] = useState(dataSiswa.jam_mulai_les);
+  const [mulaiLes, setMulaiLes] = useState(dataSiswa.jam_mulai_les);
+  const [jenisBimble, setJenisBimble] = useState(dataSiswa.jenis_bimble);
+  const [genderTutor, setGenderTutor] = useState(dataSiswa.gender_tutor);
+  const [program, setProgram] = useState(dataSiswa.program);
+  const [statusSiswa, setStatusSiswa] = useState(dataSiswa.status_siswa);
+  const [regional, setRegional] = useState(dataSiswa.regional);
+  const [statusPendaftaran, setStatusPendaftaran] = useState(
+    dataSiswa.status_pendaftaran
+  );
 
   useEffect(() => {
     axios
@@ -54,7 +66,6 @@ const DetailStudent = () => {
   }, [id, token]);
 
   // filter data rincian
-  let idSiswa = dataSiswa.id_siswa;
   let filterDataBiaya;
   if (dataBiaya) {
     filterDataBiaya = dataBiaya.filter((data) => data.id_siswa === idSiswa);
@@ -68,26 +79,37 @@ const DetailStudent = () => {
 
   const onDone = () => {
     let updateData = {
-      nama_pengajar: namaPengajar,
-      id_pengajar: idPengajar,
-      email: email,
-      asal_kampus: asalKampus,
-      mapel: mapel,
+      nama_orangtua: namaOrtu,
+      id_siswa: idSiswa,
+      nama_siswa: namaSiswa,
+      kelas: kelas,
+      kurikulum: kurikulum,
+      alamat: alamat,
+      kecamatan: kecamatan,
+      kota: kota,
       no_telp: telp,
-      nama_bank: namaBank,
-      rek_bank: rekBank,
-      an_rek_bank: anBank,
+      email: email,
+      mapel: mapel,
+      jadwal_les: jadwal,
+      jam_mulai_les: jam,
+      mulai_les: mulaiLes,
+      jenis_bimble: jenisBimble,
+      gender_tentor: genderTutor,
+      program: program,
+      status_siswa: statusSiswa,
+      regional: regional,
+      status_pendaftaran: statusPendaftaran,
     };
     console.log(updateData);
     axios
-      .put(`${url}/datapengajar/${id}/update`, updateData, {
+      .put(`${url}/dataortusiswa/${id}/update`, updateData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
         axios
-          .get(`${url}/datapengajar/${id}`, {
+          .get(`${url}/dataortusiswa/${id}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -126,27 +148,6 @@ const DetailStudent = () => {
       });
     setIsIndexEdit(null);
     setDataBiaya(dataBiaya);
-  };
-
-  // modal message
-  let defaultMessage =
-    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo cupiditate sint, totam rem ipsa ex!";
-  let refMessage = useRef();
-  const closeModal = () => {
-    setIsModalMessage(false);
-  };
-  const onMessage = () => {
-    let messageNotif = refMessage.current.value;
-
-    let dataNotif = dataSiswa.notif;
-    dataNotif.push({ messageNotif });
-
-    let message = {
-      notif: dataNotif,
-    };
-    axios.patch(`${url}/${id}`, message).then((res) => {
-      setIsModalMessage(false);
-    });
   };
 
   // modal delete
@@ -204,15 +205,14 @@ const DetailStudent = () => {
         <div className="dark:text-white font-bold text-xl m-2 ">
           Detail Data Tutor
         </div>
-        {dataSiswa.nama_orangtua? (
+        {dataSiswa.nama_orangtua ? (
           <>
             <div className="flex flex-col gap-4 m-2">
-
               {/* data student */}
               {isEdit ? (
                 <div className="flex flex-col w-full md:w=3/4 dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                   <div className="flex gap-3 relative">
-                    <div className="w-1/3 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+                    <div className="w-1/4 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                       <img
                         src="https://www.stepstherapy.com.au/wp-content/uploads/2020/05/Natalie-square-profile-picture-1024x1024.jpg"
                         alt="profile"
@@ -221,9 +221,9 @@ const DetailStudent = () => {
 
                     <div className="flex flex-col w-full justify-center">
                       <input
-                        onChange={(e) => setNamaPengajar(e.target.value)}
+                        onChange={(e) => setNamaSiswa(e.target.value)}
                         type="text"
-                        defaultValue={dataSiswa.nama_pengajar}
+                        defaultValue={dataSiswa.nama_siswa}
                         className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
                       />
 
@@ -231,13 +231,51 @@ const DetailStudent = () => {
                         <span className="dark:text-white mr-2">ID : </span>
                         <input
                           type="text"
-                          onChange={(e) => setIdPengajar(e.target.value)}
-                          defaultValue={dataSiswa.id_pengajar}
+                          onChange={(e) => setIdSiswa(e.target.value)}
+                          defaultValue={dataSiswa.id_siswa}
                           className="outline-none bg-transparent border border-sky-500 rounded-sm px-2 dark:text-white font-thin text-base"
                         />
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                        <div className="w-full">
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Nama Orang Tua
+                          </div>
+                          <input
+                            onChange={(e) => setNamaOrtu(e.target.value)}
+                            type="text"
+                            defaultValue={dataSiswa.nama_orangtua}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                          />
+                        </div>
+
+                        <div className="w-full">
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Alamat
+                          </div>
+                          <div className="flex flex-col">
+                            <input
+                              onChange={(e) => setAlamat(e.target.value)}
+                              type="text"
+                              defaultValue={dataSiswa.alamat}
+                              className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                            />
+                            <input
+                              onChange={(e) => setKecamatan(e.target.value)}
+                              type="text"
+                              defaultValue={dataSiswa.kecamatan}
+                              className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                            />
+                            <input
+                              onChange={(e) => setKota(e.target.value)}
+                              type="text"
+                              defaultValue={dataSiswa.kota}
+                              className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                            />
+                          </div>
+                        </div>
+
                         <div>
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
                             Email
@@ -252,12 +290,12 @@ const DetailStudent = () => {
 
                         <div>
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
-                            Asal Kampus
+                            Kelas
                           </div>
                           <input
-                            onChange={(e) => setAsalKampus(e.target.value)}
+                            onChange={(e) => setKelas(e.target.value)}
                             type="text"
-                            defaultValue={dataSiswa.asal_kampus}
+                            defaultValue={dataSiswa.kelas}
                             className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
                           />
                         </div>
@@ -278,6 +316,18 @@ const DetailStudent = () => {
 
                         <div>
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Kurikulum
+                          </div>
+                          <input
+                            onChange={(e) => setKurikulum(e.target.value)}
+                            type="text"
+                            defaultValue={dataSiswa.kurikulum}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                          />
+                        </div>
+
+                        <div>
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
                             Phone
                           </div>
                           <input
@@ -290,34 +340,100 @@ const DetailStudent = () => {
 
                         <div className="w-full">
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
-                            Nama Bank
+                            Jadwal Les
                           </div>
                           <input
-                            onChange={(e) => setNamaBank(e.target.value)}
+                            onChange={(e) => setJadwal(e.target.value)}
                             type="text"
-                            defaultValue={dataSiswa.nama_bank}
+                            defaultValue={dataSiswa.jadwal_les}
                             className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
                           />
                         </div>
 
-                        <div>
+                        <div className="w-full">
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
-                            Rek Bank
+                            Jam Les
                           </div>
-                          <div>
-                            <input
-                              onChange={(e) => setRekBank(e.target.value)}
-                              type="text"
-                              defaultValue={dataSiswa.rek_bank}
-                              className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
-                            />
-                            <input
-                              onChange={(e) => setAnBank(e.target.value)}
-                              type="text"
-                              defaultValue={dataSiswa.an_rek_bank}
-                              className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
-                            />
+                          <input
+                            onChange={(e) => setJam(e.target.value)}
+                            type="text"
+                            defaultValue={dataSiswa.jam_mulai_les}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                          />
+                        </div>
+
+                        <div className="w-full">
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Jenis Bimble
                           </div>
+                          <input
+                            onChange={(e) => setJenisBimble(e.target.value)}
+                            type="text"
+                            defaultValue={dataSiswa.jenis_bimble}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                          />
+                        </div>
+
+                        <div className="w-full">
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Gender Tentor
+                          </div>
+                          <input
+                            onChange={(e) => setGenderTutor(e.target.value)}
+                            type="text"
+                            defaultValue={dataSiswa.gender_tentor}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                          />
+                        </div>
+
+                        <div className="w-full">
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Program
+                          </div>
+                          <input
+                            onChange={(e) => setProgram(e.target.value)}
+                            type="text"
+                            defaultValue={dataSiswa.program}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                          />
+                        </div>
+
+                        <div className="w-full">
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Status Siswa
+                          </div>
+                          <input
+                            onChange={(e) => setStatusSiswa(e.target.value)}
+                            type="text"
+                            defaultValue={dataSiswa.status_siswa}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                          />
+                        </div>
+
+                        <div className="w-full">
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Status Pendaftaran
+                          </div>
+                          <input
+                            onChange={(e) =>
+                              setStatusPendaftaran(e.target.value)
+                            }
+                            type="text"
+                            defaultValue={dataSiswa.status_pendaftaran}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                          />
+                        </div>
+
+                        <div className="w-full">
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Regional
+                          </div>
+                          <input
+                            onChange={(e) => setRegional(e.target.value)}
+                            type="text"
+                            defaultValue={dataSiswa.regional}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                          />
                         </div>
                       </div>
                     </div>
@@ -377,10 +493,10 @@ const DetailStudent = () => {
                             Alamat
                           </div>
                           <div className="dark:text-white font-thin text-sm">
-                            {dataSiswa.alamat} {dataSiswa.kecamatan} {dataSiswa.kota}
+                            {dataSiswa.alamat} {dataSiswa.kecamatan}{" "}
+                            {dataSiswa.kota}
                           </div>
                         </div>
-
 
                         <div className="w-full">
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
@@ -452,7 +568,7 @@ const DetailStudent = () => {
                             {dataSiswa.jenis_bimble}
                           </div>
                         </div>
-                        
+
                         <div className="w-full">
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
                             Gender Tentor
@@ -535,25 +651,13 @@ const DetailStudent = () => {
                   Lorem ipsum dolor sit amet, <br /> consectetur adipisicing
                   elit.
                 </p>
-                <div className="flex justify-end mt-3">
-                  <button
-                    onClick={() => setIsModalMessage(!isModalMessage)}
-                    className="drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] dark:bg-neutral-700 bg-slate-300 rounded px-2 py-1 w-fit flex items-center dark:text-white text-sm font-thin dark:hover:bg-sky-500 hover:bg-sky-500"
-                  >
-                    <span className=" material-symbols-rounded dark:text-white font-thin">
-                      {" "}
-                      chat{" "}
-                    </span>
-                    <span>Send Message</span>
-                  </button>
-                </div>
               </div>
             </div>
 
-            {/* rincian kepengajaran */}
+            {/* rincian pembayaran */}
             <div className="flex flex-col m-2 bg-slate-200 dark:bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
               <div className="dark:text-white font-thin text-sm my-3">
-                Rincian Kepengajaran
+                Rincian Pembayaran Siswa
               </div>
 
               <table className="w-full">
@@ -570,13 +674,13 @@ const DetailStudent = () => {
                     <th className="font-medium hidden md:table-cell">
                       Realisasi TS
                     </th>
-                    <th className="font-medium md:table-cell">Biaya Pendaftaran</th> 
+                    <th className="font-medium md:table-cell">
+                      Biaya Pendaftaran
+                    </th>
                     <th className="font-medium hidden md:table-cell">
                       Realisasi BP
                     </th>
-                    <th className="font-medium hidden md:table-cell">
-                      Action
-                    </th>
+                    <th className="font-medium hidden md:table-cell">Action</th>
                   </tr>
                 </thead>
 
@@ -590,82 +694,84 @@ const DetailStudent = () => {
                     </tr>
                   </tbody>
                 ) : (
-                  filterDataBiaya.map((item, index) => {
-                    return (
-                      <tbody
-                        key={index}
-                        className="dark:text-white font-thin text-sm"
-                      >
-                        <tr
-                          className={
-                            index % 2 === 0
-                              ? "dark:bg-neutral-800 bg-slate-200 h-8"
-                              : "dark:bg-neutral-900 bg-slate-300 h-8"
-                          }
+                  filterDataBiaya
+                    .sort((a, b) => (a.nama_siswa > b.nama_siswa ? 1 : -1))
+                    .map((item, index) => {
+                      return (
+                        <tbody
+                          key={index}
+                          className="dark:text-white font-thin text-sm"
                         >
-                          <td className="text-center border-r dark:border-white">
-                            {index + 1}
-                          </td>
-                          <td className="text-center border-r dark:border-white hidden md:table-cell">
-                            {item.id_siswa}
-                          </td>
-                          <td className="border-r dark:border-white px-2">
-                            {item.nama_siswa}
-                          </td>
-                          <td className="text-center border-r dark:border-white hidden md:table-cell">
-                            {item.tagihan_siswa} jam
-                          </td>
-                          <td className="text-center border-r dark:border-white">
-                            Rp {item.realisasi_tagihan_siswa}
-                          </td>
-                          <td className="text-center border-r dark:border-white">
-                            Rp {item.biaya_pendaftaran}
-                          </td>
-                          <td className="text-center border-r dark:border-white hidden md:table-cell">
-                            {isIndexEdit === index ? (
-                              <>
-                                <input
-                                  ref={refEditRealisasi}
-                                  type="text"
-                                  defaultValue={item.realisasi_fee_pengajar}
-                                  className="w-20 break-words text-center dark:text-white font-thin text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
-                                />
-                              </>
-                            ) : (
-                              item.realisasi_biaya_pendaftaran
-                            )}
-                          </td>
-                          <td className="hidden justify-center items-center h-8 md:table-cell">
-                            {isIndexEdit === index ? (
-                              <button
-                                onClick={() => onEditDataRincian(item.id)}
-                                className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
-                              >
-                                Done
-                              </button>
-                            ) : (
-                              <div className="flex gap-2 justify-center">
+                          <tr
+                            className={
+                              index % 2 === 0
+                                ? "dark:bg-neutral-800 bg-slate-200 h-8"
+                                : "dark:bg-neutral-900 bg-slate-300 h-8"
+                            }
+                          >
+                            <td className="text-center border-r dark:border-white">
+                              {index + 1}
+                            </td>
+                            <td className="text-center border-r dark:border-white hidden md:table-cell">
+                              {item.id_siswa}
+                            </td>
+                            <td className="border-r dark:border-white px-2">
+                              {item.nama_siswa}
+                            </td>
+                            <td className="text-center border-r dark:border-white hidden md:table-cell">
+                              {item.tagihan_siswa} jam
+                            </td>
+                            <td className="text-center border-r dark:border-white">
+                              Rp {item.realisasi_tagihan_siswa}
+                            </td>
+                            <td className="text-center border-r dark:border-white">
+                              Rp {item.biaya_pendaftaran}
+                            </td>
+                            <td className="text-center border-r dark:border-white hidden md:table-cell">
+                              {isIndexEdit === index ? (
+                                <>
+                                  <input
+                                    ref={refEditRealisasi}
+                                    type="text"
+                                    defaultValue={item.realisasi_fee_pengajar}
+                                    className="w-20 break-words text-center dark:text-white font-thin text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
+                                  />
+                                </>
+                              ) : (
+                                item.realisasi_biaya_pendaftaran
+                              )}
+                            </td>
+                            <td className="hidden justify-center items-center h-8 md:table-cell">
+                              {isIndexEdit === index ? (
                                 <button
-                                  onClick={() => setIsIndexEdit(index)}
+                                  onClick={() => onEditDataRincian(item.id)}
                                   className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
                                 >
-                                  {" "}
-                                  Edit
+                                  Done
                                 </button>
-                                <button
-                                  onClick={() => onDeleteRincian(item.id)}
-                                  className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
-                                >
-                                  {" "}
-                                  Delete
-                                </button>
-                              </div>
-                            )}
-                          </td>
-                        </tr>
-                      </tbody>
-                    );
-                  })
+                              ) : (
+                                <div className="flex gap-2 justify-center">
+                                  <button
+                                    onClick={() => setIsIndexEdit(index)}
+                                    className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                                  >
+                                    {" "}
+                                    Edit
+                                  </button>
+                                  <button
+                                    onClick={() => onDeleteRincian(item.id)}
+                                    className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                                  >
+                                    {" "}
+                                    Delete
+                                  </button>
+                                </div>
+                              )}
+                            </td>
+                          </tr>
+                        </tbody>
+                      );
+                    })
                 )}
               </table>
             </div>
@@ -679,38 +785,6 @@ const DetailStudent = () => {
               </button>
             </Link>
           </div>
-        )}
-
-        {/* modal message */}
-        {isModalMessage ? (
-          <div className="absolute backdrop-blur-sm w-full h-full dark:bg-neutral-700 bg-slate-200 bg-opacity-70 flex justify-center items-center">
-            <div className="flex flex-col w-[75%] dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] py-3">
-              <div className="flex justify-between">
-                <div className="dark:text-white">Send Message</div>
-                <button onClick={closeModal}>
-                  <span class="hover:text-rose-500 material-symbols-rounded dark:text-white">
-                    close
-                  </span>
-                </button>
-              </div>
-
-              <textarea
-                ref={refMessage}
-                type="text"
-                className=" break-words dark:text-white font-thin text-sm rounded-md p-2 bg-transparent outline-none border dark:border-sky-500 border-slate-900 "
-                defaultValue={defaultMessage}
-              />
-
-              <button
-                onClick={onMessage}
-                className="hover:bg-sky-500 dark:hover:bg-sky-500 dark:text-white dark:bg-neutral-800 bg-slate-300 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-md px-2 w-fit mt-2"
-              >
-                Send
-              </button>
-            </div>
-          </div>
-        ) : (
-          ""
         )}
 
         {/* modal delete */}

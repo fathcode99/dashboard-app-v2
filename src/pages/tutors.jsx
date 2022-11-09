@@ -7,8 +7,6 @@ import ExportExcel from "../component/exportExcel";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-// const url = "https://admin.menujudigital.com/api/datapengajar";
-
 const Tutors = () => {
   const stateTutors = useSelector((state) => state.tutorsReducer);
   const navigate = useNavigate();
@@ -90,7 +88,7 @@ const Tutors = () => {
               </div>
 
               <div className="flex mb-3 items-center">
-                <span className="text-white mr-2">Export to Excel:</span>
+                <span className="dark:text-white mr-2">Export to Excel:</span>
                 <ExportExcel data={dataMembers} />
               </div>
             </div>

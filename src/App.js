@@ -9,6 +9,8 @@ import Login from "./pages/login";
 import Apply from "./pages/apply";
 import FeePengajar from "./pages/feePengajar";
 import DetailStudent from "./pages/detailStudent";
+import KeuanganSiswa from "./pages/keuanganSiswa";
+import NotifyAdmin from "./pages/notifyAdmin";
 
 import axios from "axios";
 import { Routes, Route } from "react-router-dom";
@@ -74,6 +76,19 @@ const App = () => {
         });
       });
 
+    axios
+      .get(`${url}/notifyadmin`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        dispatch({
+          type: "GET_DATA_NOTIFY",
+          payload: res.data,
+        }); 
+      });
+
     const theme = localStorage.getItem("theme");
     if (theme === "light") {
       document.documentElement.classList.remove("dark");
@@ -92,7 +107,10 @@ const App = () => {
         <Route path="/feepengajar" element={<FeePengajar />} />
 
         <Route path="/students" element={<Students />} />
+        <Route path="/keuangansiswa" element={<KeuanganSiswa />} />
         <Route path="/students/:id" element={<DetailStudent />} />
+
+        <Route path="/notifadmin" element={<NotifyAdmin />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     </div>

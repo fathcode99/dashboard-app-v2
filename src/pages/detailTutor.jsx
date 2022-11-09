@@ -78,7 +78,7 @@ const DetailTutor = () => {
       rek_bank: rekBank,
       an_rek_bank: anBank,
     };
-    console.log(updateData)
+    console.log(updateData);
     axios
       .put(`${url}/datapengajar/${id}/update`, updateData, {
         headers: {
@@ -129,24 +129,29 @@ const DetailTutor = () => {
   };
 
   // modal message
-  let defaultMessage =
-    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo cupiditate sint, totam rem ipsa ex!";
+  let defaultMessage = "Anda mendapatkan siswa bernama ...";
   let refMessage = useRef();
   const closeModal = () => {
     setIsModalMessage(false);
   };
+
   const onMessage = () => {
     let messageNotif = refMessage.current.value;
 
-    let dataNotif = dataTutor.notif;
-    dataNotif.push({ messageNotif });
-
     let message = {
-      notif: dataNotif,
+      id_pengajar: dataTutor.id_pengajar,
+      nama_pengajar: dataTutor.nama_pengajar,
+      pesan: messageNotif,
     };
-    axios.patch(`${url}/${id}`, message).then((res) => {
-      setIsModalMessage(false);
-    });
+    axios
+      .post(`${url}/notifypengajar`, message, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setIsModalMessage(false);
+      });
   };
 
   // modal delete
@@ -201,8 +206,22 @@ const DetailTutor = () => {
       </div>
       <div className="flex flex-col md:m-8 w-full min-h-screen relative">
         <Navbar />
-        <div className="dark:text-white font-bold text-xl m-2 ">
-          Detail Data Tutor
+        <div className="flex justify-between m-2 py-1">
+          <div className="dark:text-white font-bold text-xl">
+            Detail Data Tutor
+          </div>
+          <div className="flex dark:text-white font-thin">
+            <button
+              onClick={() => setIsModalMessage(!isModalMessage)}
+              className="hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] cursor-pointer dark:bg-neutral-800 bg-slate-300 rounded-md flex justify-center items-center border dark:border-sky-500 px-2"
+            >
+              <span className="material-symbols-rounded mr-2 font-thin">
+                {" "}
+                chat{" "}
+              </span>
+              <span>Send Message</span>
+            </button>
+          </div>
         </div>
         {dataTutor.nama_pengajar ? (
           <>
@@ -424,7 +443,6 @@ const DetailTutor = () => {
                         className="hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] dark:bg-neutral-700 bg-slate-300 rounded h-6 w-6 "
                       >
                         <span className="material-symbols-rounded dark:text-white font-thin">
-                          
                           Edit
                         </span>
                       </button>
@@ -452,18 +470,6 @@ const DetailTutor = () => {
                   Lorem ipsum dolor sit amet, <br /> consectetur adipisicing
                   elit.
                 </p>
-                <div className="flex justify-end mt-3">
-                  <button
-                    onClick={() => setIsModalMessage(!isModalMessage)}
-                    className="drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] dark:bg-neutral-700 bg-slate-300 rounded px-2 py-1 w-fit flex items-center dark:text-white text-sm font-thin dark:hover:bg-sky-500 hover:bg-sky-500"
-                  >
-                    <span className=" material-symbols-rounded dark:text-white font-thin">
-                      {" "}
-                      chat{" "}
-                    </span>
-                    <span>Send Message</span>
-                  </button>
-                </div>
               </div>
             </div>
 
@@ -598,7 +604,7 @@ const DetailTutor = () => {
 
         {/* modal message */}
         {isModalMessage ? (
-          <div className="absolute backdrop-blur-sm w-full h-full dark:bg-neutral-700 bg-slate-200 bg-opacity-70 flex justify-center items-center">
+          <div className="absolute backdrop-blur-sm w-full h-full bg-transparent bg-opacity-20 flex justify-center items-center">
             <div className="flex flex-col w-[75%] dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] py-3">
               <div className="flex justify-between">
                 <div className="dark:text-white">Send Message</div>

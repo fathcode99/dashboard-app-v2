@@ -37,7 +37,7 @@ Route::group(
         Route::group(
             ['middleware' => 'isAdmin'], function () {
                     Route::get('biaya', [BiayapengajardansiswaController::class, 'index']); //sudah
-                    Route::put('biaya/{biaya}/update', [BiayapengajardansiswaController::class, 'update']); 
+                    Route::put('biaya/{biaya}/update', [BiayapengajardansiswaController::class, 'update']); //sudah
                     Route::delete('biaya/{biaya}/delete', [BiayapengajardansiswaController::class, 'destroy']); //sudah
                     
                     Route::get('pengeluaran', [PengeluaranlbbController::class, 'index']);
@@ -72,20 +72,23 @@ Route::group(
                     Route::delete('dataortusiswa/{dataortusiswa}/delete', [DataorangtuadansiswaController::class, 'destroy']); //sudah
                 }
         );
-        Route::get('logout', [LoginController::class, 'logout']);
-        Route::get('biaya/{biaya}', [BiayapengajardansiswaController::class, 'show']);
+        Route::get('logout', [LoginController::class, 'logout']); //sudah
+        Route::get('biaya/{biaya}', [BiayapengajardansiswaController::class, 'show']); 
 
-        Route::post('biaya', [BiayapengajardansiswaController::class, 'store']); //kok jadi ga bisa ?
+        Route::post('biaya', [BiayapengajardansiswaController::class, 'store']); //bisa
 
-        Route::post('apply', [ApplypengajarController::class, 'store']);
-        Route::get('notifypengajar/{notifypengajar}', [NotifypengajarController::class, 'show']);
-        Route::get('notifypengajar', [NotifypengajarController::class, 'index']);
-        Route::post('notifypengajar', [NotifypengajarController::class, 'store']);
-        Route::delete('notifypengajar/{notifypengajar}/delete', [NotifypengajarController::class, 'destroy']);
-        Route::get('notifyadmin/{notifyadmin}', [NotifyadminController::class, 'show']);
-        Route::get('notifyadmin', [NotifyadminController::class, 'index']);
-        Route::post('notifyadmin', [NotifyadminController::class, 'store']);
-        Route::delete('notifyadmin/{notifyadmin}/delete', [NotifyadminController::class, 'destroy']);
+        Route::post('apply', [ApplypengajarController::class, 'store']); //bisa
+
+        Route::get('notifypengajar/{notifypengajar}', [NotifypengajarController::class, 'show']); 
+        Route::get('notifypengajar', [NotifypengajarController::class, 'index']); //bisa
+        Route::post('notifypengajar', [NotifypengajarController::class, 'store']); //sudah
+        Route::delete('notifypengajar/{notifypengajar}/delete', [NotifypengajarController::class, 'destroy']); 
+
+        Route::get('notifyadmin/{notifyadmin}', [NotifyadminController::class, 'show']); //ini di buat apa ya?
+        Route::get('notifyadmin', [NotifyadminController::class, 'index']); //sudah isinya hanya gini aja ?
+        Route::post('notifyadmin', [NotifyadminController::class, 'store']); //bisa
+        Route::delete('notifyadmin/{notifyadmin}/delete', [NotifyadminController::class, 'destroy']); //sudah
+        
         Route::get('gambar', [GambariklanController::class, 'index']);
         Route::get('teks', [TeksiklanController::class, 'index']);
 
@@ -94,8 +97,8 @@ Route::group(
 
         Route::put('datapengajar/{datapengajar}/update', [DatapengajarController::class, 'update']);
 
-        Route::get('dataortusiswa/{dataortusiswa}', [DataorangtuadansiswaController::class, 'show']); 
-        Route::post('dataortusiswa', [DataorangtuadansiswaController::class, 'store']); //tidak bisa
+        Route::get('dataortusiswa/{dataortusiswa}', [DataorangtuadansiswaController::class, 'show']); //sudah
+        Route::post('dataortusiswa', [DataorangtuadansiswaController::class, 'store']); // sudah
 
         Route::put('dataortusiswa/{dataortusiswa}/update', [DataorangtuadansiswaController::class, 'update']);
     }

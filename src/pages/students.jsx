@@ -76,7 +76,7 @@ const Students = () => {
               </div>
 
               <div className="flex mb-3 items-center">
-                <span className="text-white mr-2">Export to Excel:</span>
+                <span className="dark:text-white mr-2">Export to Excel:</span>
                 <ExportExcel data={dataMembers} />
               </div>
             </div>

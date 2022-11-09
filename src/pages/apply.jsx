@@ -116,7 +116,7 @@ const Tutors = () => {
               </div>
 
               <div className="flex mb-3 items-center">
-                <span className="text-white mr-2">Export to Excel:</span>
+                <span className="dark:text-white mr-2">Export to Excel:</span>
                 <ExportExcel data={dataMembers} />
               </div>
             </div>
@@ -125,13 +125,13 @@ const Tutors = () => {
             <table className="w-full">
               <thead className="h-8">
                 <tr className="text-sm text-white font-thin dark:bg-sky-500 bg-slate-900 h-full">
-                  <th className="font-medium w-8 cursor-pointer">No.</th>
-                  <th className="font-medium w-24 cursor-pointer">ID</th>
+                  <th className="font-medium w-8 cursor-pointer border-r">No.</th>
+                  <th className="font-medium w-24 cursor-pointer border-r">ID</th>
                   <th className="font-medium w-36 border-r"> Nama </th>
-                  <th className="font-medium cursor-pointer">Mapel</th>
-                  <th className="font-medium hidden md:table-cell cursor-pointer"> Asal Kampus </th>
-                  <th className="font-medium cursor-pointer">Telp</th>
-                  <th className="font-medium cursor-pointer">Email</th>
+                  <th className="font-medium cursor-pointer border-r">Mapel</th>
+                  <th className="font-medium hidden md:table-cell border-r cursor-pointer"> Asal Kampus </th>
+                  <th className="font-medium cursor-pointer border-r">Telp</th>
+                  <th className="font-medium cursor-pointer border-r">Email</th>
                   <th className="font-medium">Action</th>
                 </tr>
               </thead>
@@ -143,7 +143,9 @@ const Tutors = () => {
                   </tr>
                 </tbody>
               ) : (
-                sliceTable.map((item, index) => {
+                sliceTable
+                .sort((a, b) => (a.nama_pengajar > b.nama_pengajar ? 1 : -1))
+                .map((item, index) => {
                   return (
                     <tbody
                       key={index}
