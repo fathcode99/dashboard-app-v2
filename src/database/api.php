@@ -58,9 +58,10 @@ Route::group(
                     Route::get('apply', [ApplypengajarController::class, 'index']); //sudah
                     Route::delete('apply/{apply}/delete', [ApplypengajarController::class, 'destroy']); // sudah
 
-                    Route::post('gambar', [GambariklanController::class, 'store']);
-                    Route::put('gambar/{gambar}/update', [GambariklanController::class, 'update']);
-                    Route::delete('gambar/{gambar}/delete', [GambariklanController::class, 'destroy']);
+                    Route::post('gambar', [GambariklanController::class, 'store']); //sudah
+                    Route::put('gambar/{gambar}/update', [GambariklanController::class, 'update']); //get error
+                    Route::delete('gambar/{gambar}/delete', [GambariklanController::class, 'destroy']); //get error
+                    
                     Route::post('teks', [TeksiklanController::class, 'store']);
                     Route::put('teks/{teks}/update', [TeksiklanController::class, 'update']);
                     Route::delete('teks/{teks}/delete', [TeksiklanController::class, 'destroy']);
@@ -88,19 +89,19 @@ Route::group(
         Route::get('notifyadmin', [NotifyadminController::class, 'index']); //sudah isinya hanya gini aja ?
         Route::post('notifyadmin', [NotifyadminController::class, 'store']); //bisa
         Route::delete('notifyadmin/{notifyadmin}/delete', [NotifyadminController::class, 'destroy']); //sudah
-        
-        Route::get('gambar', [GambariklanController::class, 'index']);
+
+        Route::get('gambar', [GambariklanController::class, 'index']); //munculnya tulisan gamuncul gambar
         Route::get('teks', [TeksiklanController::class, 'index']);
 
         Route::post('datapengajar', [DatapengajarController::class, 'store']); // bisa sudah
         Route::get('datapengajar/{datapengajar}', [DatapengajarController::class, 'show']); //bisa sudah
 
-        Route::put('datapengajar/{datapengajar}/update', [DatapengajarController::class, 'update']);
+        Route::put('datapengajar/{datapengajar}/update', [DatapengajarController::class, 'update']); //sudah
 
         Route::get('dataortusiswa/{dataortusiswa}', [DataorangtuadansiswaController::class, 'show']); //sudah
         Route::post('dataortusiswa', [DataorangtuadansiswaController::class, 'store']); // sudah
 
-        Route::put('dataortusiswa/{dataortusiswa}/update', [DataorangtuadansiswaController::class, 'update']);
+        Route::put('dataortusiswa/{dataortusiswa}/update', [DataorangtuadansiswaController::class, 'update']); //sudah
     }
 );
 

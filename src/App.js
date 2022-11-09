@@ -11,10 +11,10 @@ import FeePengajar from "./pages/feePengajar";
 import DetailStudent from "./pages/detailStudent";
 import KeuanganSiswa from "./pages/keuanganSiswa";
 import NotifyAdmin from "./pages/notifyAdmin";
+import Picture from "./pages/picture";
 
 import axios from "axios";
-import { Routes, Route } from "react-router-dom";
-// import axios from 'axios'
+import { Routes, Route } from "react-router-dom"; 
 import { useDispatch } from "react-redux";
 
 const url = "https://admin.menujudigital.com/api";
@@ -111,6 +111,7 @@ const App = () => {
         <Route path="/students/:id" element={<DetailStudent />} />
 
         <Route path="/notifadmin" element={<NotifyAdmin />} />
+        <Route path="/picture" element={<Picture />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     </div>

@@ -107,6 +107,12 @@ const Sidebar = () => {
               </div>
             </div>
           </Link>
+          <Link to="/picture">
+            <div className="cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4">
+              <span className="material-symbols-rounded "> groups </span>
+              <span className="hidden md:block  ml-4">Advertising</span>
+            </div>
+          </Link>
           <div
             onClick={onLogout}
             className="sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4 cursor-pointer"
