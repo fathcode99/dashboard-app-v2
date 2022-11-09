@@ -68,8 +68,8 @@ Route::group(
                     Route::get('datapengajar', [DatapengajarController::class, 'index']); //bisa sudah
                     Route::delete('datapengajar/{datapengajar}/delete', [DatapengajarController::class, 'destroy']); //bisa
                     
-                    Route::get('dataortusiswa', [DataorangtuadansiswaController::class, 'index']); 
-                    Route::delete('dataortusiswa/{dataortusiswa}/delete', [DataorangtuadansiswaController::class, 'destroy']);
+                    Route::get('dataortusiswa', [DataorangtuadansiswaController::class, 'index']); //sudah
+                    Route::delete('dataortusiswa/{dataortusiswa}/delete', [DataorangtuadansiswaController::class, 'destroy']); //sudah
                 }
         );
         Route::get('logout', [LoginController::class, 'logout']);

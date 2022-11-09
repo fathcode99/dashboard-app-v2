@@ -42,30 +42,23 @@ const Sidebar = () => {
                     <Link to="/feepengajar">
                         <div className='cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
                             <span className="material-symbols-rounded ">supervised_user_circle</span>
-                            <span className="hidden md:block  ml-4">Fee Pengajar</span>
+                            <span className="hidden md:block  ml-4">Keuangan Pengajar</span>
                         </div>
                     </Link> 
 
-                    <span className='hidden md:block  text-xs text-left pl-4 mt-5'>Data Tentang Murid</span>
+                    <span className='hidden md:block  text-xs text-left pl-4 mt-5'>Data Tentang Siswa</span>
                     <Link to="/students">
                         <div className='cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
                             <span className="material-symbols-rounded "> groups </span>
-                            <span className="hidden md:block  ml-4">List Murid</span>
+                            <span className="hidden md:block  ml-4">Data Siswa</span>
                         </div>
                     </Link>
                     <Link to="/students">
                         <div className='cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4'>
                             <span className="material-symbols-rounded "> groups </span>
-                            <span className="hidden md:block  ml-4">Registrasi Murid</span>
-                        </div>
-                    </Link>
-                    <Link to="/addstudent">
-                        <div className='cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4 '>
-                            <span className="material-symbols-rounded "> person_add </span>
-                            <span className="hidden md:block ml-4">Tambahkan Murid</span>
+                            <span className="hidden md:block  ml-4">Keuangan Siswa</span>
                         </div>
                     </Link> 
-
 
                     <span className='hidden md:block text-xs text-left pl-4 mt-5'>Admin</span> 
                     <div className='sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4 cursor-pointer'>

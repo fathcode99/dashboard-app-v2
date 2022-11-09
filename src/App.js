@@ -6,8 +6,9 @@ import Tutors from "./pages/tutors";
 import Students from "./pages/students";
 import DetailTutor from "./pages/detailTutor";
 import Login from "./pages/login";
-import Apply from "./pages/apply"
-import FeePengajar from "./pages/feePengajar"
+import Apply from "./pages/apply";
+import FeePengajar from "./pages/feePengajar";
+import DetailStudent from "./pages/detailStudent";
 
 import axios from "axios";
 import { Routes, Route } from "react-router-dom";
@@ -46,7 +47,7 @@ const App = () => {
           payload: res.data,
         });
       });
-    
+
     axios
       .get(`${url}/biaya`, {
         headers: {
@@ -57,15 +58,21 @@ const App = () => {
         dispatch({
           type: "GET_DATA_BIAYA",
           payload: res.data,
-        }); 
+        });
       });
-    // axios.get(`${url}/students`)
-    //   .then(res => {
-    //     dispatch({
-    //       type: 'GET_DATA_STUDENTS',
-    //       payload: res.data
-    //     })
-    //   })
+
+    axios
+      .get(`${url}/dataortusiswa`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        dispatch({
+          type: "GET_DATA_STUDENTS",
+          payload: res.data,
+        });
+      });
 
     const theme = localStorage.getItem("theme");
     if (theme === "light") {
@@ -83,8 +90,9 @@ const App = () => {
         <Route path="/tutors/:id" element={<DetailTutor />} />
         <Route path="/apply" element={<Apply />} />
         <Route path="/feepengajar" element={<FeePengajar />} />
-        
+
         <Route path="/students" element={<Students />} />
+        <Route path="/students/:id" element={<DetailStudent />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     </div>

@@ -8,11 +8,11 @@ import { Link } from "react-router-dom";
 
 const url = "https://admin.menujudigital.com/api";
 
-const DetailTutor = () => {
+const DetailStudent = () => {
   let token = localStorage.getItem("token");
   const { id } = useParams();
 
-  const [dataTutor, setDataTutor] = useState({});
+  const [dataSiswa, setDataSiswa] = useState({});
   const [dataBiaya, setDataBiaya] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [isIndexEdit, setIsIndexEdit] = useState(null);
@@ -21,25 +21,25 @@ const DetailTutor = () => {
   const [isModalDelete, setIsModalDelete] = useState(false);
 
   // edit data tutor
-  const [namaPengajar, setNamaPengajar] = useState(dataTutor.nama_pengajar);
-  const [idPengajar, setIdPengajar] = useState(dataTutor.id_pengajar);
-  const [email, setEmail] = useState(dataTutor.email);
-  const [asalKampus, setAsalKampus] = useState(dataTutor.asal_kampus);
-  const [mapel, setMapel] = useState(dataTutor.mapel);
-  const [telp, setTelp] = useState(dataTutor.no_telp);
-  const [namaBank, setNamaBank] = useState(dataTutor.nama_bank);
-  const [rekBank, setRekBank] = useState(dataTutor.rek_bank);
-  const [anBank, setAnBank] = useState(dataTutor.an_rek_bank);
+  const [namaPengajar, setNamaPengajar] = useState(dataSiswa.nama_pengajar);
+  const [idPengajar, setIdPengajar] = useState(dataSiswa.id_pengajar);
+  const [email, setEmail] = useState(dataSiswa.email);
+  const [asalKampus, setAsalKampus] = useState(dataSiswa.asal_kampus);
+  const [mapel, setMapel] = useState(dataSiswa.mapel);
+  const [telp, setTelp] = useState(dataSiswa.no_telp);
+  const [namaBank, setNamaBank] = useState(dataSiswa.nama_bank);
+  const [rekBank, setRekBank] = useState(dataSiswa.rek_bank);
+  const [anBank, setAnBank] = useState(dataSiswa.an_rek_bank);
 
   useEffect(() => {
     axios
-      .get(`${url}/datapengajar/${id}`, {
+      .get(`${url}/dataortusiswa/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
-        setDataTutor(res.data);
+        setDataSiswa(res.data);
       });
 
     axios
@@ -54,10 +54,10 @@ const DetailTutor = () => {
   }, [id, token]);
 
   // filter data rincian
-  let idTutor = dataTutor.id_pengajar;
+  let idSiswa = dataSiswa.id_siswa;
   let filterDataBiaya;
   if (dataBiaya) {
-    filterDataBiaya = dataBiaya.filter((data) => data.id_pengajar === idTutor);
+    filterDataBiaya = dataBiaya.filter((data) => data.id_siswa === idSiswa);
   }
 
   //menghitung total fee
@@ -78,7 +78,7 @@ const DetailTutor = () => {
       rek_bank: rekBank,
       an_rek_bank: anBank,
     };
-    console.log(updateData)
+    console.log(updateData);
     axios
       .put(`${url}/datapengajar/${id}/update`, updateData, {
         headers: {
@@ -93,7 +93,7 @@ const DetailTutor = () => {
             },
           })
           .then((res) => {
-            setDataTutor(res.data);
+            setDataSiswa(res.data);
           });
       });
     setIsEdit(!isEdit);
@@ -138,7 +138,7 @@ const DetailTutor = () => {
   const onMessage = () => {
     let messageNotif = refMessage.current.value;
 
-    let dataNotif = dataTutor.notif;
+    let dataNotif = dataSiswa.notif;
     dataNotif.push({ messageNotif });
 
     let message = {
@@ -152,13 +152,13 @@ const DetailTutor = () => {
   // modal delete
   const onValidDeleteYes = () => {
     axios
-      .delete(`${url}/datapengajar/${id}/delete`, {
+      .delete(`${url}/dataortusiswa/${id}/delete`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
-        setDataTutor({});
+        setDataSiswa({});
         setIsModalDelete(false);
       });
   };
@@ -204,10 +204,11 @@ const DetailTutor = () => {
         <div className="dark:text-white font-bold text-xl m-2 ">
           Detail Data Tutor
         </div>
-        {dataTutor.nama_pengajar ? (
+        {dataSiswa.nama_orangtua? (
           <>
-            <div className="grid grid-cols-1 md:flex gap-4 m-2">
-              {/* data tutor */}
+            <div className="flex flex-col gap-4 m-2">
+
+              {/* data student */}
               {isEdit ? (
                 <div className="flex flex-col w-full md:w=3/4 dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                   <div className="flex gap-3 relative">
@@ -222,7 +223,7 @@ const DetailTutor = () => {
                       <input
                         onChange={(e) => setNamaPengajar(e.target.value)}
                         type="text"
-                        defaultValue={dataTutor.nama_pengajar}
+                        defaultValue={dataSiswa.nama_pengajar}
                         className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
                       />
 
@@ -231,7 +232,7 @@ const DetailTutor = () => {
                         <input
                           type="text"
                           onChange={(e) => setIdPengajar(e.target.value)}
-                          defaultValue={dataTutor.id_pengajar}
+                          defaultValue={dataSiswa.id_pengajar}
                           className="outline-none bg-transparent border border-sky-500 rounded-sm px-2 dark:text-white font-thin text-base"
                         />
                       </div>
@@ -244,7 +245,7 @@ const DetailTutor = () => {
                           <input
                             type="text"
                             onChange={(e) => setEmail(e.target.value)}
-                            defaultValue={dataTutor.email}
+                            defaultValue={dataSiswa.email}
                             className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
                           />
                         </div>
@@ -256,7 +257,7 @@ const DetailTutor = () => {
                           <input
                             onChange={(e) => setAsalKampus(e.target.value)}
                             type="text"
-                            defaultValue={dataTutor.asal_kampus}
+                            defaultValue={dataSiswa.asal_kampus}
                             className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
                           />
                         </div>
@@ -269,7 +270,7 @@ const DetailTutor = () => {
                             <input
                               onChange={(e) => setMapel(e.target.value)}
                               type="text"
-                              defaultValue={dataTutor.mapel}
+                              defaultValue={dataSiswa.mapel}
                               className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
                             />
                           </div>
@@ -282,7 +283,7 @@ const DetailTutor = () => {
                           <input
                             onChange={(e) => setTelp(e.target.value)}
                             type="text"
-                            defaultValue={dataTutor.no_telp}
+                            defaultValue={dataSiswa.no_telp}
                             className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
                           />
                         </div>
@@ -294,7 +295,7 @@ const DetailTutor = () => {
                           <input
                             onChange={(e) => setNamaBank(e.target.value)}
                             type="text"
-                            defaultValue={dataTutor.nama_bank}
+                            defaultValue={dataSiswa.nama_bank}
                             className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
                           />
                         </div>
@@ -307,13 +308,13 @@ const DetailTutor = () => {
                             <input
                               onChange={(e) => setRekBank(e.target.value)}
                               type="text"
-                              defaultValue={dataTutor.rek_bank}
+                              defaultValue={dataSiswa.rek_bank}
                               className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
                             />
                             <input
                               onChange={(e) => setAnBank(e.target.value)}
                               type="text"
-                              defaultValue={dataTutor.an_rek_bank}
+                              defaultValue={dataSiswa.an_rek_bank}
                               className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
                             />
                           </div>
@@ -345,9 +346,9 @@ const DetailTutor = () => {
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col w-full  dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+                <div className="flex flex-col w-full  dark:bg-neutral-800 bg-slate-200 rounded-md p-4 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                   <div className="flex gap-3 relative">
-                    <div className="w-1/3 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+                    <div className="w-1/4 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                       <img
                         src="https://www.stepstherapy.com.au/wp-content/uploads/2020/05/Natalie-square-profile-picture-1024x1024.jpg"
                         alt="profile"
@@ -355,28 +356,47 @@ const DetailTutor = () => {
                     </div>
                     <div className="flex flex-col w-full justify-center">
                       <div className="dark:text-white font-medium text-xl">
-                        {dataTutor.nama_pengajar}
+                        {dataSiswa.nama_siswa}
                       </div>
                       <div className="dark:text-white font-thin text-sm">
-                        ID : {dataTutor.id_pengajar}
+                        ID : {dataSiswa.id_siswa}
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-2">
                         <div className="w-full">
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Nama Orang Tua
+                          </div>
+                          <div className="dark:text-white font-thin text-sm">
+                            {dataSiswa.nama_orangtua}
+                          </div>
+                        </div>
+
+                        <div className="w-full">
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Alamat
+                          </div>
+                          <div className="dark:text-white font-thin text-sm">
+                            {dataSiswa.alamat} {dataSiswa.kecamatan} {dataSiswa.kota}
+                          </div>
+                        </div>
+
+
+                        <div className="w-full">
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
                             Email
                           </div>
                           <div className="dark:text-white font-thin text-sm">
-                            {dataTutor.email}
+                            {dataSiswa.email}
                           </div>
                         </div>
 
                         <div>
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
-                            Asal Kampus
+                            Kelas
                           </div>
                           <div className="dark:text-white font-thin text-sm">
-                            {dataTutor.asal_kampus}
+                            {dataSiswa.kelas}
                           </div>
                         </div>
 
@@ -385,33 +405,96 @@ const DetailTutor = () => {
                             Mapel
                           </div>
                           <div className="dark:text-white font-thin text-sm">
-                            {dataTutor.mapel}
+                            {dataSiswa.mapel}
                           </div>
                         </div>
+                        <div className="w-full">
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Kurikulum
+                          </div>
+                          <div className="dark:text-white font-thin text-sm">
+                            {dataSiswa.kurikulum}
+                          </div>
+                        </div>
+
                         <div>
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
                             Phone
                           </div>
                           <div className="dark:text-white font-thin text-sm">
-                            {dataTutor.no_telp}
-                          </div>
-                        </div>
-
-                        <div className="w-full">
-                          <div className="italic font-thin text-sky-500 text-sm mt-3">
-                            Nama Bank
-                          </div>
-                          <div className="dark:text-white font-thin text-sm">
-                            {dataTutor.nama_bank}
+                            {dataSiswa.no_telp}
                           </div>
                         </div>
 
                         <div>
                           <div className="italic font-thin text-sky-500 text-sm mt-3">
-                            Rek Bank
+                            Jadwal Les
+                          </div>
+                          <div className="dark:text-white font-thin text-sm">
+                            {dataSiswa.jadwal_les}
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Jam Les
+                          </div>
+                          <div className="dark:text-white font-thin text-sm">
+                            {dataSiswa.jam_mulai_les}
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Jenis Bimble
+                          </div>
+                          <div className="dark:text-white font-thin text-sm">
+                            {dataSiswa.jenis_bimble}
+                          </div>
+                        </div>
+                        
+                        <div className="w-full">
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Gender Tentor
+                          </div>
+                          <div className="dark:text-white font-thin text-sm">
+                            {dataSiswa.gender_tentor}
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Program
                           </div>
                           <div className={`dark:text-white font-thin text-sm`}>
-                            {dataTutor.rek_bank} <br /> {dataTutor.an_rek_bank}
+                            {dataSiswa.program}
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Status Siswa
+                          </div>
+                          <div className={`dark:text-white font-thin text-sm`}>
+                            {dataSiswa.status_siswa}
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Status Pendaftaran
+                          </div>
+                          <div className={`dark:text-white font-thin text-sm`}>
+                            {dataSiswa.status_pendaftaran}
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            Regional
+                          </div>
+                          <div className={`dark:text-white font-thin text-sm`}>
+                            {dataSiswa.regional}
                           </div>
                         </div>
                       </div>
@@ -424,8 +507,8 @@ const DetailTutor = () => {
                         className="hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] dark:bg-neutral-700 bg-slate-300 rounded h-6 w-6 "
                       >
                         <span className="material-symbols-rounded dark:text-white font-thin">
-                          
-                          Edit
+                          {" "}
+                          edit{" "}
                         </span>
                       </button>
                       <button
@@ -434,7 +517,7 @@ const DetailTutor = () => {
                       >
                         <span className="material-symbols-rounded dark:text-white font-thin">
                           {" "}
-                          Delete{" "}
+                          delete{" "}
                         </span>
                       </button>
                     </div>
@@ -443,7 +526,7 @@ const DetailTutor = () => {
               )}
 
               {/* payment */}
-              <div className="flex flex-col justify-between md:w-[50%] w-full bg-slate-200 dark:bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+              <div className="flex flex-col justify-between w-full bg-slate-200 dark:bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                 <div className="dark:text-white font-thin text-sm">Payment</div>
                 <div className="text-sky-500 font-thin text-right text-5xl md:text-3xl lg:text-5xl">
                   Rp {totalFee.toLocaleString()}
@@ -476,20 +559,22 @@ const DetailTutor = () => {
               <table className="w-full">
                 <thead className="h-8">
                   <tr className="text-sm text-white font-thin bg-slate-900 dark:bg-sky-500 h-full">
-                    <th className="font-medium w-8">No.</th>
-                    <th className="font-medium w-8 hidden md:table-cell">ID</th>
-                    <th className="font-medium w-36 px-2 flex items-center h-8 justify-between">
-                      Nama Pengajar
+                    <th className="font-medium">No.</th>
+                    <th className="font-medium hidden md:table-cell">ID</th>
+                    <th className="font-medium px-2 flex items-center h-8 justify-between">
+                      Nama Siswa
                     </th>
-                    <th className="font-medium w-20 hidden md:table-cell">
-                      Lembur
-                    </th>
-                    <th className="font-medium md:table-cell">Fee Pengajar</th>
-                    <th className="font-medium">Fotokopi</th>
                     <th className="font-medium hidden md:table-cell">
-                      Realisasi Fee
+                      Tagihan Siswa
                     </th>
-                    <th className="font-medium w-32 hidden md:table-cell">
+                    <th className="font-medium hidden md:table-cell">
+                      Realisasi TS
+                    </th>
+                    <th className="font-medium md:table-cell">Biaya Pendaftaran</th> 
+                    <th className="font-medium hidden md:table-cell">
+                      Realisasi BP
+                    </th>
+                    <th className="font-medium hidden md:table-cell">
                       Action
                     </th>
                   </tr>
@@ -522,19 +607,19 @@ const DetailTutor = () => {
                             {index + 1}
                           </td>
                           <td className="text-center border-r dark:border-white hidden md:table-cell">
-                            {item.id_pengajar}
+                            {item.id_siswa}
                           </td>
                           <td className="border-r dark:border-white px-2">
-                            {item.nama_pengajar}
+                            {item.nama_siswa}
                           </td>
                           <td className="text-center border-r dark:border-white hidden md:table-cell">
-                            {item.durasi_lembur} jam
+                            {item.tagihan_siswa} jam
                           </td>
                           <td className="text-center border-r dark:border-white">
-                            Rp {item.fee_pengajar}
+                            Rp {item.realisasi_tagihan_siswa}
                           </td>
                           <td className="text-center border-r dark:border-white">
-                            Rp {item.biaya_fotokopi}
+                            Rp {item.biaya_pendaftaran}
                           </td>
                           <td className="text-center border-r dark:border-white hidden md:table-cell">
                             {isIndexEdit === index ? (
@@ -547,7 +632,7 @@ const DetailTutor = () => {
                                 />
                               </>
                             ) : (
-                              item.realisasi_fee_pengajar
+                              item.realisasi_biaya_pendaftaran
                             )}
                           </td>
                           <td className="hidden justify-center items-center h-8 md:table-cell">
@@ -588,9 +673,9 @@ const DetailTutor = () => {
         ) : (
           <div className="flex flex-col items-center w-full m-2 text-sky-500 italic font-thin">
             Data Empty
-            <Link to="/tutors">
+            <Link to="/students">
               <button className="mt-2 text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-md px-1">
-                <span>Back to Tutors Page</span>
+                <span>Back to Students Page</span>
               </button>
             </Link>
           </div>
@@ -698,4 +783,4 @@ const DetailTutor = () => {
   );
 };
 
-export default DetailTutor;
+export default DetailStudent;
