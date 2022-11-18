@@ -56,30 +56,30 @@ const AddTutor = () => {
     }
 
     return (
-        <div className='flex'>
-            <div className="flex">
+        <div className='flex bg-slate-200 min-h-screen'>
+            <div className='min-w-[50px] md:w-[300px]'>
                 <Sidebar />
             </div>
-            <div className="flex flex-col md:m-8 w-full min-h-screen m-2">
+            <div className='flex flex-col md:mb-8 md:mx-8 w-full m-2'>
                 <Navbar />
-                <div className='dark:text-white font-bold text-xl m-2 '>Add New Tutors</div>
-                <div className="flex flex-col bg-slate-200 dark:bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+                <div className='font-bold text-xl m-2 '>Add New Tutors</div>
+                <div className="flex flex-col bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                     <div className='flex flex-col'>
-                        <label className='dark:text-white text-sm'>Full Name</label>
+                        <label className='text-sm'>Full Name</label>
                         <input type="text" placeholder='Full Name' ref={refName}
-                            className='mt-2 outline-none bg-transparent border-b dark:border-sky-500 border-slate-900 text-white text-sm font-thin' />
+                            className='mt-2 outline-none bg-transparent border-b border-slate-900 text-white text-sm font-thin' />
                     </div>
 
                     <div className='flex flex-col mt-4'>
-                        <label className='dark:text-white text-sm'>Address</label>
+                        <label className=' text-sm'>Address</label>
                         <input type="text" placeholder='Address' ref={refAddress}
-                            className='mt-2 outline-none bg-transparent border-b dark:border-sky-500 border-slate-900 text-white text-sm font-thin' />
+                            className='mt-2 outline-none bg-transparent border-b border-slate-900 text-white text-sm font-thin' />
                     </div>
 
                     <div className='flex flex-col mt-4'>
-                        <label className='dark:text-white text-sm'>Date Birth</label>
+                        <label className=' text-sm'>Date Birth</label>
                         <input type="text" placeholder='Date' ref={refBirth}
-                            className='mt-2 outline-none bg-transparent border-b dark:border-sky-500 border-slate-900 text-white text-sm font-thin' />
+                            className='mt-2 outline-none bg-transparent border-b border-slate-900 text-white text-sm font-thin' />
                     </div>
 
                     <div className='flex flex-col mt-4'>

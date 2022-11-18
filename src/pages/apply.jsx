@@ -42,6 +42,19 @@ const Tutors = () => {
     setDataRenders(dataMembers);
     setMaxPage(Math.ceil(dataRenders.length / rowPerPage));
 
+    axios
+      .get(`${url}/apply`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        dispatch({
+          type: "GET_DATA_APPLY",
+          payload: res.data,
+        });
+      });
+      
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateTutors.data, dataMembers, rowPerPage]);
 
@@ -94,15 +107,15 @@ const Tutors = () => {
   };
 
   return (
-    <div className="flex">
-      <div className="flex">
+    <div className="flex bg-slate-200  min-h-screen">
+      <div className='min-w-[50px] md:w-[300px]'>
         <Sidebar />
       </div>
-      <div className="flex flex-col md:m-8 w-full min-h-screen">
+      <div className='flex flex-col md:mb-8 md:mx-8 w-full m-2'>
         <Navbar />
-        <div className="dark:text-white font-bold text-xl m-2 ">Data Apply</div>
-        <div className="m-2">
-          <div className="flex flex-col dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+        <div className="main-title">Data Apply</div>
+        <div>
+          <div className="flex flex-col dark:bg-neutral-800 bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
             
             {/* search data */}
             <div className="flex justify-between items-center">  
@@ -154,8 +167,8 @@ const Tutors = () => {
                       <tr
                         className={
                           index % 2 === 0
-                            ? "dark:bg-neutral-800 bg-slate-200 h-8"
-                            : "dark:bg-neutral-900 bg-slate-300 h-8"
+                            ? " bg-slate-white h-8"
+                            : " bg-slate-200 h-8"
                         }
                       >
                         <td className="text-center border-r">{nomer++}</td>
@@ -175,7 +188,7 @@ const Tutors = () => {
                         <td className="flex justify-center items-center h-8 ">
                           <button
                             onClick={() => deleteApply(item.id)}
-                            className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                            className="hover:bg-slate-200 transition duration-300 bg-rose-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
                           >
                             Delete
                           </button>

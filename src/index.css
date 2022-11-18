@@ -3,7 +3,19 @@
 @tailwind utilities;
 
 @layer {
-    .sidebar-btn-hover {
-        @apply dark:hover:bg-neutral-700 hover:bg-slate-400 w-full flex items-center justify-center py-1 
+    .sidebar-btn {
+        @apply cursor-pointer flex md:justify-start justify-center hover:bg-indigo-400 m-1 transition duration-300 rounded-md py-1 items-center md:pl-4 font-medium 
     };
+
+    .widget {
+        @apply flex flex-col bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]
+    };
+    
+    .main-title {
+        @apply text-lg font-bold my-2 bg-sky-500 px-4 py-2 rounded-md
+    };
+
+    .btnutama {
+        @apply hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2
+    }
 }

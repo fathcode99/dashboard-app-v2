@@ -4,11 +4,18 @@ import Sidebar from "../component/sidebar";
 import Navbar from "../component/navbar";
 import ExportExcel from "../component/exportExcel";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import axios from "axios";
+
+
+const url = "https://admin.menujudigital.com/api";
 
 const Students = () => {
   const stateStudents = useSelector((state) => state.studentsReducer);
-  // console.log(stateStudents.data)
+  const dispatch = useDispatch()
+
+  let token = localStorage.getItem("token");
 
   // default data
   const [dataMembers, setDataMembers] = useState(stateStudents.data);
@@ -38,6 +45,20 @@ const Students = () => {
     setDataMembers(stateStudents.data);
     setDataRenders(dataMembers);
     setMaxPage(Math.ceil(dataRenders.length / rowPerPage));
+
+    axios
+      .get(`${url}/dataortusiswa`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        dispatch({
+          type: "GET_DATA_STUDENTS",
+          payload: res.data,
+        });
+      });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateStudents.data, dataMembers, rowPerPage]);
 
@@ -55,15 +76,15 @@ const Students = () => {
   };
 
   return (
-    <div className="flex">
-      <div className="flex">
+    <div className="flex bg-slate-200  min-h-screen">
+      <div className='min-w-[50px] md:w-[300px]'>
         <Sidebar />
       </div>
-      <div className="flex flex-col md:m-8 w-full min-h-screen">
+      <div className='flex flex-col md:mb-8 md:mx-8 w-full m-2'>
         <Navbar />
-        <div className="dark:text-white font-bold text-xl m-2">Data Students</div>
-        <div className="m-2">
-          <div className="flex flex-col dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+        <div className="main-title">Data Students</div>
+        <div>
+          <div className="flex flex-col dark:bg-neutral-800 bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
             {/* search data */}
             <div className="flex justify-between items-center">
               <div className="flex mb-3">
@@ -128,8 +149,8 @@ const Students = () => {
                       <tr
                         className={
                           index % 2 === 0
-                            ? "dark:bg-neutral-800 bg-slate-200 h-8"
-                            : "dark:bg-neutral-900 bg-slate-300 h-8"
+                            ? " bg-white h-8"
+                            : " bg-slate-200 h-8"
                         }
                       >
                         <td className="text-center">{nomer++}</td>
@@ -157,7 +178,7 @@ const Students = () => {
                         </td>
                         <td className="flex justify-center items-center h-8">
                           <Link to={`/students/${item.id}`}>
-                            <button className="text-white bg-neutral-800 text-sm flex justify-center items-center h-6 border border-sky-500 rounded-md px-2">
+                            <button className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2">
                               View
                             </button>
                           </Link>

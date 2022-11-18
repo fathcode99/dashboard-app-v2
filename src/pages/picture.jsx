@@ -40,13 +40,13 @@ const Picture = () => {
   };
 
   return (
-    <div className="flex">
-      <div className="flex">
+    <div className="flex bg-slate-200  min-h-screen">
+      <div className='min-w-[50px] md:w-[300px]'>
         <Sidebar />
       </div>
-      <div className="flex flex-col md:m-8 w-full min-h-screen relative">
+      <div className='flex flex-col md:mb-8 md:mx-8 w-full m-2 relative'>
         <Navbar />
-        <div className="dark:text-white font-bold text-xl m-2">
+        <div className="main-title">
           {" "}
           Upload Picture{" "}
         </div>

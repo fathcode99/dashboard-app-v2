@@ -132,17 +132,17 @@ const KeuanganSiswa = () => {
   };
 
   return (
-    <div className="flex">
-      <div className="flex">
+    <div className="flex bg-slate-200  min-h-screen">
+      <div className='min-w-[50px] md:w-[300px]'>
         <Sidebar />
       </div>
-      <div className="flex flex-col md:m-8 w-full min-h-screen">
+      <div className='flex flex-col md:mb-8 md:mx-8 w-full m-2'>
         <Navbar />
-        <div className="dark:text-white font-bold text-xl m-2 ">
+        <div className="main-title">
           Data Keuangan Siswa
         </div>
-        <div className="m-2">
-          <div className="flex flex-col dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+        <div >
+          <div className="flex flex-col dark:bg-neutral-800 bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
             {/* search data */}
             <div className="flex justify-between items-center">
               <div className="flex mb-3">
@@ -202,8 +202,8 @@ const KeuanganSiswa = () => {
                       <tr
                         className={
                           index % 2 === 0
-                            ? "dark:bg-neutral-800 bg-slate-200 h-8"
-                            : "dark:bg-neutral-900 bg-slate-300 h-8"
+                            ? " bg-white h-8"
+                            : " bg-slate-200 h-8"
                         }
                       >
                         <td className="text-center border-r">{nomer++}</td>
@@ -250,7 +250,7 @@ const KeuanganSiswa = () => {
                         {isIndexEdit === index ? (
                               <button
                                 onClick={() => onEditDataRincian(item.id)}
-                                className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                                className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
                               >
                                 Done
                               </button>
@@ -258,14 +258,14 @@ const KeuanganSiswa = () => {
                               <div className="flex gap-2 justify-center">
                                 <button
                                   onClick={() => setIsIndexEdit(index)}
-                                  className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                                  className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
                                 >
                                   {" "}
                                   Edit
                                 </button>
                                 <button
                                   onClick={() => onDelete(item.id)}
-                                  className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                                  className="hover:bg-slate-200 transition duration-300 bg-rose-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
                                 >
                                   {" "}
                                   Delete

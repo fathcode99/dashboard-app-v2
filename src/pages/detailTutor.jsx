@@ -199,21 +199,27 @@ const DetailTutor = () => {
     setIsModalDeleteRincian(false);
   };
 
+  //modal post data fee pengajar, realisasi fee
+  const [isModalPost, setIsModalPost] = useState(false);
+  const [feePengajar, setFeePengajar] = useState(null)
+  const [realFee, setRealFee] = useState(null)
+  const onPostData = () => {
+      
+  };
+
   return (
-    <div className="flex">
-      <div className="flex">
+    <div className="flex bg-slate-200  min-h-screen">
+      <div className="min-w-[50px] md:w-[300px]">
         <Sidebar />
       </div>
-      <div className="flex flex-col md:m-8 w-full min-h-screen relative">
+      <div className="flex flex-col md:mb-8 md:mx-8 w-full m-2 relative">
         <Navbar />
-        <div className="flex justify-between m-2 py-1">
-          <div className="dark:text-white font-bold text-xl">
-            Detail Data Tutor
-          </div>
-          <div className="flex dark:text-white font-thin">
+        <div className="flex justify-between items-center my-2 py-1">
+          <div className="main-title">Detail Data Pengajar</div>
+          <div className="flex h-fit items-center font-normal">
             <button
               onClick={() => setIsModalMessage(!isModalMessage)}
-              className="hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] cursor-pointer dark:bg-neutral-800 bg-slate-300 rounded-md flex justify-center items-center border dark:border-sky-500 px-2"
+              className="hover:bg-sky-500 py-1 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)] cursor-pointer  bg-slate-300 rounded-md flex justify-center items-center border border-sky-900 px-2"
             >
               <span className="material-symbols-rounded mr-2 font-thin">
                 {" "}
@@ -225,18 +231,11 @@ const DetailTutor = () => {
         </div>
         {dataTutor.nama_pengajar ? (
           <>
-            <div className="grid grid-cols-1 md:flex gap-4 m-2">
+            <div className="grid grid-cols-1 md:flex gap-4">
               {/* data tutor */}
               {isEdit ? (
-                <div className="flex flex-col w-full md:w=3/4 dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+                <div className="flex flex-col w-full md:w=3/4 dark:bg-neutral-800 bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                   <div className="flex gap-3 relative">
-                    <div className="w-1/3 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
-                      <img
-                        src="https://www.stepstherapy.com.au/wp-content/uploads/2020/05/Natalie-square-profile-picture-1024x1024.jpg"
-                        alt="profile"
-                      />
-                    </div>
-
                     <div className="flex flex-col w-full justify-center">
                       <input
                         onChange={(e) => setNamaPengajar(e.target.value)}
@@ -364,14 +363,8 @@ const DetailTutor = () => {
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col w-full  dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+                <div className="flex flex-col w-full  dark:bg-neutral-800 bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
                   <div className="flex gap-3 relative">
-                    <div className="w-1/3 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
-                      <img
-                        src="https://www.stepstherapy.com.au/wp-content/uploads/2020/05/Natalie-square-profile-picture-1024x1024.jpg"
-                        alt="profile"
-                      />
-                    </div>
                     <div className="flex flex-col w-full justify-center">
                       <div className="dark:text-white font-medium text-xl">
                         {dataTutor.nama_pengajar}
@@ -461,22 +454,26 @@ const DetailTutor = () => {
               )}
 
               {/* payment */}
-              <div className="flex flex-col justify-between md:w-[50%] w-full bg-slate-200 dark:bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
-                <div className="dark:text-white font-thin text-sm">Payment</div>
-                <div className="text-sky-500 font-thin text-right text-5xl md:text-3xl lg:text-5xl">
+              <div className="flex flex-col md:w-[50%] w-full bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+                <div className="dark:text-white font-thin text-sm">
+                  Total Fee
+                </div>
+                <div className="text-sky-500 h-full font-thin text-right text-5xl md:text-3xl lg:text-5xl flex items-center justify-end">
                   Rp {totalFee.toLocaleString()}
                 </div>
-                <p className="dark:text-white font-thin text-right text-sm">
-                  Lorem ipsum dolor sit amet, <br /> consectetur adipisicing
-                  elit.
-                </p>
               </div>
             </div>
 
             {/* rincian kepengajaran */}
-            <div className="flex flex-col m-2 bg-slate-200 dark:bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
-              <div className="dark:text-white font-thin text-sm my-3">
-                Rincian Kepengajaran
+            <div className="flex flex-col mt-4 bg-white  rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
+              <div className="flex items-center justify-between font-normal my-3">
+                <div>Rincian Kepengajaran</div>
+                <button
+                  onClick={() => setIsModalPost(true)}
+                  className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
+                >
+                  Tambahkan Data
+                </button>
               </div>
 
               <table className="w-full">
@@ -520,8 +517,8 @@ const DetailTutor = () => {
                         <tr
                           className={
                             index % 2 === 0
-                              ? "dark:bg-neutral-800 bg-slate-200 h-8"
-                              : "dark:bg-neutral-900 bg-slate-300 h-8"
+                              ? " bg-white h-8"
+                              : " bg-slate-200 h-8"
                           }
                         >
                           <td className="text-center border-r dark:border-white">
@@ -553,14 +550,14 @@ const DetailTutor = () => {
                                 />
                               </>
                             ) : (
-                              item.realisasi_fee_pengajar
+                              <div>Rp {item.realisasi_fee_pengajar}</div>
                             )}
                           </td>
                           <td className="hidden justify-center items-center h-8 md:table-cell">
                             {isIndexEdit === index ? (
                               <button
                                 onClick={() => onEditDataRincian(item.id)}
-                                className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                                className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
                               >
                                 Done
                               </button>
@@ -568,14 +565,14 @@ const DetailTutor = () => {
                               <div className="flex gap-2 justify-center">
                                 <button
                                   onClick={() => setIsIndexEdit(index)}
-                                  className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                                  className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
                                 >
                                   {" "}
                                   Edit
                                 </button>
                                 <button
                                   onClick={() => onDeleteRincian(item.id)}
-                                  className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                                  className="hover:bg-slate-200 transition duration-300 bg-rose-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
                                 >
                                   {" "}
                                   Delete
@@ -595,7 +592,7 @@ const DetailTutor = () => {
           <div className="flex flex-col items-center w-full m-2 text-sky-500 italic font-thin">
             Data Empty
             <Link to="/tutors">
-              <button className="mt-2 text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-md px-1">
+              <button className="text-white hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2">
                 <span>Back to Tutors Page</span>
               </button>
             </Link>
@@ -692,6 +689,45 @@ const DetailTutor = () => {
                   className="drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] hover:bg-sky-500 dark:hover:bg-sky-500 dark:text-white dark:bg-neutral-800 bg-slate-300 text-sm flex justify-center items-center h-8 border dark:border-sky-500 rounded-md px-2 w-fit mt-2"
                 >
                   No
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
+
+        {/* modal post data */}
+        {isModalPost ? (
+          <div className="absolute backdrop-blur-sm w-full h-full bg-transparent bg-opacity-20 flex justify-center items-center">
+            <div className="flex flex-col w-[75%] bg-slate-200 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+              <div className="flex justify-between bg-indigo-900 p-2">
+                <div className="text-white">Send Message</div>
+                <button onClick={() => setIsModalPost(false)}>
+                  <span class="hover:text-rose-500 text-white material-symbols-rounded ">
+                    close
+                  </span>
+                </button>
+              </div>
+
+              <div className="p-2">
+                <div className="flex flex-col gap-3">
+                  <div className="flex flex-col">
+                    <label>Fee Pengajar</label>
+                    <input onChange={(e) => setFeePengajar(e.target.value)} type="text" placeholder="Number" className="px-2 py-1 rounded-md"/>
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label>Realisasi Fee Pengajar</label>
+                    <input onChange={(e) => setRealFee(e.target.value)} type="text" placeholder="Number" className="px-2 py-1 rounded-md" />
+                  </div>
+                </div>
+
+                <button
+                  onClick={onPostData}
+                  className="hover:bg-sky-500 dark:hover:bg-sky-500 dark:text-white dark:bg-neutral-800 bg-slate-300 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-md px-2 w-fit mt-2"
+                >
+                  Post Data
                 </button>
               </div>
             </div>

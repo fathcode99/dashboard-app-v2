@@ -25,19 +25,17 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="min-w-[40px] md:w-[200px] flex flex-col dark:bg-neutral-800 bg-slate-300 min-h-screen drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
-      <div className="min-w-[40px] md:w-[200px] flex flex-col min-h-screen justify-center dark:text-white">
-        <div className="flex justify-center items-center  pb-6">
-          <span className="font-bold text-center  text-xs  md:text-5xl md:mt-3 md:mb-5">
-            LO
-            <br />
-            GO
+    <div className="min-w-[40px] md:w-[240px] flex flex-col fixed h-screen drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+      <div className="min-w-[40px] md:w-[240px] flex flex-col h-full text-white justify-center m-1 rounded-2xl bg-ungutua">
+        <div className="hidden md:flex justify-center items-center ">
+          <span className="font-bold text-center text-xs  md:text-3xl md:my-7">
+            admin.
           </span>
         </div>
-        <div className="w-full sidebar flex text-sm flex-col gap-8 lg:gap-0">
+        <div className="w-full sidebar flex text-sm flex-col gap-6 lg:gap-0">
           <span className="hidden md:block  text-xs text-left pl-4">Home</span>
           <Link to="/">
-            <div className="cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4">
+            <div className="sidebar-btn uppercase">
               <span className="material-symbols-rounded "> grid_view </span>
               <span className="hidden md:block  ml-4">Dashboard</span>
             </div>
@@ -47,15 +45,15 @@ const Sidebar = () => {
             Data Tentang Pengajar
           </span>
           <Link to="/tutors">
-            <div className="cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4">
+            <div className="sidebar-btn uppercase">
               <span className="material-symbols-rounded ">
                 supervised_user_circle
-              </span>
+              </span> 
               <span className="hidden md:block  ml-4">List Tutors</span>
             </div>
           </Link>
           <Link to="/apply">
-            <div className="cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4">
+            <div className="sidebar-btn uppercase">
               <span className="material-symbols-rounded ">
                 supervised_user_circle
               </span>
@@ -63,7 +61,7 @@ const Sidebar = () => {
             </div>
           </Link>
           <Link to="/feepengajar">
-            <div className="cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4">
+            <div className="sidebar-btn uppercase">
               <span className="material-symbols-rounded ">
                 supervised_user_circle
               </span>
@@ -75,13 +73,13 @@ const Sidebar = () => {
             Data Tentang Siswa
           </span>
           <Link to="/students">
-            <div className="cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4">
+            <div className="sidebar-btn uppercase">
               <span className="material-symbols-rounded "> groups </span>
               <span className="hidden md:block  ml-4">Data Siswa</span>
             </div>
           </Link>
           <Link to="/keuangansiswa">
-            <div className="cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4">
+            <div className="sidebar-btn uppercase">
               <span className="material-symbols-rounded "> groups </span>
               <span className="hidden md:block  ml-4">Keuangan Siswa</span>
             </div>
@@ -91,7 +89,7 @@ const Sidebar = () => {
             Admin
           </span>
           <Link to="/notifadmin" onClick={onCounter}>
-            <div className="sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4 cursor-pointer">
+            <div className="sidebar-btn uppercase">
               <span className="material-symbols-rounded "> notifications </span>
               <div className="hidden md:block  ml-4">
                 Notifikasi
@@ -108,14 +106,14 @@ const Sidebar = () => {
             </div>
           </Link>
           <Link to="/picture">
-            <div className="cursor-pointer sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4">
+            <div className="sidebar-btn uppercase">
               <span className="material-symbols-rounded "> groups </span>
               <span className="hidden md:block  ml-4">Advertising</span>
             </div>
           </Link>
           <div
             onClick={onLogout}
-            className="sidebar-btn-hover hover:border-l-2 border-sky-500 md:flex md:justify-start md:pl-4 cursor-pointer"
+            className="sidebar-btn uppercase"
           >
             <span className="material-symbols-rounded "> logout </span>
             <span className="hidden md:block  ml-4">Logout</span>

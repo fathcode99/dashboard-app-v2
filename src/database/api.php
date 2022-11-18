@@ -40,18 +40,20 @@ Route::group(
                     Route::put('biaya/{biaya}/update', [BiayapengajardansiswaController::class, 'update']); //sudah
                     Route::delete('biaya/{biaya}/delete', [BiayapengajardansiswaController::class, 'destroy']); //sudah
                     
-                    Route::get('pengeluaran', [PengeluaranlbbController::class, 'index']);
-                    Route::post('pengeluaran', [PengeluaranlbbController::class, 'store']);
+                    Route::get('pengeluaran', [PengeluaranlbbController::class, 'index']); //sudah
+                    Route::post('pengeluaran', [PengeluaranlbbController::class, 'store']); //sudah
                     Route::put('pengeluaran/{pengeluaran}/update', [PengeluaranlbbController::class, 'update']);
                     Route::delete('pengeluaran/{pengeluaran}/delete', [PengeluaranlbbController::class, 'destroy']);
-                    Route::get('realisasi', [TotalrealisasiController::class, 'index']);
-                    Route::post('realisasi', [TotalrealisasiController::class, 'store']);
-                    Route::delete('realisasi/{realisasi}/delete', [TotalrealisasiController::class, 'destroy']);
+
+                    Route::get('realisasi', [TotalrealisasiController::class, 'index']); //sudah
+                    Route::post('realisasi', [TotalrealisasiController::class, 'store']); //sudah
+                    Route::delete('realisasi/{realisasi}/delete', [TotalrealisasiController::class, 'destroy']); 
                     
-                    Route::get('totalbiaya', [TotalbiayaController::class, 'index']);
+                    Route::get('totalbiaya', [TotalbiayaController::class, 'index']); 
                     Route::post('totalbiaya', [TotalbiayaController::class, 'store']);
                     Route::delete('totalbiaya/{totalbiaya}/delete', [TotalbiayaController::class, 'destroy']);
-                    Route::get('selisih', [SelisihController::class, 'index']);
+
+                    Route::get('selisih', [SelisihController::class, 'index']); //total biaya di kurangi realisasi
                     Route::post('selisih', [SelisihController::class, 'store']);
                     Route::delete('selisih/{selisih}/delete', [SelisihController::class, 'destroy']);
 

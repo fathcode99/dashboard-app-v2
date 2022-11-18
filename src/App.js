@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 
 // import pages
 import Home from "./pages/home";
@@ -24,31 +24,31 @@ const App = () => {
 
   useEffect(() => {
     let token = localStorage.getItem("token");
-    axios
-      .get(`${url}/datapengajar`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        dispatch({
-          type: "GET_DATA_TUTORS",
-          payload: res.data,
-        });
-      });
+  //   // axios
+  //   //   .get(`${url}/datapengajar`, {
+  //   //     headers: {
+  //   //       Authorization: `Bearer ${token}`,
+  //   //     },
+  //   //   })
+  //   //   .then((res) => {
+  //   //     dispatch({
+  //   //       type: "GET_DATA_TUTORS",
+  //   //       payload: res.data,
+  //   //     });
+  //   //   });
 
-    axios
-      .get(`${url}/apply`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        dispatch({
-          type: "GET_DATA_APPLY",
-          payload: res.data,
-        });
-      });
+  //   // axios
+  //   //   .get(`${url}/apply`, {
+  //   //     headers: {
+  //   //       Authorization: `Bearer ${token}`,
+  //   //     },
+  //   //   })
+  //   //   .then((res) => {
+  //   //     dispatch({
+  //   //       type: "GET_DATA_APPLY",
+  //   //       payload: res.data,
+  //   //     });
+  //   //   });
 
     axios
       .get(`${url}/biaya`, {
@@ -63,18 +63,18 @@ const App = () => {
         });
       });
 
-    axios
-      .get(`${url}/dataortusiswa`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        dispatch({
-          type: "GET_DATA_STUDENTS",
-          payload: res.data,
-        });
-      });
+  //   // axios
+  //   //   .get(`${url}/dataortusiswa`, {
+  //   //     headers: {
+  //   //       Authorization: `Bearer ${token}`,
+  //   //     },
+  //   //   })
+  //   //   .then((res) => {
+  //   //     dispatch({
+  //   //       type: "GET_DATA_STUDENTS",
+  //   //       payload: res.data,
+  //   //     });
+  //   //   });
 
     axios
       .get(`${url}/notifyadmin`, {
@@ -89,12 +89,6 @@ const App = () => {
         }); 
       });
 
-    const theme = localStorage.getItem("theme");
-    if (theme === "light") {
-      document.documentElement.classList.remove("dark");
-    } else if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    }
   }, [dispatch]);
 
   return (

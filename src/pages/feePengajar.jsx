@@ -13,6 +13,9 @@ const Tutors = () => {
   const stateBiaya = useSelector((state) => state.biayaReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  let token = localStorage.getItem("token");
+
   // default data
   const [dataBiaya, setDataBiaya] = useState(stateBiaya.data);
 
@@ -42,6 +45,19 @@ const Tutors = () => {
     setDataRenders(dataBiaya);
     setMaxPage(Math.ceil(dataRenders.length / rowPerPage));
 
+    axios
+      .get(`${url}/biaya`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        dispatch({
+          type: "GET_DATA_BIAYA",
+          payload: res.data,
+        });
+      });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateBiaya.data, dataBiaya, rowPerPage]);
 
@@ -62,14 +78,14 @@ const Tutors = () => {
 
   // proteksi login
   useEffect(() => {
-    const tokenId = localStorage.getItem("token");
-    if (!tokenId) {
+    if (!token) {
       navigate("/login");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
 
   // menghapus data pembiayaan
-  let token = localStorage.getItem("token");
+  
   const onDelete = (id) => {
     console.log(id);
     axios
@@ -93,6 +109,7 @@ const Tutors = () => {
           });
       });
   };
+
 
   // edit data realisasi
   const [isIndexEdit, setIsIndexEdit] = useState()
@@ -129,17 +146,17 @@ const Tutors = () => {
   };
 
   return (
-    <div className="flex">
-      <div className="flex">
+    <div className="flex bg-slate-200  min-h-screen">
+      <div className='min-w-[50px] md:w-[300px]'>
         <Sidebar />
       </div>
-      <div className="flex flex-col md:m-8 w-full min-h-screen">
+      <div className='flex flex-col md:mb-8 md:mx-8 w-full m-2'>
         <Navbar />
-        <div className="dark:text-white font-bold text-xl m-2 ">
+        <div className="main-title">
           Data Keuangan Pengajar
         </div>
-        <div className="m-2">
-          <div className="flex flex-col dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+        <div >
+          <div className="flex flex-col dark:bg-neutral-800 bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
             {/* search data */}
             <div className="flex justify-between items-center">
               <div className="flex mb-3">
@@ -147,7 +164,7 @@ const Tutors = () => {
                   onChange={(e) => onSearch(e)}
                   type="text"
                   placeholder="Search..."
-                  className="outline-none bg-transparent w-full ml-2 dark:text-white font-thin text-sm border-b border-sky-500"
+                  className="outline-none bg-transparent w-full ml-2 font-thin text-sm border-b border-sky-500"
                 />
               </div>
 
@@ -157,9 +174,9 @@ const Tutors = () => {
               </div>
             </div>
 
-            <table className="w-full" id="myTable">
+            <table className="w-full">
               <thead className="h-8">
-                <tr className="text-sm text-white font-thin dark:bg-sky-500 bg-slate-900 h-full">
+                <tr className="text-sm text-white font-thin bg-slate-900 h-full">
                   <th className="font-medium border-r w-8">No.</th>
                   <th className="font-medium border-r w-8 cursor-pointer">
                     ID
@@ -198,13 +215,14 @@ const Tutors = () => {
                       <tr
                         className={
                           index % 2 === 0
-                            ? "dark:bg-neutral-800 bg-slate-200 h-8"
-                            : "dark:bg-neutral-900 bg-slate-300 h-8"
+                            ? " bg-white h-8"
+                            : " bg-slate-200 h-8"
                         }
                       >
                         <td className="text-center border-r">{nomer++}</td>
 
-                        <td className="border-r px-2">{item.id_pengajar}</td>
+                        {/* <td className="border-r px-2">{item.id_pengajar}</td> */}
+                        <td className="border-r px-2">{item.created_at}</td>
                         <td className="border-r px-2">{item.nama_pengajar}</td>
                         <td className="border-r px-2 text-right">
                           Rp {item.fee_pengajar}{" "}
@@ -239,14 +257,14 @@ const Tutors = () => {
                               <div className="flex gap-2 justify-center">
                                 <button
                                   onClick={() => setIsIndexEdit(index)}
-                                  className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                                  className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
                                 >
                                   {" "}
                                   Edit
                                 </button>
                                 <button
                                   onClick={() => onDelete(item.id)}
-                                  className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                                  className="hover:bg-slate-200 transition duration-300 bg-rose-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
                                 >
                                   {" "}
                                   Delete

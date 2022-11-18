@@ -54,7 +54,7 @@ const data = [
 
 const WidgetB = () => {
   return (
-    <div className='w-full dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] flex flex-col justify-between dark:text-white'>
+    <div className='widget flex flex-col justify-between'>
       <div className=' font-thin text-sm'>Statistic</div>
       <div className='h-full w-full'>
         <ResponsiveContainer width="100%" height="100%">

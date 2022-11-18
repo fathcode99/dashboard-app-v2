@@ -196,21 +196,21 @@ const DetailStudent = () => {
   };
 
   return (
-    <div className="flex">
-      <div className="flex">
+    <div className="flex bg-slate-200  min-h-screen">
+      <div className='min-w-[50px] md:w-[300px]'>
         <Sidebar />
       </div>
-      <div className="flex flex-col md:m-8 w-full min-h-screen relative">
+      <div className='flex flex-col md:mb-8 md:mx-8 w-full m-2 relative'>
         <Navbar />
-        <div className="dark:text-white font-bold text-xl m-2 ">
-          Detail Data Tutor
+        <div className="main-title">
+          Detail Data Siswa
         </div>
         {dataSiswa.nama_orangtua ? (
           <>
-            <div className="flex flex-col gap-4 m-2">
+            <div className="flex flex-col gap-4">
               {/* data student */}
               {isEdit ? (
-                <div className="flex flex-col w-full md:w=3/4 dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+                <div className="flex flex-col w-full md:w=3/4 dark:bg-neutral-800 bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
                   <div className="flex gap-3 relative">
                     <div className="w-1/4 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                       <img
@@ -442,7 +442,7 @@ const DetailStudent = () => {
                     <div className="absolute top-0 right-0 flex gap-2">
                       <button
                         onClick={onDone}
-                        className="hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] dark:bg-neutral-700 bg-slate-300 rounded h-6 w-6"
+                        className="hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)] dark:bg-neutral-700 bg-slate-300 rounded h-6 w-6"
                       >
                         <span className="material-symbols-rounded dark:text-white font-thin">
                           {" "}
@@ -451,7 +451,7 @@ const DetailStudent = () => {
                       </button>
                       <button
                         onClick={() => setIsEdit(false)}
-                        className="hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] dark:bg-neutral-700 bg-slate-300 rounded h-6 w-6 "
+                        className="hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)] dark:bg-neutral-700 bg-slate-300 rounded h-6 w-6 "
                       >
                         <span className="material-symbols-rounded dark:text-white font-thin">
                           {" "}
@@ -462,7 +462,7 @@ const DetailStudent = () => {
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col w-full  dark:bg-neutral-800 bg-slate-200 rounded-md p-4 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+                <div className="flex flex-col w-full  dark:bg-neutral-800 bg-white rounded-md p-4 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
                   <div className="flex gap-3 relative">
                     <div className="w-1/4 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                       <img
@@ -642,20 +642,17 @@ const DetailStudent = () => {
               )}
 
               {/* payment */}
-              <div className="flex flex-col justify-between w-full bg-slate-200 dark:bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+              <div className="flex flex-col  w-full bg-white dark:bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
                 <div className="dark:text-white font-thin text-sm">Payment</div>
                 <div className="text-sky-500 font-thin text-right text-5xl md:text-3xl lg:text-5xl">
                   Rp {totalFee.toLocaleString()}
                 </div>
-                <p className="dark:text-white font-thin text-right text-sm">
-                  Lorem ipsum dolor sit amet, <br /> consectetur adipisicing
-                  elit.
-                </p>
+                
               </div>
             </div>
 
             {/* rincian pembayaran */}
-            <div className="flex flex-col m-2 bg-slate-200 dark:bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+            <div className="flex flex-col m-2 bg-white dark:bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
               <div className="dark:text-white font-thin text-sm my-3">
                 Rincian Pembayaran Siswa
               </div>
@@ -705,8 +702,8 @@ const DetailStudent = () => {
                           <tr
                             className={
                               index % 2 === 0
-                                ? "dark:bg-neutral-800 bg-slate-200 h-8"
-                                : "dark:bg-neutral-900 bg-slate-300 h-8"
+                                ? " bg-slate-200 h-8"
+                                : " bg-white h-8"
                             }
                           >
                             <td className="text-center border-r dark:border-white">
@@ -745,7 +742,7 @@ const DetailStudent = () => {
                               {isIndexEdit === index ? (
                                 <button
                                   onClick={() => onEditDataRincian(item.id)}
-                                  className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                                  className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
                                 >
                                   Done
                                 </button>
@@ -753,14 +750,14 @@ const DetailStudent = () => {
                                 <div className="flex gap-2 justify-center">
                                   <button
                                     onClick={() => setIsIndexEdit(index)}
-                                    className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                                    className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
                                   >
                                     {" "}
                                     Edit
                                   </button>
                                   <button
                                     onClick={() => onDeleteRincian(item.id)}
-                                    className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                                    className="hover:bg-slate-200 transition duration-300 bg-rose-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
                                   >
                                     {" "}
                                     Delete
@@ -780,7 +777,7 @@ const DetailStudent = () => {
           <div className="flex flex-col items-center w-full m-2 text-sky-500 italic font-thin">
             Data Empty
             <Link to="/students">
-              <button className="mt-2 text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-md px-1">
+              <button className="text-white hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2">
                 <span>Back to Students Page</span>
               </button>
             </Link>

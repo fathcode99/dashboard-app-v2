@@ -5,12 +5,19 @@ import Sidebar from "../component/sidebar";
 import Navbar from "../component/navbar";
 import ExportExcel from "../component/exportExcel";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import axios from "axios";
+
+const url = "https://admin.menujudigital.com/api";
 
 const Tutors = () => {
   const stateTutors = useSelector((state) => state.tutorsReducer);
   const navigate = useNavigate();
 
+  let token = localStorage.getItem("token");
+
+  const dispatch = useDispatch()
   // default data
   const [dataMembers, setDataMembers] = useState(stateTutors.data);
 
@@ -61,20 +68,35 @@ const Tutors = () => {
     if (!tokenId) {
       navigate("/login");
     }
+
+    axios
+      .get(`${url}/datapengajar`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        dispatch({
+          type: "GET_DATA_TUTORS",
+          payload: res.data,
+        });
+      });
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
 
   return (
-    <div className="flex">
-      <div className="flex">
+    <div className="flex bg-slate-200  min-h-screen">
+      <div className='min-w-[50px] md:w-[300px]'>
         <Sidebar />
       </div>
-      <div className="flex flex-col md:m-8 w-full min-h-screen">
+      <div className="className='flex flex-col md:mb-8 md:mx-8 w-full m-2">
         <Navbar />
-        <div className="dark:text-white font-bold text-xl m-2 ">
+        <div className="main-title">
           Data Tutors
         </div>
-        <div className="m-2">
-          <div className="flex flex-col dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+        <div>
+          <div className="flex flex-col dark:bg-neutral-800 bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
             
             {/* search data */}
             <div className="flex justify-between items-center"> 
@@ -83,12 +105,12 @@ const Tutors = () => {
                   onChange={(e) => onSearch(e)}
                   type="text"
                   placeholder="Search..."
-                  className="outline-none bg-transparent w-full ml-2 dark:text-white font-thin text-sm border-b border-sky-500"
+                  className="outline-none bg-transparent w-full ml-2 font-thin text-sm border-b border-sky-500"
                 />
               </div>
 
               <div className="flex mb-3 items-center">
-                <span className="dark:text-white mr-2">Export to Excel:</span>
+                <span className=" mr-2">Export to Excel:</span>
                 <ExportExcel data={dataMembers} />
               </div>
             </div>
@@ -126,8 +148,8 @@ const Tutors = () => {
                         <tr
                           className={
                             index % 2 === 0
-                              ? "dark:bg-neutral-800 bg-slate-200 h-8"
-                              : "dark:bg-neutral-900 bg-slate-300 h-8"
+                              ? " bg-slate-200 h-8"
+                              : " bg-white h-8"
                           }
                         >
                           <td className="text-center border-r">{nomer++}</td>
@@ -150,7 +172,7 @@ const Tutors = () => {
                           <td className="border-r text-center">{item.email}</td>
                           <td className="flex justify-center items-center h-8 ">
                             <Link to={`/tutors/${item.id}`}>
-                              <button className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2">
+                              <button className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2">
                                 View
                               </button>
                             </Link>
