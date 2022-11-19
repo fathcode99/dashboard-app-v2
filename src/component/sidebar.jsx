@@ -41,15 +41,13 @@ const Sidebar = () => {
             </div>
           </Link>
 
-          <span className="hidden md:block text-xs text-left pl-4 mt-5">
-            Data Tentang Pengajar
-          </span>
+          
           <Link to="/tutors">
             <div className="sidebar-btn uppercase">
               <span className="material-symbols-rounded ">
                 supervised_user_circle
               </span> 
-              <span className="hidden md:block  ml-4">List Tutors</span>
+              <span className="hidden md:block  ml-4">Data Pengajar</span>
             </div>
           </Link>
           <Link to="/apply">
@@ -60,28 +58,20 @@ const Sidebar = () => {
               <span className="hidden md:block  ml-4">Apply Pengajar</span>
             </div>
           </Link>
-          <Link to="/feepengajar">
+          <Link to="/keuangan">
             <div className="sidebar-btn uppercase">
               <span className="material-symbols-rounded ">
                 supervised_user_circle
               </span>
-              <span className="hidden md:block  ml-4">Keuangan Pengajar</span>
+              <span className="hidden md:block  ml-4">Data Keuangan</span>
             </div>
           </Link>
 
-          <span className="hidden md:block  text-xs text-left pl-4 mt-5">
-            Data Tentang Siswa
-          </span>
+          
           <Link to="/students">
             <div className="sidebar-btn uppercase">
               <span className="material-symbols-rounded "> groups </span>
               <span className="hidden md:block  ml-4">Data Siswa</span>
-            </div>
-          </Link>
-          <Link to="/keuangansiswa">
-            <div className="sidebar-btn uppercase">
-              <span className="material-symbols-rounded "> groups </span>
-              <span className="hidden md:block  ml-4">Keuangan Siswa</span>
             </div>
           </Link>
 

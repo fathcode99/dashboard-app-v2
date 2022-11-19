@@ -5,7 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import ExportExcel from "../component/exportExcel";
+import ExportExcelTotalBy from "../component/exportExcelTotalBy";
+import ExportExcelPengeluaran from "../component/exportExcelPengeluaran";
+import ExportExcelRealisasi from "../component/exportExcelRealisasi";
+
 import axios from "axios";
 
 const url = "https://admin.menujudigital.com/api";
@@ -15,7 +18,7 @@ const Home = () => {
 
   let token = localStorage.getItem("token");
 
-  const [data, setData] = useState([]); 
+  const [data, setData] = useState([]);
 
   const [totalBiaya, setTotalBiaya] = useState([]);
   const [dataRealisasi, setDataRealisasi] = useState([]);
@@ -76,7 +79,6 @@ const Home = () => {
       c += +dataRealisasi[i].nominal;
     }
     setNomTotalRealisasi(c);
-
   }, [totalBiaya, dataRealisasi, dataPengeluaran, data]);
 
   useEffect(() => {
@@ -87,35 +89,57 @@ const Home = () => {
     setData(stateBiaya.data);
 
     // get detail data
-    axios
-      .get(`${url}/pengeluaran`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setDataPengeluaran(res.data);
-      });
+    async function getPengeluaran() {
+      try {
+        await axios
+        .get(`${url}/pengeluaran`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setDataPengeluaran(res.data);
+        });
+      } catch (err) {
+        console.log("Error when fetching data - Pengeluaran");
+      }
+    }
+    getPengeluaran()
 
-    axios
-      .get(`${url}/realisasi`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setDataRealisasi(res.data);
-      });
-
-    axios
-      .get(`${url}/totalbiaya`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setTotalBiaya(res.data);
-      });
+    async function getRealisasi() {
+      try {
+        await axios
+        .get(`${url}/realisasi`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setDataRealisasi(res.data);
+        });
+      } catch (err) {
+        console.log("Error when fetching data - Realisasi")
+      }
+    }
+    getRealisasi()
+    
+    async function getTotalBiaya() {
+      try {
+        await  axios
+        .get(`${url}/totalbiaya`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setTotalBiaya(res.data);
+        });
+      } catch (err) {
+        console.log("Error when fetching data - Total Biaya");
+      }
+    }
+    getTotalBiaya()
+   
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateBiaya]);
@@ -197,7 +221,7 @@ const Home = () => {
 
     let ftcp = 0;
     for (let i = 0; i < data.length; i++) {
-      ftcp += +data[i].biaya_fotokopi
+      ftcp += +data[i].biaya_fotokopi;
     }
 
     let dataUpdateFp = {
@@ -234,7 +258,7 @@ const Home = () => {
             },
           })
           .then((res) => {
-            setTotalBiaya(res.data)
+            setTotalBiaya(res.data);
           });
       });
 
@@ -258,8 +282,6 @@ const Home = () => {
 
   //update total realisasi
   const onUpdateRealisasi = () => {
-    
-
     let rfp = 0;
     for (let i = 0; i < data.length; i++) {
       rfp += +data[i].realisasi_fee_pengajar;
@@ -304,25 +326,22 @@ const Home = () => {
             },
           })
           .then((res) => {
-            setDataRealisasi(res.data); 
+            setDataRealisasi(res.data);
           });
       });
 
-      axios
-      .put(`${url}/realisasi/2/update`, dataUpdateRts, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+    axios.put(`${url}/realisasi/2/update`, dataUpdateRts, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-      axios
-      .put(`${url}/realisasi/3/update`, dataUpdateRbp, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      console.log('update realisasi');
-  }
+    axios.put(`${url}/realisasi/3/update`, dataUpdateRbp, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  };
   return (
     <div>
       <div className="flex bg-slate-200 min-h-screen">
@@ -336,11 +355,11 @@ const Home = () => {
             {/* widget */}
             <div className="grid md:grid-cols-4 grid-cols-2 gap-3 font-normal">
               <div className="flex flex-col bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
-                <div className=" mb-6 font-thin text-sm">Total Biaya</div>
-                <div className=" font-thin text-2xl flex justify-between items-baseline">
+                <div className=" mb-6  text-sm">Total Biaya</div>
+                <div className="  text-2xl flex justify-between items-baseline">
                   <span>Rp {totalNomTotalBiaya.toLocaleString()}</span>
                   <div className="bg-sky-500 rounded-sm w-6 h-6 flex items-center justify-center">
-                    <span className="material-symbols-rounded  text-lg font-thin ">
+                    <span className="material-symbols-rounded  text-lg  ">
                       add_shopping_cart
                     </span>
                   </div>
@@ -348,11 +367,11 @@ const Home = () => {
               </div>
 
               <div className="flex flex-col bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
-                <div className=" mb-6 font-thin text-sm">Realisasi</div>
-                <div className=" font-thin text-2xl flex justify-between items-baseline">
+                <div className=" mb-6  text-sm">Realisasi</div>
+                <div className="  text-2xl flex justify-between items-baseline">
                   <span>Rp {totalNomTotalRealisasi.toLocaleString()}</span>
                   <div className="bg-sky-500 rounded-sm w-6 h-6 flex items-center justify-center">
-                    <span className="material-symbols-rounded  text-lg font-thin ">
+                    <span className="material-symbols-rounded  text-lg  ">
                       add_shopping_cart
                     </span>
                   </div>
@@ -360,8 +379,8 @@ const Home = () => {
               </div>
 
               <div className="flex flex-col bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
-                <div className=" mb-6 font-thin text-sm">Selisih</div>
-                <div className=" font-thin text-2xl flex justify-between items-baseline">
+                <div className=" mb-6  text-sm">Selisih</div>
+                <div className="  text-2xl flex justify-between items-baseline">
                   <span>
                     Rp{" "}
                     {(
@@ -369,7 +388,7 @@ const Home = () => {
                     ).toLocaleString()}
                   </span>
                   <div className="bg-sky-500 rounded-sm w-6 h-6 flex items-center justify-center">
-                    <span className="material-symbols-rounded  text-lg font-thin ">
+                    <span className="material-symbols-rounded  text-lg  ">
                       add_shopping_cart
                     </span>
                   </div>
@@ -377,11 +396,11 @@ const Home = () => {
               </div>
 
               <div className="flex flex-col bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
-                <div className=" mb-6 font-thin text-sm">Pengeluaran</div>
-                <div className=" font-thin text-2xl flex justify-between items-baseline">
+                <div className=" mb-6  text-sm">Pengeluaran</div>
+                <div className="  text-2xl flex justify-between items-baseline">
                   <span>Rp {totalNomPengeluaran.toLocaleString()} </span>
                   <div className="bg-sky-500 rounded-sm w-6 h-6 flex items-center justify-center">
-                    <span className="material-symbols-rounded  text-lg font-thin ">
+                    <span className="material-symbols-rounded  text-lg  ">
                       add_shopping_cart
                     </span>
                   </div>
@@ -399,17 +418,17 @@ const Home = () => {
                     onClick={onUpdateTotalBiaya}
                     className="hover:text-sky-500 cursor-pointer flex justify-center items-center"
                     title="Update total biaya"
-                  > 
+                  >
                     <span className="material-symbols-rounded"> update </span>
                   </button>
                   <button className="flex items-center" title="Export to Excel">
-                    <ExportExcel data={totalBiaya} />
+                    <ExportExcelTotalBy data={totalBiaya} />
                   </button>
                 </div>
               </div>
               <table className="w-full">
                 <thead className="h-8">
-                  <tr className="text-sm text-white font-thin bg-slate-900 h-full">
+                  <tr className="text-sm text-white  bg-slate-900 h-full">
                     <th className="font-medium border-r w-8">No.</th>
                     <th className="font-medium border-r">Update</th>
                     <th className="font-medium border-r">Keterangan</th>
@@ -433,7 +452,7 @@ const Home = () => {
                           {index + 1}
                         </td>
                         <td className="font-normal border-r text-center">
-                          {(item.updated_at).slice(0, 10)}
+                          {item.updated_at.slice(0, 10)}
                         </td>
                         <td className="font-normal border-r px-2">
                           {item.hal}
@@ -462,13 +481,13 @@ const Home = () => {
                   </button>
 
                   <button className="flex items-center" title="Export to Excel">
-                    <ExportExcel data={dataRealisasi} />
+                    <ExportExcelRealisasi data={dataRealisasi} />
                   </button>
                 </div>
               </div>
               <table className="w-full">
                 <thead className="h-8">
-                  <tr className="text-sm text-white font-thin bg-slate-900 h-full">
+                  <tr className="text-sm text-white  bg-slate-900 h-full">
                     <th className="font-medium border-r w-8">No.</th>
                     <th className="font-medium border-r">Update</th>
                     <th className="font-medium border-r">Keterangan</th>
@@ -492,7 +511,7 @@ const Home = () => {
                           {index + 1}
                         </td>
                         <td className="font-normal border-r text-center">
-                          {(item.updated_at).slice(0, 10)}
+                          {item.updated_at.slice(0, 10)}
                         </td>
                         <td className="font-normal border-r px-2 capitalize">
                           {item.hal}
@@ -511,7 +530,7 @@ const Home = () => {
           <div className="mt-4 w-full bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)] ">
             <div className="flex justify-between items-center mb-2">
               <div>Pengeluaran</div>
-              <div className="flex gap-2"> 
+              <div className="flex gap-2">
                 <button
                   onClick={() => setIsModalAdd(true)}
                   className="hover:text-sky-500 cursor-pointer flex justify-center items-center"
@@ -521,13 +540,13 @@ const Home = () => {
                 </button>
 
                 <button className="flex items-center" title="Export to Excel">
-                  <ExportExcel data={dataPengeluaran} />
+                  <ExportExcelPengeluaran data={dataPengeluaran} />
                 </button>
               </div>
             </div>
             <table className="w-full">
               <thead className="h-8">
-                <tr className="text-sm text-white font-thin bg-slate-900 h-full">
+                <tr className="text-sm text-white  bg-slate-900 h-full">
                   <th className="font-medium border-r w-8">No.</th>
                   <th className="font-medium border-r">Keterangan</th>
                   <th className="font-medium border-r">Nominal</th>
@@ -548,8 +567,17 @@ const Home = () => {
                       <td className="font-normal border-r text-center">
                         {index + 1}
                       </td>
-                      <td className="font-normal border-r px-2 capitalize"> 
-                          {item.hal} 
+                      <td className="font-normal border-r px-2 capitalize">
+                        {indexEdit === item.id ? (
+                          <input
+                            className="w-full break-words bg-transparent outline-none border-b border-slate-900 "
+                            onChange={(e) => setEditHal(e.target.value)}
+                            type="text"
+                            defaultValue={item.hal}
+                          />
+                        ) : (
+                          item.hal
+                        )}
                       </td>
                       <td className="font-normal border-r px-2 text-right">
                         {indexEdit === item.id ? (

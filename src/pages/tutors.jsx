@@ -3,21 +3,14 @@ import React, { useEffect, useState } from "react";
 
 import Sidebar from "../component/sidebar";
 import Navbar from "../component/navbar";
-import ExportExcel from "../component/exportExcel";
+import ExportExcelTutor from "../component/exportExcelTutor";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
-import axios from "axios";
-
-const url = "https://admin.menujudigital.com/api";
+import { useSelector } from "react-redux";
 
 const Tutors = () => {
   const stateTutors = useSelector((state) => state.tutorsReducer);
   const navigate = useNavigate();
-
-  let token = localStorage.getItem("token");
-
-  const dispatch = useDispatch()
+  
   // default data
   const [dataMembers, setDataMembers] = useState(stateTutors.data);
 
@@ -69,19 +62,6 @@ const Tutors = () => {
       navigate("/login");
     }
 
-    axios
-      .get(`${url}/datapengajar`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        dispatch({
-          type: "GET_DATA_TUTORS",
-          payload: res.data,
-        });
-      });
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
 
@@ -105,20 +85,20 @@ const Tutors = () => {
                   onChange={(e) => onSearch(e)}
                   type="text"
                   placeholder="Search..."
-                  className="outline-none bg-transparent w-full ml-2 font-thin text-sm border-b border-sky-500"
+                  className="outline-none bg-transparent w-full ml-2  text-sm border-b border-sky-500"
                 />
               </div>
 
               <div className="flex mb-3 items-center">
                 <span className=" mr-2">Export to Excel:</span>
-                <ExportExcel data={dataMembers} />
+                <ExportExcelTutor data={dataMembers} />
               </div>
             </div>
 
             {/* TABLE START */}
             <table className="w-full">
               <thead className="h-8">
-                <tr className="text-sm text-white font-thin dark:bg-sky-500 bg-slate-900 h-full">
+                <tr className="text-sm text-white  dark:bg-sky-500 bg-slate-900 h-full">
                   <th className="font-medium w-8 border-r">No.</th>
                   <th className="font-medium w-8 border-r">ID</th>
                   <th className="font-medium w-36 border-r"> Nama </th>
@@ -132,7 +112,7 @@ const Tutors = () => {
 
               {dataMembers.length === 0 ? (
                 <tbody>
-                  <tr className="dark:text-white font-thin w-full">
+                  <tr className="dark:text-white  w-full">
                     <td style={{ colSpan: "8" }}>No Data Found</td>
                   </tr>
                 </tbody>
@@ -143,7 +123,7 @@ const Tutors = () => {
                     return (
                       <tbody
                         key={index}
-                        className="dark:text-white font-thin text-sm "
+                        className="dark:text-white  text-sm "
                       >
                         <tr
                           className={

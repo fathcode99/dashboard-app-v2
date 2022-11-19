@@ -3,7 +3,7 @@ import axios from "axios";
 
 import Sidebar from "../component/sidebar";
 import Navbar from "../component/navbar";
-import ExportExcel from "../component/exportExcel";
+// import ExportExcel from "../component/exportExcel";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -41,19 +41,6 @@ const Tutors = () => {
     setDataMembers(stateTutors.data);
     setDataRenders(dataMembers);
     setMaxPage(Math.ceil(dataRenders.length / rowPerPage));
-
-    axios
-      .get(`${url}/apply`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        dispatch({
-          type: "GET_DATA_APPLY",
-          payload: res.data,
-        });
-      });
       
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateTutors.data, dataMembers, rowPerPage]);
@@ -128,10 +115,10 @@ const Tutors = () => {
                 />
               </div>
 
-              <div className="flex mb-3 items-center">
+              {/* <div className="flex mb-3 items-center">
                 <span className="dark:text-white mr-2">Export to Excel:</span>
                 <ExportExcel data={dataMembers} />
-              </div>
+              </div> */}
             </div>
 
             {/* TABLE START */}

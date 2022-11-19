@@ -150,7 +150,7 @@ const KeuanganSiswa = () => {
                   onChange={(e) => onSearch(e)}
                   type="text"
                   placeholder="Search..."
-                  className="outline-none bg-transparent w-full ml-2 dark:text-white font-thin text-sm border-b border-sky-500"
+                  className="outline-none bg-transparent w-full ml-2 dark:text-white  text-sm border-b border-sky-500"
                 />
               </div>
 
@@ -162,7 +162,7 @@ const KeuanganSiswa = () => {
 
             <table className="w-full" id="myTable">
               <thead className="h-8">
-                <tr className="text-sm text-white font-thin dark:bg-sky-500 bg-slate-900 h-full">
+                <tr className="text-sm text-white  dark:bg-sky-500 bg-slate-900 h-full">
                   <th className="font-medium border-r w-8">No.</th>
                   <th className="font-medium border-r cursor-pointer">
                     ID
@@ -188,7 +188,7 @@ const KeuanganSiswa = () => {
 
               {dataBiaya.length === 0 ? (
                 <tbody>
-                  <tr className="dark:text-white font-thin w-full">
+                  <tr className="dark:text-white  w-full">
                     <td style={{ colSpan: "8" }}>No Data Found</td>
                   </tr>
                 </tbody>
@@ -197,7 +197,7 @@ const KeuanganSiswa = () => {
                   return (
                     <tbody
                       key={index}
-                      className="dark:text-white font-thin text-sm "
+                      className="dark:text-white  text-sm "
                     >
                       <tr
                         className={
@@ -220,7 +220,7 @@ const KeuanganSiswa = () => {
                                   onChange={(e) => setRealTagihan(e.target.value)}
                                   type="text"
                                   defaultValue={item.realisasi_tagihan_siswa}
-                                  className="w-20 break-words text-center dark:text-white font-thin text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
+                                  className="w-20 break-words text-center dark:text-white  text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
                                 />
                               </>
                             ) : (
@@ -238,7 +238,7 @@ const KeuanganSiswa = () => {
                                   onChange={(e) => setRealPendaftaran(e.target.value)}
                                   type="text"
                                   defaultValue={item.realisasi_biaya_pendaftaran}
-                                  className="w-20 break-words text-center dark:text-white font-thin text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
+                                  className="w-20 break-words text-center dark:text-white  text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
                                 />
                               </>
                             ) : (

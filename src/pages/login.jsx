@@ -46,9 +46,7 @@ const Login = () => {
   return (
     <div className="w-full min-h-screen flex justify-center items-center relative">
       <div className="w-3/4 md:w-1/3 grid grid-cols-1 dark:bg-neutral-800 bg-slate-100 rounded-md py-8 p-4 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
-        <div className="text-sky-500 text-center font-bold text-xl">
-          Creative.Dev
-        </div>
+        
         <div className="dark:text-white font-medium text-base text-center my-4 ">
           Admin Login
         </div>
@@ -60,7 +58,7 @@ const Login = () => {
               type="text"
               placeholder="Input username"
               ref={refUsername}
-              className="mt-2 outline-none bg-transparent border-b border-sky-500  text-sm font-thin"
+              className="mt-2 outline-none bg-transparent border-b border-sky-500  text-sm "
             />
           </div>
 
@@ -70,18 +68,18 @@ const Login = () => {
               type="text"
               placeholder="Input password Id"
               ref={refPassword}
-              className="mt-2 outline-none bg-transparent border-b border-sky-500  text-sm font-thin"
+              className="mt-2 outline-none bg-transparent border-b border-sky-500  text-sm "
             />
           </div>
         </div>
 
         <button
           onClick={onLogin}
-          className="mt-3  px-2 py-1 text-sm font-thin hover:bg-sky-500 dark:hover:bg-sky-500 w-fit drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] bg-slate-200 dark:bg-neutral-700 dark:text-white rounded"
+          className="mt-3  px-2 py-1 text-sm  hover:bg-sky-500 dark:hover:bg-sky-500 w-fit drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] bg-slate-200 dark:bg-neutral-700 dark:text-white rounded"
         >
           Login
         </button>
-        <div className="dark:text-white text-xs font-thin mt-6">
+        <div className="dark:text-white text-xs  mt-6">
           Note : Lorem ipsum, dolor sit amet consectetur adipisicing.
         </div>
       </div>
@@ -94,13 +92,13 @@ const Login = () => {
               <div className=" text-rose-500">Login Failed</div>
             </div>
             <div className="flex justify-between">
-              <div className="dark:text-white font-thin text-sm">
+              <div className="dark:text-white  text-sm">
                 Data yang anda masukan tidak sesuai.
               </div>
             </div>
             <button
               onClick={() => setIsModalLogin(false)}
-              className="px-4 py-1 text-sm font-thin hover:bg-sky-500 dark:hover:bg-sky-500 w-fit drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] bg-slate-200 rounded"
+              className="px-4 py-1 text-sm  hover:bg-sky-500 dark:hover:bg-sky-500 w-fit drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] bg-slate-200 rounded"
             >
               Ok
             </button>

@@ -2,20 +2,12 @@ import React, { useEffect, useState } from "react";
 
 import Sidebar from "../component/sidebar";
 import Navbar from "../component/navbar";
-import ExportExcel from "../component/exportExcel";
+import ExportExcelSiswa from "../component/exportExcelSiswa";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
-import axios from "axios";
-
-
-const url = "https://admin.menujudigital.com/api";
+import { useSelector } from "react-redux";
 
 const Students = () => {
-  const stateStudents = useSelector((state) => state.studentsReducer);
-  const dispatch = useDispatch()
-
-  let token = localStorage.getItem("token");
+  const stateStudents = useSelector((state) => state.studentsReducer); 
 
   // default data
   const [dataMembers, setDataMembers] = useState(stateStudents.data);
@@ -45,19 +37,6 @@ const Students = () => {
     setDataMembers(stateStudents.data);
     setDataRenders(dataMembers);
     setMaxPage(Math.ceil(dataRenders.length / rowPerPage));
-
-    axios
-      .get(`${url}/dataortusiswa`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        dispatch({
-          type: "GET_DATA_STUDENTS",
-          payload: res.data,
-        });
-      });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateStudents.data, dataMembers, rowPerPage]);
@@ -92,19 +71,19 @@ const Students = () => {
                   onChange={(e) => onSearch(e)}
                   type="text"
                   placeholder="Search..."
-                  className="outline-none bg-transparent w-full ml-2 dark:text-white font-thin text-sm border-b border-sky-500"
+                  className="outline-none bg-transparent w-full ml-2 dark:text-white  text-sm border-b border-sky-500"
                 />
               </div>
 
               <div className="flex mb-3 items-center">
                 <span className="dark:text-white mr-2">Export to Excel:</span>
-                <ExportExcel data={dataMembers} />
+                <ExportExcelSiswa data={dataMembers} />
               </div>
             </div>
 
             <table className="table-auto w-full">
               <thead className="h-8">
-                <tr className="text-sm text-white font-thin dark:bg-sky-500 bg-slate-900 h-full">
+                <tr className="text-sm text-white  dark:bg-sky-500 bg-slate-900 h-full">
                   <th className="font-medium ">No.</th>
                   <th className="font-medium ">ID</th>
                   <th className="font-medium flex items-center h-8 justify-between w-fit">
@@ -138,14 +117,14 @@ const Students = () => {
 
               {dataMembers.length === 0 ? (
                 <tbody>
-                  <tr className="text-white font-thin w-full">
+                  <tr className="text-white  w-full">
                     <td style={{ colSpan: "8" }}>No Data Found</td>
                   </tr>
                 </tbody>
               ) : (
                 sliceTable.map((item, index) => {
                   return (
-                    <tbody key={index} className="dark:text-white font-thin text-sm">
+                    <tbody key={index} className="dark:text-white  text-sm">
                       <tr
                         className={
                           index % 2 === 0

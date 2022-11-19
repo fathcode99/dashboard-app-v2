@@ -32,25 +32,41 @@ const DetailTutor = () => {
   const [anBank, setAnBank] = useState(dataTutor.an_rek_bank);
 
   useEffect(() => {
-    axios
-      .get(`${url}/datapengajar/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setDataTutor(res.data);
-      });
 
-    axios
-      .get(`${url}/biaya`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setDataBiaya(res.data);
-      });
+    async function getDataPengajar() {
+      try {
+        await axios
+        .get(`${url}/datapengajar/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setDataTutor(res.data);
+        });
+      } catch (err) {
+        console.log("Error when fetching data - Pengajar")
+      }
+    }
+    getDataPengajar()
+    
+    async function getBiaya() {
+      try {
+        await axios
+        .get(`${url}/biaya`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setDataBiaya(res.data);
+        });
+      } catch (err) {
+        console.log("Error when fetching data - Biaya");
+      }
+    }
+    getBiaya()
+    
   }, [id, token]);
 
   // filter data rincian
@@ -66,7 +82,7 @@ const DetailTutor = () => {
     totalFee += +filterDataBiaya[i].fee_pengajar;
   }
 
-  const onDone = () => {
+  const onDone = async () => {
     let updateData = {
       nama_pengajar: namaPengajar,
       id_pengajar: idPengajar,
@@ -79,7 +95,7 @@ const DetailTutor = () => {
       an_rek_bank: anBank,
     };
     console.log(updateData);
-    axios
+    await axios
       .put(`${url}/datapengajar/${id}/update`, updateData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -101,12 +117,18 @@ const DetailTutor = () => {
 
   //edit data rincian
   let refEditRealisasi = useRef();
-  const onEditDataRincian = (id) => {
-    let dataEdit = refEditRealisasi.current.value;
-    axios
+  let refEditFeePengajar = useRef();
+  const onEditDataRincian = async (id) => {
+    let dataEditRealisasi = refEditRealisasi.current.value;
+    let dataEditFeePengajar = refEditFeePengajar.current.value;
+
+    await axios
       .put(
         `${url}/biaya/${id}/update`,
-        { realisasi_fee_pengajar: dataEdit },
+        {
+          realisasi_fee_pengajar: dataEditRealisasi,
+          fee_pengajar: dataEditFeePengajar,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -135,7 +157,7 @@ const DetailTutor = () => {
     setIsModalMessage(false);
   };
 
-  const onMessage = () => {
+  const onMessage = async () => {
     let messageNotif = refMessage.current.value;
 
     let message = {
@@ -143,7 +165,7 @@ const DetailTutor = () => {
       nama_pengajar: dataTutor.nama_pengajar,
       pesan: messageNotif,
     };
-    axios
+    await axios
       .post(`${url}/notifypengajar`, message, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -155,8 +177,8 @@ const DetailTutor = () => {
   };
 
   // modal delete
-  const onValidDeleteYes = () => {
-    axios
+  const onValidDeleteYes = async () => {
+    await axios
       .delete(`${url}/datapengajar/${id}/delete`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -178,8 +200,8 @@ const DetailTutor = () => {
   };
 
   // modal delete biaya / rincian
-  const onValidDeleteRincian = () => {
-    axios
+  const onValidDeleteRincian = async () => {
+    await axios
       .delete(`${url}/biaya/${idRincian}/delete`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -200,12 +222,12 @@ const DetailTutor = () => {
   };
 
   //modal post data fee pengajar, realisasi fee
-  const [isModalPost, setIsModalPost] = useState(false);
-  const [feePengajar, setFeePengajar] = useState(null)
-  const [realFee, setRealFee] = useState(null)
-  const onPostData = () => {
-      
-  };
+  // const [isModalPost, setIsModalPost] = useState(false);
+  // const [feePengajar, setFeePengajar] = useState(null)
+  // const [realFee, setRealFee] = useState(null)
+  // const onPostData = () => {
+
+  // };
 
   return (
     <div className="flex bg-slate-200  min-h-screen">
@@ -221,7 +243,7 @@ const DetailTutor = () => {
               onClick={() => setIsModalMessage(!isModalMessage)}
               className="hover:bg-sky-500 py-1 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)] cursor-pointer  bg-slate-300 rounded-md flex justify-center items-center border border-sky-900 px-2"
             >
-              <span className="material-symbols-rounded mr-2 font-thin">
+              <span className="material-symbols-rounded mr-2 ">
                 {" "}
                 chat{" "}
               </span>
@@ -241,84 +263,84 @@ const DetailTutor = () => {
                         onChange={(e) => setNamaPengajar(e.target.value)}
                         type="text"
                         defaultValue={dataTutor.nama_pengajar}
-                        className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                        className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white  text-base"
                       />
 
-                      <div className="font-thin text-sm flex">
+                      <div className=" text-sm flex">
                         <span className="dark:text-white mr-2">ID : </span>
                         <input
                           type="text"
                           onChange={(e) => setIdPengajar(e.target.value)}
                           defaultValue={dataTutor.id_pengajar}
-                          className="outline-none bg-transparent border border-sky-500 rounded-sm px-2 dark:text-white font-thin text-base"
+                          className="outline-none bg-transparent border border-sky-500 rounded-sm px-2 dark:text-white  text-base"
                         />
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                         <div>
-                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                          <div className="italic  text-sky-500 text-sm mt-3">
                             Email
                           </div>
                           <input
                             type="text"
                             onChange={(e) => setEmail(e.target.value)}
                             defaultValue={dataTutor.email}
-                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white  text-base"
                           />
                         </div>
 
                         <div>
-                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                          <div className="italic  text-sky-500 text-sm mt-3">
                             Asal Kampus
                           </div>
                           <input
                             onChange={(e) => setAsalKampus(e.target.value)}
                             type="text"
                             defaultValue={dataTutor.asal_kampus}
-                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white  text-base"
                           />
                         </div>
 
                         <div>
                           <div className="w-full">
-                            <div className="italic font-thin text-sky-500 text-sm mt-3">
+                            <div className="italic  text-sky-500 text-sm mt-3">
                               Mapel
                             </div>
                             <input
                               onChange={(e) => setMapel(e.target.value)}
                               type="text"
                               defaultValue={dataTutor.mapel}
-                              className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                              className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white  text-base"
                             />
                           </div>
                         </div>
 
                         <div>
-                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                          <div className="italic  text-sky-500 text-sm mt-3">
                             Phone
                           </div>
                           <input
                             onChange={(e) => setTelp(e.target.value)}
                             type="text"
                             defaultValue={dataTutor.no_telp}
-                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white  text-base"
                           />
                         </div>
 
                         <div className="w-full">
-                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                          <div className="italic  text-sky-500 text-sm mt-3">
                             Nama Bank
                           </div>
                           <input
                             onChange={(e) => setNamaBank(e.target.value)}
                             type="text"
                             defaultValue={dataTutor.nama_bank}
-                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white  text-base"
                           />
                         </div>
 
                         <div>
-                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                          <div className="italic  text-sky-500 text-sm mt-3">
                             Rek Bank
                           </div>
                           <div>
@@ -326,13 +348,13 @@ const DetailTutor = () => {
                               onChange={(e) => setRekBank(e.target.value)}
                               type="text"
                               defaultValue={dataTutor.rek_bank}
-                              className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                              className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white  text-base"
                             />
                             <input
                               onChange={(e) => setAnBank(e.target.value)}
                               type="text"
                               defaultValue={dataTutor.an_rek_bank}
-                              className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white font-thin text-base"
+                              className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white  text-base"
                             />
                           </div>
                         </div>
@@ -345,7 +367,7 @@ const DetailTutor = () => {
                         onClick={onDone}
                         className="hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] dark:bg-neutral-700 bg-slate-300 rounded h-6 w-6"
                       >
-                        <span className="material-symbols-rounded dark:text-white font-thin">
+                        <span className="material-symbols-rounded ">
                           {" "}
                           done{" "}
                         </span>
@@ -354,7 +376,7 @@ const DetailTutor = () => {
                         onClick={() => setIsEdit(false)}
                         className="hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] dark:bg-neutral-700 bg-slate-300 rounded h-6 w-6 "
                       >
-                        <span className="material-symbols-rounded dark:text-white font-thin">
+                        <span className="material-symbols-rounded ">
                           {" "}
                           cancel{" "}
                         </span>
@@ -363,66 +385,66 @@ const DetailTutor = () => {
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col w-full  dark:bg-neutral-800 bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
+                <div className="flex flex-col w-full bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
                   <div className="flex gap-3 relative">
                     <div className="flex flex-col w-full justify-center">
                       <div className="dark:text-white font-medium text-xl">
                         {dataTutor.nama_pengajar}
                       </div>
-                      <div className="dark:text-white font-thin text-sm">
+                      <div className="dark:text-white  text-sm">
                         ID : {dataTutor.id_pengajar}
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-2">
                         <div className="w-full">
-                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                          <div className="italic  text-sky-500 text-sm mt-3">
                             Email
                           </div>
-                          <div className="dark:text-white font-thin text-sm">
+                          <div className="dark:text-white  text-sm">
                             {dataTutor.email}
                           </div>
                         </div>
 
                         <div>
-                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                          <div className="italic  text-sky-500 text-sm mt-3">
                             Asal Kampus
                           </div>
-                          <div className="dark:text-white font-thin text-sm">
+                          <div className="dark:text-white  text-sm">
                             {dataTutor.asal_kampus}
                           </div>
                         </div>
 
                         <div className="w-full">
-                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                          <div className="italic  text-sky-500 text-sm mt-3">
                             Mapel
                           </div>
-                          <div className="dark:text-white font-thin text-sm">
+                          <div className="dark:text-white  text-sm">
                             {dataTutor.mapel}
                           </div>
                         </div>
                         <div>
-                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                          <div className="italic  text-sky-500 text-sm mt-3">
                             Phone
                           </div>
-                          <div className="dark:text-white font-thin text-sm">
+                          <div className="dark:text-white  text-sm">
                             {dataTutor.no_telp}
                           </div>
                         </div>
 
                         <div className="w-full">
-                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                          <div className="italic  text-sky-500 text-sm mt-3">
                             Nama Bank
                           </div>
-                          <div className="dark:text-white font-thin text-sm">
+                          <div className="dark:text-white  text-sm">
                             {dataTutor.nama_bank}
                           </div>
                         </div>
 
                         <div>
-                          <div className="italic font-thin text-sky-500 text-sm mt-3">
+                          <div className="italic  text-sky-500 text-sm mt-3">
                             Rek Bank
                           </div>
-                          <div className={`dark:text-white font-thin text-sm`}>
+                          <div className={`dark:text-white  text-sm`}>
                             {dataTutor.rek_bank} <br /> {dataTutor.an_rek_bank}
                           </div>
                         </div>
@@ -435,7 +457,7 @@ const DetailTutor = () => {
                         onClick={() => setIsEdit(!isEdit)}
                         className="hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] dark:bg-neutral-700 bg-slate-300 rounded h-6 w-6 "
                       >
-                        <span className="material-symbols-rounded dark:text-white font-thin">
+                        <span className="material-symbols-rounded dark:text-white ">
                           Edit
                         </span>
                       </button>
@@ -443,7 +465,7 @@ const DetailTutor = () => {
                         onClick={() => setIsModalDelete(true)}
                         className="hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] dark:bg-neutral-700 bg-slate-300 rounded h-6 w-6 "
                       >
-                        <span className="material-symbols-rounded dark:text-white font-thin">
+                        <span className="material-symbols-rounded dark:text-white ">
                           {" "}
                           Delete{" "}
                         </span>
@@ -455,10 +477,10 @@ const DetailTutor = () => {
 
               {/* payment */}
               <div className="flex flex-col md:w-[50%] w-full bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
-                <div className="dark:text-white font-thin text-sm">
+                <div className="dark:text-white  text-sm">
                   Total Fee
                 </div>
-                <div className="text-sky-500 h-full font-thin text-right text-5xl md:text-3xl lg:text-5xl flex items-center justify-end">
+                <div className="text-sky-500 h-full  text-right text-5xl md:text-3xl lg:text-5xl flex items-center justify-end">
                   Rp {totalFee.toLocaleString()}
                 </div>
               </div>
@@ -468,17 +490,17 @@ const DetailTutor = () => {
             <div className="flex flex-col mt-4 bg-white  rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
               <div className="flex items-center justify-between font-normal my-3">
                 <div>Rincian Kepengajaran</div>
-                <button
+                {/* <button
                   onClick={() => setIsModalPost(true)}
                   className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
                 >
                   Tambahkan Data
-                </button>
+                </button> */}
               </div>
 
               <table className="w-full">
                 <thead className="h-8">
-                  <tr className="text-sm text-white font-thin bg-slate-900 dark:bg-sky-500 h-full">
+                  <tr className="text-sm text-white  bg-slate-900 dark:bg-sky-500 h-full">
                     <th className="font-medium w-8">No.</th>
                     <th className="font-medium w-8 hidden md:table-cell">ID</th>
                     <th className="font-medium w-36 px-2 flex items-center h-8 justify-between">
@@ -500,7 +522,7 @@ const DetailTutor = () => {
 
                 {filterDataBiaya.length === 0 ? (
                   <tbody>
-                    <tr className="text-white font-thin w-full">
+                    <tr className="text-white  w-full">
                       <td></td>
                       <td></td>
                       <td>No Data Found</td>
@@ -512,7 +534,7 @@ const DetailTutor = () => {
                     return (
                       <tbody
                         key={index}
-                        className="dark:text-white font-thin text-sm"
+                        className="dark:text-white  text-sm"
                       >
                         <tr
                           className={
@@ -534,7 +556,18 @@ const DetailTutor = () => {
                             {item.durasi_lembur} jam
                           </td>
                           <td className="text-center border-r dark:border-white">
-                            Rp {item.fee_pengajar}
+                            {isIndexEdit === index ? (
+                              <>
+                                <input
+                                  ref={refEditFeePengajar}
+                                  type="text"
+                                  defaultValue={item.fee_pengajar}
+                                  className="w-20 break-words text-center dark:text-white  text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
+                                />
+                              </>
+                            ) : (
+                              <div>Rp {item.fee_pengajar}</div>
+                            )}
                           </td>
                           <td className="text-center border-r dark:border-white">
                             Rp {item.biaya_fotokopi}
@@ -546,7 +579,7 @@ const DetailTutor = () => {
                                   ref={refEditRealisasi}
                                   type="text"
                                   defaultValue={item.realisasi_fee_pengajar}
-                                  className="w-20 break-words text-center dark:text-white font-thin text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
+                                  className="w-20 break-words text-center dark:text-white  text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
                                 />
                               </>
                             ) : (
@@ -555,12 +588,20 @@ const DetailTutor = () => {
                           </td>
                           <td className="hidden justify-center items-center h-8 md:table-cell">
                             {isIndexEdit === index ? (
+                              <div className="flex gap-2">
                               <button
                                 onClick={() => onEditDataRincian(item.id)}
                                 className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
                               >
                                 Done
                               </button>
+                              <button
+                              onClick={() => setIsIndexEdit(null)}
+                              className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
+                            >
+                              Cancel
+                            </button>
+                              </div>
                             ) : (
                               <div className="flex gap-2 justify-center">
                                 <button
@@ -589,7 +630,7 @@ const DetailTutor = () => {
             </div>
           </>
         ) : (
-          <div className="flex flex-col items-center w-full m-2 text-sky-500 italic font-thin">
+          <div className="flex flex-col items-center w-full m-2 text-sky-500 italic ">
             Data Empty
             <Link to="/tutors">
               <button className="text-white hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2">
@@ -615,7 +656,7 @@ const DetailTutor = () => {
               <textarea
                 ref={refMessage}
                 type="text"
-                className=" break-words dark:text-white font-thin text-sm rounded-md p-2 bg-transparent outline-none border dark:border-sky-500 border-slate-900 "
+                className=" break-words dark:text-white  text-sm rounded-md p-2 bg-transparent outline-none border dark:border-sky-500 border-slate-900 "
                 defaultValue={defaultMessage}
               />
 
@@ -639,7 +680,7 @@ const DetailTutor = () => {
                 <div className=" text-rose-500">Delete Data</div>
               </div>
               <div className="flex justify-between">
-                <div className="dark:text-white font-thin text-sm">
+                <div className="dark:text-white  text-sm">
                   Are you sure ?
                 </div>
               </div>
@@ -672,7 +713,7 @@ const DetailTutor = () => {
                 <div className=" text-rose-500">Delete Data</div>
               </div>
               <div className="flex justify-between">
-                <div className="dark:text-white font-thin text-sm">
+                <div className="dark:text-white  text-sm">
                   Are you sure ?
                 </div>
               </div>
@@ -698,7 +739,7 @@ const DetailTutor = () => {
         )}
 
         {/* modal post data */}
-        {isModalPost ? (
+        {/* {isModalPost ? (
           <div className="absolute backdrop-blur-sm w-full h-full bg-transparent bg-opacity-20 flex justify-center items-center">
             <div className="flex flex-col w-[75%] bg-slate-200 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
               <div className="flex justify-between bg-indigo-900 p-2">
@@ -734,7 +775,7 @@ const DetailTutor = () => {
           </div>
         ) : (
           ""
-        )}
+        )} */}
       </div>
     </div>
   );
