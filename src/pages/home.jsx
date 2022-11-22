@@ -353,7 +353,7 @@ const Home = () => {
           <div className="main-title">Laporan Keuangan</div>
           <div>
             {/* widget */}
-            <div className="grid md:grid-cols-4 grid-cols-2 gap-3 font-normal">
+            <div className="grid lg:grid-cols-4 grid-cols-2 gap-3 font-normal">
               <div className="flex flex-col bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
                 <div className=" mb-6  text-sm">Total Biaya</div>
                 <div className="  text-2xl flex justify-between items-baseline">

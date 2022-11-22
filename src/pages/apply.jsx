@@ -111,7 +111,7 @@ const Tutors = () => {
                   onChange={(e) => onSearch(e)}
                   type="text"
                   placeholder="Search..."
-                  className="outline-none bg-transparent w-full ml-2 dark:text-white font-thin text-sm border-b border-sky-500"
+                  className="outline-none bg-transparent w-full ml-2 dark:text-white  text-sm border-b border-sky-500"
                 />
               </div>
 
@@ -124,21 +124,21 @@ const Tutors = () => {
             {/* TABLE START */}
             <table className="w-full">
               <thead className="h-8">
-                <tr className="text-sm text-white font-thin dark:bg-sky-500 bg-slate-900 h-full">
+                <tr className="text-sm text-white  dark:bg-sky-500 bg-slate-900 h-full">
                   <th className="font-medium w-8 cursor-pointer border-r">No.</th>
-                  <th className="font-medium w-24 cursor-pointer border-r">ID</th>
+                  <th className="font-medium w-24 cursor-pointer border-r">ID Pengajar</th>
                   <th className="font-medium w-36 border-r"> Nama </th>
-                  <th className="font-medium cursor-pointer border-r">Mapel</th>
+                  <th className="font-medium hidden md:table-cell cursor-pointer border-r">Mapel</th>
                   <th className="font-medium hidden md:table-cell border-r cursor-pointer"> Asal Kampus </th>
                   <th className="font-medium cursor-pointer border-r">Telp</th>
-                  <th className="font-medium cursor-pointer border-r">Email</th>
+                  <th className="font-medium hidden md:table-cell cursor-pointer border-r">Email</th>
                   <th className="font-medium">Action</th>
                 </tr>
               </thead>
 
               {dataMembers.length === 0 ? (
                 <tbody>
-                  <tr className="dark:text-white font-thin w-full">
+                  <tr className="dark:text-white  w-full">
                     <td style={{ colSpan: "8" }}>No Data Found</td>
                   </tr>
                 </tbody>
@@ -149,7 +149,7 @@ const Tutors = () => {
                   return (
                     <tbody
                       key={index}
-                      className="dark:text-white font-thin text-sm "
+                      className="dark:text-white  text-sm "
                     >
                       <tr
                         className={
@@ -164,14 +164,14 @@ const Tutors = () => {
                           {item.id_pengajar}
                         </td>
                         <td className="border-r px-2">{item.nama_pengajar}</td>
-                        <td className="border-r px-2 uppercase">
+                        <td className="border-r px-2 uppercase hidden md:table-cell">
                           {item.mapel}
                         </td>
-                        <td className="border-r px-2 text-center">
+                        <td className="border-r px-2 text-center hidden md:table-cell">
                           {item.asal_kampus}
                         </td>
                         <td className="border-r text-center">{item.no_telp}</td>
-                        <td className="border-r px-2">{item.email}</td>
+                        <td className="border-r px-2 hidden md:table-cell">{item.email}</td>
                         <td className="flex justify-center items-center h-8 ">
                           <button
                             onClick={() => deleteApply(item.id)}

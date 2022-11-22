@@ -45,9 +45,9 @@ const Login = () => {
 
   return (
     <div className="w-full min-h-screen flex justify-center items-center relative">
-      <div className="w-3/4 md:w-1/3 grid grid-cols-1 dark:bg-neutral-800 bg-slate-100 rounded-md py-8 p-4 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+      <div className="w-3/4 md:w-1/3 grid grid-cols-1 bg-slate-100 rounded-md py-8 p-4 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
         
-        <div className="dark:text-white font-medium text-base text-center my-4 ">
+        <div className=" font-medium text-base text-center my-4 ">
           Admin Login
         </div>
 

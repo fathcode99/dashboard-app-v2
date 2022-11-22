@@ -140,7 +140,7 @@ const DataKeuangan = () => {
           Data Keuangan (Absensi)
         </div>
         <div className="max-w-full">
-          <div className="flex flex-col max-w-[1020px] bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
+          <div className="flex flex-col w-[350px] md:w-[600px] lg:w-[1020px] bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
             
             {/* search data */}
             <div className="flex justify-between items-center"> 

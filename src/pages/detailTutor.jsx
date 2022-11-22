@@ -455,7 +455,7 @@ const DetailTutor = () => {
                     <div className="absolute top-0 right-0 flex gap-2">
                       <button
                         onClick={() => setIsEdit(!isEdit)}
-                        className="hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] dark:bg-neutral-700 bg-slate-300 rounded h-6 w-6 "
+                        className="hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)] dark:bg-neutral-700 bg-slate-300 rounded h-6 w-6 "
                       >
                         <span className="material-symbols-rounded dark:text-white ">
                           Edit
@@ -463,7 +463,7 @@ const DetailTutor = () => {
                       </button>
                       <button
                         onClick={() => setIsModalDelete(true)}
-                        className="hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] dark:bg-neutral-700 bg-slate-300 rounded h-6 w-6 "
+                        className="hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)] dark:bg-neutral-700 bg-slate-300 rounded h-6 w-6 "
                       >
                         <span className="material-symbols-rounded dark:text-white ">
                           {" "}
@@ -476,7 +476,7 @@ const DetailTutor = () => {
               )}
 
               {/* payment */}
-              <div className="flex flex-col md:w-[50%] w-full bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+              <div className="flex flex-col md:w-[50%] w-full bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
                 <div className="dark:text-white  text-sm">
                   Total Fee
                 </div>

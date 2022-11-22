@@ -13,6 +13,7 @@ import DetailStudent from "./pages/detailStudent";
 import NotifyAdmin from "./pages/notifyAdmin";
 import Picture from "./pages/picture";
 import DataKeuangan from "./pages/datakeuangan";
+import Catatan from "./pages/catatan";
 
 import axios from "axios";
 import { Routes, Route } from "react-router-dom";
@@ -144,6 +145,7 @@ const App = () => {
 
         <Route path="/notifadmin" element={<NotifyAdmin />} />
         <Route path="/picture" element={<Picture />} />
+        <Route path="/catatan" element={<Catatan />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     </div>

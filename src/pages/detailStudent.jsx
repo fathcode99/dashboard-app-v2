@@ -212,12 +212,12 @@ const DetailStudent = () => {
               {isEdit ? (
                 <div className="flex flex-col w-full md:w=3/4 dark:bg-neutral-800 bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
                   <div className="flex gap-3 relative">
-                    <div className="w-1/4 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+                    {/* <div className="w-1/4 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                       <img
                         src="https://www.stepstherapy.com.au/wp-content/uploads/2020/05/Natalie-square-profile-picture-1024x1024.jpg"
                         alt="profile"
                       />
-                    </div>
+                    </div> */}
 
                     <div className="flex flex-col w-full justify-center">
                       <input
@@ -476,12 +476,12 @@ const DetailStudent = () => {
               ) : (
                 <div className="flex flex-col w-full  dark:bg-neutral-800 bg-white rounded-md p-4 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
                   <div className="flex gap-3 relative">
-                    <div className="w-1/4 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+                    {/* <div className="w-1/4 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                       <img
                         src="https://www.stepstherapy.com.au/wp-content/uploads/2020/05/Natalie-square-profile-picture-1024x1024.jpg"
                         alt="profile"
                       />
-                    </div>
+                    </div> */}
                     <div className="flex flex-col w-full justify-center">
                       <div className="dark:text-white font-medium text-xl">
                         {dataSiswa.nama_siswa}

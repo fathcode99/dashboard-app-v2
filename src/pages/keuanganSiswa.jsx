@@ -165,9 +165,9 @@ const KeuanganSiswa = () => {
                 <tr className="text-sm text-white  dark:bg-sky-500 bg-slate-900 h-full">
                   <th className="font-medium border-r w-8">No.</th>
                   <th className="font-medium border-r cursor-pointer">
-                    ID
+                    ID Siswa
                   </th>
-                  <th className="font-medium flex items-center h-8 justify-center border-r cursor-pointer">
+                  <th className="font-medium flex items-center h-8 justify-center border-r cursor-pointer w-32">
                     Nama Siswa
                   </th>
                   <th className="font-medium border-r cursor-pointer">

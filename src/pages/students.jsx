@@ -85,12 +85,11 @@ const Students = () => {
               <thead className="h-8">
                 <tr className="text-sm text-white  dark:bg-sky-500 bg-slate-900 h-full">
                   <th className="font-medium ">No.</th>
-                  <th className="font-medium ">ID</th>
-                  <th className="font-medium flex items-center h-8 justify-between w-fit">
-                    
+                  <th className="font-medium ">ID Siswa</th>
+                  <th className="font-medium flex items-center h-8 justify-between w-32"> 
                     Nama Ortu
                   </th>
-                  <th className="font-medium hidden md:table-cell">
+                  <th className="font-medium hidden md:table-cell w-32">
                     Nama Siswa
                   </th>
                   <th className="font-medium">Kelas</th>
@@ -99,9 +98,9 @@ const Students = () => {
                   {/* <th className="hidden md:table-cell font-medium">Kota</th> */}
                   <th className="hidden md:table-cell font-medium">Mapel</th>
                   {/* <th className="hidden md:table-cell font-medium">Email</th>  */}
-                  <th className="hidden md:table-cell font-medium">Jadwal</th>
-                  <th className="hidden md:table-cell font-medium">Waktu</th>
-                  <th className="hidden md:table-cell font-medium">
+                  <th className="hidden lg:table-cell font-medium">Jadwal</th>
+                  <th className="hidden lg:table-cell font-medium">Waktu</th>
+                  <th className="hidden lg:table-cell font-medium">
                     Jenis Bimble
                   </th>
                   {/* <th className="hidden md:table-cell font-medium"> Gender Tentor </th> */}
@@ -138,19 +137,19 @@ const Students = () => {
                         <td className="table-cell">
                           {item.nama_orangtua}
                         </td>
-                        <td className="table-cell">
+                        <td className="hidden md:table-cell ">
                           {item.nama_siswa}
                         </td>
                         <td className="text-center">{item.kelas}</td> 
-                        <td className="text-center">{item.mapel}</td>
-                        <td className="text-center">{item.jadwal_les}</td>
-                        <td className="text-center">{item.jam_mulai_les}</td>
-                        <td className="text-center">{item.jenis_bimble}</td>
+                        <td className="text-center hidden md:table-cell ">{item.mapel}</td>
+                        <td className="text-center hidden lg:table-cell ">{item.jadwal_les}</td>
+                        <td className="text-center hidden lg:table-cell ">{item.jam_mulai_les}</td>
+                        <td className="text-center hidden lg:table-cell ">{item.jenis_bimble}</td>
                         <td
                           className={
                             item.status === "Active"
-                              ? "text-lime-600 text-center"
-                              : "text-rose-600 text-center"
+                              ? "text-lime-600 text-center hidden md:table-cell "
+                              : "text-rose-600 text-center hidden md:table-cell "
                           }
                         >
                           {item.status_siswa}
@@ -172,14 +171,14 @@ const Students = () => {
               <button
                 onClick={onPrev}
                 disabled={page === 1 ? true : false}
-                className="text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-l-md px-2"
+                className="dark:text-white bg-slate-200 dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-l-md px-2"
               >
                 Prev
               </button>
               <button
                 onClick={onNext}
                 disabled={page === maxPage ? true : false}
-                className="text-white bg-neutral-800 text-sm flex justify-center items-center h-8 border border-sky-500 rounded-r-md px-2"
+                className="dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-r-md px-2"
               >
                 Next
               </button>

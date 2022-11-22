@@ -80,7 +80,7 @@ const NotifyAdmin = () => {
 
                 <button
                   onClick={() => onDelete(item.id)}
-                  className="hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.3)] cursor-pointer bg-slate-300 rounded-md flex justify-center items-center border px-2"
+                  className="hover:bg-slate-200 transition duration-300 bg-rose-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
                 >
                   <span className="material-symbols-rounded dark:text-white ">
                     {" "}

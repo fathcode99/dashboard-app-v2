@@ -105,7 +105,7 @@ const Tutors = () => {
                   <th className="font-medium hidden md:table-cell cursor-pointer border-r"> Mapel </th>
                   <th className="font-medium hidden md:table-cell cursor-pointer border-r"> Asal Kampus </th>
                   <th className="font-medium cursor-pointer border-r">Telp</th>
-                  <th className="font-medium w-56 cursor-pointer border-r">Email</th>
+                  <th className="font-medium hidden md:table-cell w-56 cursor-pointer border-r">Email</th>
                   <th className="font-medium w-20 border-r">Action</th>
                 </tr>
               </thead>
@@ -149,7 +149,7 @@ const Tutors = () => {
                           <td className="border-r text-center">
                             {item.no_telp}
                           </td>
-                          <td className="border-r text-center">{item.email}</td>
+                          <td className="border-r text-center hidden md:table-cell">{item.email}</td>
                           <td className="flex justify-center items-center h-8 ">
                             <Link to={`/tutors/${item.id}`}>
                               <button className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2">

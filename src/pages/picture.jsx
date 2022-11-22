@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
+import { useRef } from "react";
 import { useState } from "react";
 import Navbar from "../component/navbar";
 import Sidebar from "../component/sidebar";
@@ -24,16 +25,32 @@ const Picture = () => {
   }, [token]);
 
   // upload teks id 1
-  const [teksA, setTeksA] = useState();
-  const onUpload = () => {
+  // const [teksA, setTeksA] = useState();
+  const [indexEdit, setIndexEdit] = useState(null);
+  const teksIklanRef = useRef();
+  const onUpload = async (id) => {
+    let teksA = teksIklanRef.current.value;
     let teks = {
       teks: teksA,
     };
-    axios.post(`${url}/teks`, teks, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    await axios
+      .put(`${url}/teks/${id}/update`, teks, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        axios
+          .get(`${url}/teks`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            setDataTeks(res.data);
+          });
+      });
+    setIndexEdit(null);
   };
 
   return (
@@ -46,29 +63,55 @@ const Picture = () => {
         <div className="main-title"> Upload Teks Ads </div>
 
         <div>
-          <input
-            id="addfile"
-            type="teks"
-            onChange={(e) => setTeksA(e.target.value)}
-          />
-        </div>
-        <div className="w-full flex justify-center"></div>
-
-        <div>
           {dataTeks.length === 0 ? (
             ""
           ) : (
             <div>
-              {dataTeks.map((item) => (
-                <div>
-                  {item.teks}
-                  <button
-                    onClick={onUpload}
-                    className="w-fit mt-3 hover:bg-sky-500 dark:hover:bg-sky-500 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] cursor-pointer dark:bg-neutral-800 bg-slate-300 rounded-md flex justify-center items-center border dark:border-sky-500 p-2"
-                  >
-                    <span class="material-symbols-rounded">file_upload</span>
-                    Upload Teks
-                  </button>
+              {dataTeks.map((item, index) => (
+                <div className="mb-5" key={index}>
+                  {indexEdit === index ? (
+                    <textarea
+                      ref={teksIklanRef}
+                      name="iklan"
+                      id="teksiklan" 
+                      rows="3"
+                      defaultValue={item.teks}
+                      className="w-full"
+                    />
+                  ) : (
+                    <div className="bg-slate-100 p-2 w-full mb-3 rounded-md">
+                      {item.teks}
+                    </div>
+                  )}
+
+                  <div>
+                    {indexEdit === index ? (
+                      <div className="flex gap-3">
+                        <button
+                          onClick={() => onUpload(item.id)}
+                          className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
+                        >
+                          <span className="material-symbols-rounded">
+                            file_upload
+                          </span>
+                          Upload Teks
+                        </button>
+                        <button
+                          className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
+                          onClick={() => setIndexEdit(null)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
+                        onClick={() => setIndexEdit(index)}
+                      >
+                        Edit
+                      </button>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
