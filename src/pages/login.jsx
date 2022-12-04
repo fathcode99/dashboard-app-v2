@@ -79,9 +79,6 @@ const Login = () => {
         >
           Login
         </button>
-        <div className="dark:text-white text-xs  mt-6">
-          Note : Lorem ipsum, dolor sit amet consectetur adipisicing.
-        </div>
       </div>
 
       {/* modal data kosong */}

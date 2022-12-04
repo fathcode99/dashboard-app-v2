@@ -123,7 +123,7 @@ const Students = () => {
               ) : (
                 sliceTable.map((item, index) => {
                   return (
-                    <tbody key={index} className="dark:text-white  text-sm">
+                    <tbody key={index} className="dark:text-white text-sm">
                       <tr
                         className={
                           index % 2 === 0

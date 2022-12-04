@@ -4,7 +4,7 @@
 
 @layer {
     .sidebar-btn {
-        @apply cursor-pointer flex md:justify-start justify-center hover:bg-indigo-400 m-1 transition duration-300 rounded-md py-1 items-center md:pl-4 font-medium 
+        @apply cursor-pointer flex md:justify-start bg- justify-center hover:bg-indigo-400 m-1 transition duration-300 rounded-md py-1 items-center  font-medium 
     };
 
     .widget {
