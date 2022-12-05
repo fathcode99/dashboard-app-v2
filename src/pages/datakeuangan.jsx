@@ -131,7 +131,7 @@ const DataKeuangan = () => {
 
   return (
     <div className="flex bg-slate-200 min-h-screen">
-      <div className='min-w-[50px] md:min-w-[230px]'>
+      <div className='min-w-[50px] lg:min-w-[230px]'>
         <Sidebar />
       </div>
       <div className="className='flex flex-col md:mb-8 md:mx-8 max-w-full m-2">
@@ -140,7 +140,7 @@ const DataKeuangan = () => {
           Data Keuangan (Absensi)
         </div>
         <div className="max-w-full">
-          <div className="flex flex-col w-[350px] md:w-[600px] lg:w-[1020px] bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
+          <div className="flex flex-col min-w-[350px] max-w-[90vw] lg:max-w-[77vw] bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
             
             {/* search data */}
             <div className="flex justify-between items-center"> 

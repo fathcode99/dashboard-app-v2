@@ -62,11 +62,32 @@ const Tutors = () => {
 
   // proteksi login
   useEffect(() => {
-    const tokenId = localStorage.getItem("token");
-    if (!tokenId) {
+    const token = localStorage.getItem("token");
+
+    async function getApply() {
+      try {
+        await axios
+        .get(`${url}/apply`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          dispatch({
+            type: "GET_DATA_APPLY",
+            payload: res.data,
+          });
+        });
+      } catch (err) {
+        console.log("Error when fetching data - Apply");
+      }
+    }
+    getApply()
+
+    if (!token) {
       navigate("/login");
     }
-  }, [navigate]);
+  }, [navigate, dispatch]);
 
   // menghapus data apply
   let token = localStorage.getItem("token");
@@ -95,7 +116,7 @@ const Tutors = () => {
 
   return (
     <div className="flex bg-slate-200  min-h-screen">
-      <div className='min-w-[50px] md:w-[300px]'>
+      <div className='min-w-[50px] lg:w-[300px]'>
         <Sidebar />
       </div>
       <div className='flex flex-col md:mb-8 md:mx-8 w-full m-2'>

@@ -197,7 +197,7 @@ const DetailStudent = () => {
 
   return (
     <div className="flex bg-slate-200  min-h-screen">
-      <div className='min-w-[50px] md:w-[300px]'>
+      <div className='min-w-[50px] lg:w-[300px]'>
         <Sidebar />
       </div>
       <div className='flex flex-col md:mb-8 md:mx-8 w-full m-2 relative'>

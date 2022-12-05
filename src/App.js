@@ -25,47 +25,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    let token = localStorage.getItem("token");
-
-    async function getDataPengajar() {
-      try {
-        await axios
-        .get(`${url}/datapengajar`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          dispatch({
-            type: "GET_DATA_TUTORS",
-            payload: res.data,
-          });
-        });
-      } catch (err) {
-        console.log("Error when fetching data - Pengajar");
-      }
-    }
-    getDataPengajar()
-      
-    async function getApply() {
-      try {
-        await axios
-        .get(`${url}/apply`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          dispatch({
-            type: "GET_DATA_APPLY",
-            payload: res.data,
-          });
-        });
-      } catch (err) {
-        console.log("Error when fetching data - Apply");
-      }
-    }
-    getApply()
+    let token = localStorage.getItem("token"); 
 
     async function getBiaya() {
       try {
@@ -86,27 +46,6 @@ const App = () => {
       }
     }
     getBiaya()
-
-    async function getDataOrtuSiswa() {
-      try {
-        await axios
-        .get(`${url}/dataortusiswa`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          dispatch({
-            type: "GET_DATA_STUDENTS",
-            payload: res.data,
-          });
-        });
-      } catch (err) {
-        console.log("Error when fetching data - Ortu Siswa");
-      }
-    }
-    getDataOrtuSiswa()
-      
 
     async function getNotify() {
       try {
@@ -137,7 +76,7 @@ const App = () => {
         <Route path="/tutors" element={<Tutors />} />
         <Route path="/tutors/:id" element={<DetailTutor />} />
         <Route path="/apply" element={<Apply />} />
-        <Route path="/keuangan" element={<DataKeuangan />} />
+        <Route path="/pay" element={<DataKeuangan />} />
 
         <Route path="/students" element={<Students />} />
         {/* <Route path="/keuangansiswa" element={<KeuanganSiswa />} /> */}

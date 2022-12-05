@@ -20,6 +20,27 @@ const NotifyAdmin = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    async function getNotify() {
+      try {
+        await axios
+        .get(`${url}/notifyadmin`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          dispatch({
+            type: "GET_DATA_NOTIFY",
+            payload: res.data,
+          });
+        });
+      } catch (err) {
+        console.log("Error when fetching data - Notify ")
+      }
+    }
+    
+    getNotify()
+    
     setDataNotify(stateNotify.data);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateNotify]);
@@ -57,7 +78,7 @@ const NotifyAdmin = () => {
 
   return (
     <div className="flex bg-slate-200  min-h-screen">
-      <div className='min-w-[50px] md:w-[300px]'>
+      <div className='min-w-[50px] lg:w-[300px]'>
         <Sidebar />
       </div>
       <div className='flex flex-col md:mb-8 md:mx-8 w-full m-2 relative'>

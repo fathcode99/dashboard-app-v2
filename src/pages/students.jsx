@@ -5,9 +5,14 @@ import Navbar from "../component/navbar";
 import ExportExcelSiswa from "../component/exportExcelSiswa";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+
+const url = "https://admin.menujudigital.com/api";
 
 const Students = () => {
   const stateStudents = useSelector((state) => state.studentsReducer); 
+  const dispatch = useDispatch();
 
   // default data
   const [dataMembers, setDataMembers] = useState(stateStudents.data);
@@ -34,6 +39,28 @@ const Students = () => {
   };
 
   useEffect(() => {
+    let token = localStorage.getItem("token");
+
+    async function getDataOrtuSiswa() {
+      try {
+        await axios
+        .get(`${url}/dataortusiswa`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          dispatch({
+            type: "GET_DATA_STUDENTS",
+            payload: res.data,
+          });
+        });
+      } catch (err) {
+        console.log("Error when fetching data - Ortu Siswa");
+      }
+    }
+    getDataOrtuSiswa()
+
     setDataMembers(stateStudents.data);
     setDataRenders(dataMembers);
     setMaxPage(Math.ceil(dataRenders.length / rowPerPage));
@@ -56,7 +83,7 @@ const Students = () => {
 
   return (
     <div className="flex bg-slate-200  min-h-screen">
-      <div className='min-w-[50px] md:w-[300px]'>
+      <div className='min-w-[50px] lg:w-[300px]'>
         <Sidebar />
       </div>
       <div className='flex flex-col md:mb-8 md:mx-8 w-full m-2'>
@@ -132,7 +159,7 @@ const Students = () => {
                         }
                       >
                         <td className="text-center">{nomer++}</td>
-                        <td>{item.id_siswa}</td>
+                        <td>{item.id}</td>
 
                         <td className="table-cell">
                           {item.nama_orangtua}

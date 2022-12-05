@@ -25,19 +25,19 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="min-w-[40px] md:w-[240px] lg:w-[260px] flex flex-col fixed h-screen md:min-h-screen drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] overflow-y-auto">
-      <div className="min-w-[40px] lg:w-[240px] flex flex-col h-full md:min-h-[650px] text-white justify-center m-1 rounded-2xl bg-ungutua ">
-        <div className="hidden md:flex justify-center items-center ">
-          <span className="font-bold text-center text-xs   md:text-3xl md:my-7">
-            admin.
-          </span>
-        </div>
+    // <div className="min-w-[40px] md:w-[240px] lg:w-[260px] flex flex-col fixed h-screen md:min-h-screen drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] overflow-y-auto">
+      <div className="min-w-[40px] lg:w-[240px] flex flex-col h-full text-white justify-start pt-10 bg-ungutua ">
+        
         <div className="w-full sidebar flex text-sm flex-col gap-6 md:gap-3 lg:gap-0">
-          <span className="hidden md:block  text-xs text-left pl-4">Home</span>
+          <div> 
+              <span className="hidden lg:block ml-4 font-semibold text-4xl text-center mb-4">ADMIN</span>
+            </div>
+
+          <span className="hidden lg:block  text-xs text-left pl-4">Home</span>
           <Link to="/">
             <div className="sidebar-btn uppercase">
               <span className="material-symbols-rounded "> grid_view </span>
-              <span className="hidden md:block  ml-4">Dashboard</span>
+              <span className="hidden lg:block  ml-4">Dashboard</span>
             </div>
           </Link>
 
@@ -47,7 +47,7 @@ const Sidebar = () => {
               <span className="material-symbols-rounded ">
                 supervised_user_circle
               </span> 
-              <span className="hidden md:block  ml-4">Data Pengajar</span>
+              <span className="hidden lg:block  ml-4">Data Pengajar</span>
             </div>
           </Link>
           <Link to="/apply">
@@ -55,15 +55,15 @@ const Sidebar = () => {
               <span className="material-symbols-rounded ">
                 supervised_user_circle
               </span>
-              <span className="hidden md:block  ml-4">Apply Pengajar</span>
+              <span className="hidden lg:block  ml-4">Apply Pengajar</span>
             </div>
           </Link>
-          <Link to="/keuangan">
+          <Link to="/pay">
             <div className="sidebar-btn uppercase">
               <span className="material-symbols-rounded ">
                 payments
               </span>
-              <span className="hidden md:block  ml-4">Data Keuangan</span>
+              <span className="hidden lg:block  ml-4">Data Keuangan</span>
             </div>
           </Link>
 
@@ -71,17 +71,17 @@ const Sidebar = () => {
           <Link to="/students">
             <div className="sidebar-btn uppercase">
               <span className="material-symbols-rounded "> groups </span>
-              <span className="hidden md:block  ml-4">Data Siswa</span>
+              <span className="hidden lg:block  ml-4">Data Siswa</span>
             </div>
           </Link>
 
-          <span className="hidden md:block text-xs text-left pl-4 mt-5">
+          <span className="hidden lg:block text-xs text-left pl-4 mt-5">
             Admin
           </span>
           <Link to="/notifadmin" onClick={onCounter}>
             <div className="sidebar-btn uppercase">
               <span className="material-symbols-rounded "> notifications </span>
-              <div className="hidden md:block  ml-4">
+              <div className="hidden lg:block  ml-4">
                 Notifikasi
                 {counter < counterNotify ? (
                   <span className="h-6 ml-2 px-2 bg-rose-700 text-white rounded-md">
@@ -98,14 +98,14 @@ const Sidebar = () => {
           <Link to="/picture">
             <div className="sidebar-btn uppercase">
               <span className="material-symbols-rounded "> storefront </span>
-              <span className="hidden md:block  ml-4">Advertising</span>
+              <span className="hidden lg:block  ml-4">Advertising</span>
             </div>
           </Link>
 
           <Link to="/catatan">
             <div className="sidebar-btn uppercase">
               <span className="material-symbols-rounded "> edit_note </span>
-              <span className="hidden md:block  ml-4">Catatan</span>
+              <span className="hidden lg:block  ml-4">Catatan</span>
             </div> 
           </Link>
 
@@ -114,11 +114,11 @@ const Sidebar = () => {
             className="sidebar-btn uppercase"
           >
             <span className="material-symbols-rounded "> logout </span>
-            <span className="hidden md:block  ml-4">Logout</span>
+            <span className="hidden lg:block  ml-4">Logout</span>
           </div>
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 

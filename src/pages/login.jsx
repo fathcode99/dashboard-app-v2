@@ -78,10 +78,7 @@ const Login = () => {
           className="mt-3  px-2 py-1 text-sm  hover:bg-sky-500 dark:hover:bg-sky-500 w-fit drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] bg-slate-200 dark:bg-neutral-700 dark:text-white rounded"
         >
           Login
-        </button>
-        <div className="dark:text-white text-xs  mt-6">
-          Note : Lorem ipsum, dolor sit amet consectetur adipisicing.
-        </div>
+        </button> 
       </div>
 
       {/* modal data kosong */}

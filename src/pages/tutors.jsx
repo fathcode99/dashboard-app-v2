@@ -6,11 +6,16 @@ import Navbar from "../component/navbar";
 import ExportExcelTutor from "../component/exportExcelTutor";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+
+const url = "https://admin.menujudigital.com/api";
 
 const Tutors = () => {
   const stateTutors = useSelector((state) => state.tutorsReducer);
   const navigate = useNavigate();
-  
+  const dispatch = useDispatch();
+
   // default data
   const [dataMembers, setDataMembers] = useState(stateTutors.data);
 
@@ -49,6 +54,28 @@ const Tutors = () => {
   };
 
   useEffect(() => {
+    let token = localStorage.getItem("token");
+
+    async function getDataPengajar() {
+      try {
+        await axios
+        .get(`${url}/datapengajar`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          dispatch({
+            type: "GET_DATA_TUTORS",
+            payload: res.data,
+          });
+        });
+      } catch (err) {
+        console.log("Error when fetching data - Pengajar");
+      }
+    }
+    getDataPengajar()
+
     setDataMembers(stateTutors.data);
     setDataRenders(dataMembers);
     setMaxPage(Math.ceil(dataRenders.length / rowPerPage));
@@ -67,7 +94,7 @@ const Tutors = () => {
 
   return (
     <div className="flex bg-slate-200  min-h-screen">
-      <div className='min-w-[50px] md:w-[300px]'>
+      <div className='min-w-[50px] lg:w-[300px]'>
         <Sidebar />
       </div>
       <div className="className='flex flex-col md:mb-8 md:mx-8 w-full m-2">
