@@ -27,26 +27,6 @@ const App = () => {
   useEffect(() => {
     let token = localStorage.getItem("token"); 
 
-    async function getBiaya() {
-      try {
-        await axios
-          .get(`${url}/biaya`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((res) => {
-            dispatch({
-              type: "GET_DATA_BIAYA",
-              payload: res.data,
-            });
-          });
-      } catch (err) {
-        console.log("Error when fetching data - Biaya");
-      }
-    }
-    getBiaya()
-
     async function getNotify() {
       try {
         await axios

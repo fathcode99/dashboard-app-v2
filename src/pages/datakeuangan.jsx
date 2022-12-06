@@ -5,22 +5,22 @@ import Sidebar from "../component/sidebar";
 import Navbar from "../component/navbar";
 import ExportExcelAbsensi from "../component/exportAbsensi";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 
 const url = "https://admin.menujudigital.com/api";
 
 const DataKeuangan = () => {
-  const stateBiaya = useSelector((state) => state.biayaReducer);
+  // const stateBiaya = useSelector((state) => state.biayaReducer);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   let token = localStorage.getItem("token");
 
   // default data
-  const [dataBiaya, setDataBiaya] = useState(stateBiaya.data);
+  const [dataBiaya, setDataBiaya] = useState([]);
 
   // data renders
-  const [dataRenders, setDataRenders] = useState(stateBiaya.data);
+  const [dataRenders, setDataRenders] = useState(dataBiaya);
 
   // pagination
   const [page, setPage] = useState(1);
@@ -40,13 +40,26 @@ const DataKeuangan = () => {
     setNomer(1 + rowPerPage * (page - 2));
   };
 
-  useEffect(() => {
-    setDataBiaya(stateBiaya.data);
-    setDataRenders(dataBiaya);
+  useEffect(() => { 
+        axios
+          .get(`${url}/biaya`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            // dispatch({
+            //   type: "GET_DATA_BIAYA",
+            //   payload: res.data,
+            // });
+            setDataBiaya(res.data)
+            setDataRenders(res.data);
+          });
+      
     setMaxPage(Math.ceil(dataRenders.length / rowPerPage));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stateBiaya.data, dataBiaya, rowPerPage]);
+  }, [rowPerPage]);
 
   //search /filter
   const onSearch = (e) => {
@@ -87,23 +100,39 @@ const DataKeuangan = () => {
             },
           })
           .then((res) => {
-            dispatch({
-              type: "GET_DATA_BIAYA",
-              payload: res.data,
-            });
+            // dispatch({
+            //   type: "GET_DATA_BIAYA",
+            //   payload: res.data,
+            // });
+            setDataBiaya(res.data)
           });
       });
   };
 
   // edit data realisasi
   const [isIndexEdit, setIsIndexEdit] = useState();
+  
   let refEditRealisasi = useRef();
-  const onEditDataRincian = async (id) => {
-    let dataEdit = refEditRealisasi.current.value;
-    await axios
+  let refEditFeePengajar = useRef();
+  let refTagihanSiswa = useRef();
+  let refRealisasiTs = useRef();
+  let refBiayaPendaftaran = useRef();
+  let refRealisasiBp = useRef();
+
+  const onEditDataRincian = (id) => {
+    
+    let realisasi_fee_pengajar = refEditRealisasi.current.value;
+    let fee_pengajar = refEditFeePengajar.current.value;
+    let tagihan_siswa = refTagihanSiswa.current.value
+    let realisasi_tagihan_siswa = refRealisasiTs.current.value
+    let biaya_pendaftaran = refBiayaPendaftaran.current.value
+    let realisasi_biaya_pendaftaran = refRealisasiBp.current.value
+    
+    console.log(realisasi_fee_pengajar, fee_pengajar, tagihan_siswa, realisasi_tagihan_siswa, biaya_pendaftaran, realisasi_biaya_pendaftaran)
+    axios
       .put(
         `${url}/biaya/${id}/update`,
-        { realisasi_fee_pengajar: dataEdit },
+        { realisasi_fee_pengajar, fee_pengajar, tagihan_siswa, realisasi_tagihan_siswa, biaya_pendaftaran, realisasi_biaya_pendaftaran},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -118,11 +147,12 @@ const DataKeuangan = () => {
             },
           })
           .then((res) => {
-            dispatch({
-              type: "GET_DATA_BIAYA",
-              payload: res.data,
-            });
+            // dispatch({
+            //   type: "GET_DATA_BIAYA",
+            //   payload: res.data,
+            // });
             setDataBiaya(res.data);
+            setDataRenders(res.data);
           });
       });
     setIsIndexEdit(null);
@@ -231,7 +261,19 @@ const DataKeuangan = () => {
                             </td>
                             <td className="text-center px-2">{item.durasi_lembur}</td>
                             <td className="whitespace-nowrap border-r px-2 text-right">
-                              Rp {item.fee_pengajar}{" "}
+                              {/* Rp {item.fee_pengajar}{" "} */}
+                              {isIndexEdit === index ? (
+                                <>
+                                  <input
+                                    ref={refEditFeePengajar}
+                                    type="text"
+                                    defaultValue={item.fee_pengajar}
+                                    className="whitespace-nowrap w-20 break-words text-center dark:text-white  text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
+                                  />
+                                </>
+                              ) : (
+                                <div> Rp {parseInt(item.fee_pengajar).toLocaleString()}</div>
+                              )}
                             </td>
                             <td className="whitespace-nowrap border-r px-2 text-right">
                               {isIndexEdit === index ? (
@@ -254,10 +296,66 @@ const DataKeuangan = () => {
                             <td className="whitespace-nowrap ">{item.nama_siswa}</td>
                             <td className="whitespace-nowrap ">{item.nama_orang_tua}</td>
                             <td className="whitespace-nowrap text-center ">{item.regional}</td>
-                            <td className="whitespace-nowrap ">Rp {parseInt(item.tagihan_siswa).toLocaleString()}</td>
-                            <td className="whitespace-nowrap ">Rp {parseInt(item.realisasi_tagihan_siswa).toLocaleString()}</td>
-                            <td className="whitespace-nowrap ">Rp {parseInt(item.biaya_pendaftaran).toLocaleString()}</td>
-                            <td className="whitespace-nowrap ">Rp {parseInt(item.realisasi_biaya_pendaftaran).toLocaleString()}</td>
+                            <td className="whitespace-nowrap ">
+                              {/* Rp {parseInt(item.tagihan_siswa).toLocaleString()} */}
+                              {isIndexEdit === index ? (
+                                <>
+                                  <input
+                                    ref={refTagihanSiswa}
+                                    type="text"
+                                    defaultValue={item.tagihan_siswa}
+                                    className="whitespace-nowrap w-20 break-words text-center dark:text-white  text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
+                                  />
+                                </>
+                              ) : (
+                                <div> Rp {parseInt(item.tagihan_siswa).toLocaleString()}</div>
+                              )}
+                            </td>
+                            <td className="whitespace-nowrap ">
+                              {/* Rp {parseInt(item.realisasi_tagihan_siswa).toLocaleString()} */}
+                              {isIndexEdit === index ? (
+                                <>
+                                  <input
+                                    ref={refRealisasiTs}
+                                    type="text"
+                                    defaultValue={item.realisasi_tagihan_siswa}
+                                    className="whitespace-nowrap w-20 break-words text-center dark:text-white  text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
+                                  />
+                                </>
+                              ) : (
+                                <div> Rp {parseInt(item.realisasi_tagihan_siswa).toLocaleString()}</div>
+                              )}
+                            </td>
+                            <td className="whitespace-nowrap ">
+                              {/* Rp {parseInt(item.biaya_pendaftaran).toLocaleString()} */}
+                              {isIndexEdit === index ? (
+                                <>
+                                  <input
+                                    ref={refBiayaPendaftaran}
+                                    type="text"
+                                    defaultValue={item.biaya_pendaftaran}
+                                    className="whitespace-nowrap w-20 break-words text-center dark:text-white  text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
+                                  />
+                                </>
+                              ) : (
+                                <div> Rp {parseInt(item.biaya_pendaftaran).toLocaleString()}</div>
+                              )}
+                            </td>
+                            <td className="whitespace-nowrap ">
+                              {/* Rp {parseInt(item.realisasi_biaya_pendaftaran).toLocaleString()} */}
+                              {isIndexEdit === index ? (
+                                <>
+                                  <input
+                                    ref={refRealisasiBp}
+                                    type="text"
+                                    defaultValue={item.realisasi_biaya_pendaftaran}
+                                    className="whitespace-nowrap w-20 break-words text-center dark:text-white  text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
+                                  />
+                                </>
+                              ) : (
+                                <div> Rp {parseInt(item.realisasi_biaya_pendaftaran).toLocaleString()}</div>
+                              )}
+                            </td>
                             
                             <td className="flex justify-center items-center h-8 ">
                               {isIndexEdit === index ? (

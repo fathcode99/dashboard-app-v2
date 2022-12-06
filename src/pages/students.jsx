@@ -4,21 +4,21 @@ import Sidebar from "../component/sidebar";
 import Navbar from "../component/navbar";
 import ExportExcelSiswa from "../component/exportExcelSiswa";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 
 const url = "https://admin.menujudigital.com/api";
 
 const Students = () => {
-  const stateStudents = useSelector((state) => state.studentsReducer); 
-  const dispatch = useDispatch();
+  // const stateStudents = useSelector((state) => state.studentsReducer); 
+  // const dispatch = useDispatch();
 
   // default data
-  const [dataMembers, setDataMembers] = useState(stateStudents.data);
+  const [dataMembers, setDataMembers] = useState([]);
 
   // data renders
-  const [dataRenders, setDataRenders] = useState(stateStudents.data);
+  const [dataRenders, setDataRenders] = useState([]);
 
   // pagination
   const [page, setPage] = useState(1);
@@ -50,10 +50,13 @@ const Students = () => {
           },
         })
         .then((res) => {
-          dispatch({
-            type: "GET_DATA_STUDENTS",
-            payload: res.data,
-          });
+          // dispatch({
+          //   type: "GET_DATA_STUDENTS",
+          //   payload: res.data,
+          // });
+          setDataMembers(res.data)
+          setDataRenders(res.data);
+          // console.log(res.data)
         });
       } catch (err) {
         console.log("Error when fetching data - Ortu Siswa");
@@ -61,12 +64,12 @@ const Students = () => {
     }
     getDataOrtuSiswa()
 
-    setDataMembers(stateStudents.data);
-    setDataRenders(dataMembers);
+    // setDataMembers(dataMembers);
+    
     setMaxPage(Math.ceil(dataRenders.length / rowPerPage));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stateStudents.data, dataMembers, rowPerPage]);
+  }, [rowPerPage]);
 
   //search /filter
   const onSearch = (e) => {

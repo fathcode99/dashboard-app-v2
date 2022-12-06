@@ -6,7 +6,7 @@ import Navbar from "../component/navbar";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-const url = "https://admin.menujudigital.com/api";
+const url = "https://admin.menujudigital.com/api"; 
 
 const DetailStudent = () => {
   let token = localStorage.getItem("token");
@@ -16,6 +16,8 @@ const DetailStudent = () => {
   const [dataBiaya, setDataBiaya] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [isIndexEdit, setIsIndexEdit] = useState(null);
+  
+  const [filterDataBiaya, setFilterDataBiaya] =  useState([])
 
   const [isModalDelete, setIsModalDelete] = useState(false);
 
@@ -54,27 +56,36 @@ const DetailStudent = () => {
         setDataSiswa(res.data);
       });
 
-    axios
-      .get(`${url}/biaya`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setDataBiaya(res.data);
-      });
+      async function getBiaya() {
+        try {
+          await axios
+          .get(`${url}/biaya`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            setDataBiaya(res.data); 
+            let filter = res.data.filter((data) => data.id_siswa === id); 
+            setFilterDataBiaya(filter)
+          });
+        } catch (err) {
+          console.log("Error when fetching data - Biaya");
+        }
+      }
+      getBiaya()
   }, [id, token]);
 
-  // filter data rincian
-  let filterDataBiaya;
-  if (dataBiaya) {
-    filterDataBiaya = dataBiaya.filter((data) => data.id_siswa === idSiswa);
-  }
+  // // filter data rincian
+  // let filterDataBiaya;
+  // if (dataBiaya) {
+  //   filterDataBiaya = dataBiaya.filter((data) => data.id_siswa === idSiswa);
+  // }
 
   //menghitung total fee
-  let totalFee = 0;
+  let totalTagihanSiswa = 0;
   for (let i = 0; i < filterDataBiaya.length; i++) {
-    totalFee += +filterDataBiaya[i].fee_pengajar;
+    totalTagihanSiswa += +filterDataBiaya[i].tagihan_siswa;
   }
 
   const onDone = () => {
@@ -194,7 +205,8 @@ const DetailStudent = () => {
       });
     setIsModalDeleteRincian(false);
   };
-
+  
+ 
   return (
     <div className="flex bg-slate-200  min-h-screen">
       <div className='min-w-[50px] lg:w-[300px]'>
@@ -202,8 +214,16 @@ const DetailStudent = () => {
       </div>
       <div className='flex flex-col md:mb-8 md:mx-8 w-full m-2 relative'>
         <Navbar />
-        <div className="main-title">
-          Detail Data Siswa
+        <div className="main-title flex justify-between">
+          <div>
+            Detail Data Siswa
+          </div>
+          <a
+              href={`https://api.whatsapp.com/send?phone=${dataSiswa.no_telp}&text=*INVOICE*%0ATagihan+Bulan+ini+untuk+Ananda+${dataSiswa.nama_siswa}%0Aadalah+Rp+${totalTagihanSiswa.toLocaleString()}+%0A%0ATerimakasih+%0AAdmin+Cendikia`} 
+              target='_blank'
+              rel='noreferrer'
+               > Send Invoice via WA 
+          </a>
         </div>
         {dataSiswa.nama_orangtua ? (
           <>
@@ -487,7 +507,7 @@ const DetailStudent = () => {
                         {dataSiswa.nama_siswa}
                       </div>
                       <div className="dark:text-white  text-sm">
-                        ID : {dataSiswa.id_siswa}
+                        ID : {dataSiswa.id}
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-2">
@@ -666,7 +686,7 @@ const DetailStudent = () => {
               <div className="flex flex-col  w-full bg-white dark:bg-neutral-800 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
                 <div className="dark:text-white  text-sm">Payment</div>
                 <div className="text-sky-500  text-right text-5xl md:text-3xl lg:text-5xl">
-                  Rp {totalFee.toLocaleString()}
+                  Rp {totalTagihanSiswa.toLocaleString()}
                 </div>
                 
               </div>
@@ -682,6 +702,7 @@ const DetailStudent = () => {
                 <thead className="h-8">
                   <tr className="text-sm text-white  bg-slate-900 dark:bg-sky-500 h-full">
                     <th className="font-medium">No.</th>
+                    <th className="font-medium hidden md:table-cell">Tanggal</th>
                     <th className="font-medium hidden md:table-cell">ID</th>
                     <th className="font-medium px-2 flex items-center h-8 justify-between">
                       Nama Siswa
@@ -730,6 +751,9 @@ const DetailStudent = () => {
                             <td className="text-center border-r dark:border-white">
                               {index + 1}
                             </td>
+                            <td className="whitespace-nowrap border-r px-2">
+                              {item.created_at.slice(0, 10)}
+                            </td>
                             <td className="text-center border-r dark:border-white hidden md:table-cell">
                               {item.id_siswa}
                             </td>
@@ -737,7 +761,7 @@ const DetailStudent = () => {
                               {item.nama_siswa}
                             </td>
                             <td className="text-center border-r dark:border-white hidden md:table-cell">
-                              {item.tagihan_siswa} jam
+                              Rp {item.tagihan_siswa}
                             </td>
                             <td className="text-center border-r dark:border-white">
                               Rp {item.realisasi_tagihan_siswa}

@@ -70,18 +70,37 @@ const Picture = () => {
               {dataTeks.map((item, index) => (
                 <div className="mb-5" key={index}>
                   {indexEdit === index ? (
-                    <textarea
-                      ref={teksIklanRef}
-                      name="iklan"
-                      id="teksiklan" 
-                      rows="3"
-                      defaultValue={item.teks}
-                      className="w-full"
-                    />
+                    <>
+                      <div>Judul</div>
+                      <textarea
+                        ref={teksIklanRef}
+                        name="iklan"
+                        id="teksiklan" 
+                        rows="3"
+                        defaultValue={item.teks}
+                        className="w-full"
+                      />
+                      <div>Contain</div>
+                      <textarea
+                        ref={teksIklanRef}
+                        name="iklan"
+                        id="teksiklan" 
+                        rows="3"
+                        defaultValue={item.teks}
+                        className="w-full"
+                      />
+                    </>
                   ) : (
-                    <div className="bg-slate-100 p-2 w-full mb-3 rounded-md">
-                      {item.teks}
-                    </div>
+                    <>
+                      <div>Judul</div>
+                      <div className="bg-slate-100 p-2 w-full mb-3 rounded-md">
+                        {item.judul}
+                      </div>
+                      <div>Contain</div>
+                      <div className="bg-slate-100 p-2 w-full mb-3 rounded-md">
+                        {item.teks}
+                      </div>
+                    </>
                   )}
 
                   <div>

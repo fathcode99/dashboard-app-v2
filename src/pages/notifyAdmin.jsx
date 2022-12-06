@@ -20,19 +20,20 @@ const NotifyAdmin = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    async function getNotify() {
+    function getNotify() {
       try {
-        await axios
+        axios
         .get(`${url}/notifyadmin`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then((res) => {
-          dispatch({
-            type: "GET_DATA_NOTIFY",
-            payload: res.data,
-          });
+          // dispatch({
+          //   type: "GET_DATA_NOTIFY",
+          //   payload: res.data,
+          // });
+          setDataNotify(res.data);
         });
       } catch (err) {
         console.log("Error when fetching data - Notify ")
@@ -41,9 +42,8 @@ const NotifyAdmin = () => {
     
     getNotify()
     
-    setDataNotify(stateNotify.data);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stateNotify]);
+  }, []);
 
   // modal delete
   const onDelete = (id) => {
@@ -95,7 +95,9 @@ const NotifyAdmin = () => {
                 className="bg-slate-200 p-2 border-b mb-2 border-slate-500 flex justify-between gap-2"
               >
                 <div className="flex gap-3">
-                  <div>{item.id_pengajar}</div>
+                  <div>Tanggal : {item.created_at.slice(0, 10)} </div>
+                  <div>Waktu : {item.created_at.slice(11, 16)} </div>
+                  <div>ID Pengajar : {item.id_pengajar} </div>
                   <div>{item.nama_pengajar}</div>
                 </div>
 

@@ -3,7 +3,7 @@ import Sidebar from "../component/sidebar";
 import Navbar from "../component/navbar";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 import ExportExcelTotalBy from "../component/exportExcelTotalBy";
 import ExportExcelPengeluaran from "../component/exportExcelPengeluaran";
@@ -14,7 +14,7 @@ import axios from "axios";
 const url = "https://admin.menujudigital.com/api";
 
 const Home = () => {
-  const stateBiaya = useSelector((state) => state.biayaReducer);
+  // const stateBiaya = useSelector((state) => state.biayaReducer);
 
   let token = localStorage.getItem("token");
 
@@ -86,7 +86,20 @@ const Home = () => {
       navigate("/login");
     }
 
-    setData(stateBiaya.data);
+    axios
+          .get(`${url}/biaya`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            // dispatch({
+            //   type: "GET_DATA_BIAYA",
+            //   payload: res.data,
+            // });
+            // setDataBiaya(res.data) 
+            setData(res.data);
+          });
 
     // get detail data
     async function getPengeluaran() {
@@ -142,7 +155,7 @@ const Home = () => {
    
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stateBiaya]);
+  }, []);
 
   //delete pengeluaran
   const onDeletePengeluaran = (id) => {
@@ -342,6 +355,59 @@ const Home = () => {
       },
     });
   };
+
+  // editmanual Total Biaya
+  const [indexEditManual, setIndexEditManual] = useState(null);
+  const [nom, setNom] = useState('')
+  
+  const onEditDataManualTotalBiaya = (id) => {
+    axios
+      .put(`${url}/totalbiaya/${id}/update`, {nominal : nom}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        axios
+          .get(`${url}/totalbiaya`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            setTotalBiaya(res.data); 
+          });
+      })
+      .catch((err) => console.log(err))   
+    setIndexEditManual(null)
+  }
+
+  // editmanual Realisasi
+  const [indexEditManualRealisasi, setIndexEditManualRealisasi] = useState(null);
+  const [nomRealisasi, setNomRealisasi] = useState('')
+  
+  const onEditDataManualRealisasi = (id) => {
+    axios
+      .put(`${url}/realisasi/${id}/update`, {nominal : nomRealisasi}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        axios
+          .get(`${url}/realisasi`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            setDataRealisasi(res.data); 
+          });
+      })
+      .catch((err) => console.log(err))   
+    setIndexEditManualRealisasi(null)
+  }
+
   return (
     <div>
       <div className="flex bg-slate-200 min-h-screen">
@@ -413,7 +479,7 @@ const Home = () => {
             <div className="w-full bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)] ">
               <div className="flex justify-between items-center mb-2">
                 <div>Total Biaya</div>
-                <div className="flex gap-2">
+                <div className="flex gap-2"> 
                   <button
                     onClick={onUpdateTotalBiaya}
                     className="hover:text-sky-500 cursor-pointer flex justify-center items-center"
@@ -433,6 +499,7 @@ const Home = () => {
                     <th className="font-medium border-r">Update</th>
                     <th className="font-medium border-r">Keterangan</th>
                     <th className="font-medium border-r">Nominal</th>
+                    <th className="font-medium border-r">Act</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -457,8 +524,40 @@ const Home = () => {
                         <td className="font-normal border-r px-2">
                           {item.hal}
                         </td>
-                        <td className="font-normal border-r px-2 text-right">
-                          Rp {parseInt(item.nominal).toLocaleString()}
+                        <td className="font-normal border-r px-2 text-right"> 
+                          {indexEditManual === index ? 
+                          <>
+                          <input
+                            onChange={(e) => setNom(e.target.value)}
+                            type="text"
+                            defaultValue={item.nominal}
+                            className="whitespace-nowrap w-20 break-words text-center dark:text-white  text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
+                          />
+                        </>
+                          :
+                            <>
+                              Rp {parseInt(item.nominal).toLocaleString()}
+                            </>
+                          }
+                        </td>
+                        <td>
+                          {indexEditManual === index ? 
+                          <button
+                              onClick={() => onEditDataManualTotalBiaya(item.id)}
+                              className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                          >
+                              Done
+                          </button>
+                          :
+                          <button
+                              onClick={() => setIndexEditManual(index)}
+                              className="hover:text-sky-500 cursor-pointer flex justify-center items-center"
+                              title="Input Data Manual"
+                            >
+                              <span className="material-symbols-rounded"> edit_square </span>
+                          </button>
+                          }
+                          
                         </td>
                       </tr>
                     ))
@@ -492,6 +591,7 @@ const Home = () => {
                     <th className="font-medium border-r">Update</th>
                     <th className="font-medium border-r">Keterangan</th>
                     <th className="font-medium border-r">Nominal</th>
+                    <th className="font-medium border-r">Act</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -517,7 +617,40 @@ const Home = () => {
                           {item.hal}
                         </td>
                         <td className="font-normal border-r px-2 text-right">
-                          Rp {parseInt(item.nominal).toLocaleString()}
+                          {/* Rp {parseInt(item.nominal).toLocaleString()} */}
+                          {indexEditManualRealisasi === index ? 
+                          <>
+                          <input
+                            onChange={(e) => setNomRealisasi(e.target.value)}
+                            type="text"
+                            defaultValue={item.nominal}
+                            className="whitespace-nowrap w-20 break-words text-center dark:text-white  text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
+                          />
+                        </>
+                          :
+                            <>
+                              Rp {parseInt(item.nominal).toLocaleString()}
+                            </>
+                          }
+                        </td>
+                        <td>
+                          {indexEditManualRealisasi === index ? 
+                          <button
+                              onClick={() => onEditDataManualRealisasi(item.id)}
+                              className="dark:text-white dark:bg-neutral-800 bg-slate-200 text-sm flex justify-center items-center h-6 border dark:border-sky-500 border-slate-900 rounded-md px-2"
+                          >
+                              Done
+                          </button>
+                          :
+                          <button
+                              onClick={() => setIndexEditManualRealisasi(index)}
+                              className="hover:text-sky-500 cursor-pointer flex justify-center items-center"
+                              title="Input Data Manual"
+                            >
+                              <span className="material-symbols-rounded"> edit_square </span>
+                          </button>
+                          }
+                          
                         </td>
                       </tr>
                     ))

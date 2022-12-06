@@ -5,22 +5,22 @@ import Sidebar from "../component/sidebar";
 import Navbar from "../component/navbar";
 import ExportExcelTutor from "../component/exportExcelTutor";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 
 const url = "https://admin.menujudigital.com/api";
 
 const Tutors = () => {
-  const stateTutors = useSelector((state) => state.tutorsReducer);
+  // const stateTutors = useSelector((state) => state.tutorsReducer);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // default data
-  const [dataMembers, setDataMembers] = useState(stateTutors.data);
+  const [dataMembers, setDataMembers] = useState([]);
 
   // data renders
-  const [dataRenders, setDataRenders] = useState(stateTutors.data);
+  const [dataRenders, setDataRenders] = useState([]);
 
   const onSearch = (e) => {
       let value = e.target.value
@@ -65,10 +65,12 @@ const Tutors = () => {
           },
         })
         .then((res) => {
-          dispatch({
-            type: "GET_DATA_TUTORS",
-            payload: res.data,
-          });
+          // dispatch({
+          //   type: "GET_DATA_TUTORS",
+          //   payload: res.data,
+          // });
+          setDataMembers(res.data)
+          setDataRenders(res.data); 
         });
       } catch (err) {
         console.log("Error when fetching data - Pengajar");
@@ -76,11 +78,11 @@ const Tutors = () => {
     }
     getDataPengajar()
 
-    setDataMembers(stateTutors.data);
-    setDataRenders(dataMembers);
+    // setDataMembers(stateTutors.data);
+    
     setMaxPage(Math.ceil(dataRenders.length / rowPerPage));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stateTutors.data, dataMembers, rowPerPage,]);
+  }, [rowPerPage,]);
 
   // proteksi login
   useEffect(() => {
@@ -127,7 +129,7 @@ const Tutors = () => {
               <thead className="h-8">
                 <tr className="text-sm text-white  dark:bg-sky-500 bg-slate-900 h-full">
                   <th className="font-medium w-8 border-r">No.</th>
-                  <th className="font-medium w-8 border-r">ID</th>
+                  <th className="font-medium w-12 border-r">ID Pengajar</th>
                   <th className="font-medium w-36 border-r"> Nama </th>
                   <th className="font-medium hidden md:table-cell cursor-pointer border-r"> Mapel </th>
                   <th className="font-medium hidden md:table-cell cursor-pointer border-r"> Asal Kampus </th>
@@ -161,7 +163,7 @@ const Tutors = () => {
                         >
                           <td className="text-center border-r">{nomer++}</td>
                           <td className="text-center border-r">
-                            {item.id_pengajar}
+                            {item.id}
                           </td>
 
                           <td className="border-r px-2">

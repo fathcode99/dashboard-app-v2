@@ -16,6 +16,7 @@ const DetailTutor = () => {
   const [dataBiaya, setDataBiaya] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [isIndexEdit, setIsIndexEdit] = useState(null);
+  const [filterDataBiaya, setFilterDataBiaya] =  useState([])
 
   const [isModalMessage, setIsModalMessage] = useState(false);
   const [isModalDelete, setIsModalDelete] = useState(false);
@@ -59,7 +60,10 @@ const DetailTutor = () => {
           },
         })
         .then((res) => {
-          setDataBiaya(res.data);
+          setDataBiaya(res.data); 
+          let filter = res.data.filter((data) => data.id_pengajar === id); 
+          setFilterDataBiaya(filter)
+          // console.log(filter)
         });
       } catch (err) {
         console.log("Error when fetching data - Biaya");
@@ -68,13 +72,6 @@ const DetailTutor = () => {
     getBiaya()
     
   }, [id, token]);
-
-  // filter data rincian
-  let idTutor = dataTutor.id_pengajar;
-  let filterDataBiaya;
-  if (dataBiaya) {
-    filterDataBiaya = dataBiaya.filter((data) => data.id_pengajar === idTutor);
-  }
 
   //menghitung total fee
   let totalFee = 0;
@@ -94,7 +91,7 @@ const DetailTutor = () => {
       rek_bank: rekBank,
       an_rek_bank: anBank,
     };
-    console.log(updateData);
+    // console.log(updateData);
     await axios
       .put(`${url}/datapengajar/${id}/update`, updateData, {
         headers: {
@@ -160,8 +157,13 @@ const DetailTutor = () => {
   const onMessage = async () => {
     let messageNotif = refMessage.current.value;
 
+    // let message = {
+    //   id_pengajar: 15,
+    //   nama_pengajar: 1,
+    //   pesan: messageNotif,
+    // };
     let message = {
-      id_pengajar: dataTutor.id_pengajar,
+      id_pengajar: dataTutor.id,
       nama_pengajar: dataTutor.nama_pengajar,
       pesan: messageNotif,
     };
@@ -392,7 +394,7 @@ const DetailTutor = () => {
                         {dataTutor.nama_pengajar}
                       </div>
                       <div className="dark:text-white  text-sm">
-                        ID : {dataTutor.id_pengajar}
+                        ID : {dataTutor.id}
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-2">
@@ -503,6 +505,8 @@ const DetailTutor = () => {
                   <tr className="text-sm text-white  bg-slate-900 dark:bg-sky-500 h-full">
                     <th className="font-medium w-8">No.</th>
                     <th className="font-medium w-8 hidden md:table-cell">ID</th>
+                    <th className="font-medium w-8 hidden md:table-cell">Tanggal</th>
+
                     <th className="font-medium w-36 px-2 flex items-center h-8 justify-between">
                       Nama Pengajar
                     </th>
@@ -546,8 +550,12 @@ const DetailTutor = () => {
                           <td className="text-center border-r dark:border-white">
                             {index + 1}
                           </td>
+                          
                           <td className="text-center border-r dark:border-white hidden md:table-cell">
                             {item.id_pengajar}
+                          </td>
+                          <td className="whitespace-nowrap border-r px-2">
+                              {item.created_at.slice(0, 10)}
                           </td>
                           <td className="border-r dark:border-white px-2">
                             {item.nama_pengajar}
@@ -647,7 +655,7 @@ const DetailTutor = () => {
               <div className="flex justify-between">
                 <div className="dark:text-white">Send Message</div>
                 <button onClick={closeModal}>
-                  <span class="hover:text-rose-500 material-symbols-rounded dark:text-white">
+                  <span className="hover:text-rose-500 material-symbols-rounded dark:text-white">
                     close
                   </span>
                 </button>
