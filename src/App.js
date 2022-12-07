@@ -16,7 +16,7 @@ import DataKeuangan from "./pages/datakeuangan";
 import Catatan from "./pages/catatan";
 
 import axios from "axios";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom"; 
 import { useDispatch } from "react-redux";
 
 const url = "https://admin.menujudigital.com/api";
@@ -64,7 +64,7 @@ const App = () => {
               <Route path="tutors/:id" element={<DetailTutor />} />
               <Route path="apply" element={<Apply />} />
               <Route path="pay" element={<DataKeuangan />} />
-              <Route path="students" element={<Students />} />
+              <Route path="students" element={<Students />} /> 
           </Route>
           {/* <Route path="/" element={<Home />} />
           <Route path="/tutors" element={<Tutors />} />

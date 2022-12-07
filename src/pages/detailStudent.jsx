@@ -42,7 +42,8 @@ const DetailStudent = () => {
   const [statusPendaftaran, setStatusPendaftaran] = useState(dataSiswa.status_pendaftaran);
   const [biayaPendaftaran, setBiayaPendaftaran] = useState(dataSiswa.biaya_pendaftaran);
   const [tagihanMnt, setTagihanMnt] = useState(dataSiswa.tagihan_per_menit);
-  const [realisasiBp,, setRealisasiBp] = useState(dataSiswa.biaya_pendaftaran_dibayar)
+  const [realisasiBp, setRealisasiBp] = useState(dataSiswa.biaya_pendaftaran_dibayar)
+  const [biayaLes, setBiayaLes] = useState(dataSiswa.biaya_les)
 
   useEffect(() => {
     axios
@@ -86,7 +87,7 @@ const DetailStudent = () => {
     totalTagihanSiswa += +filterDataBiaya[i].tagihan_siswa;
   }
 
-  const onDone = () => {
+  const onDone = () => { 
     let updateData = {
       nama_orangtua: namaOrtu,
       id_siswa: idSiswa,
@@ -109,8 +110,9 @@ const DetailStudent = () => {
       regional: regional,
       status_pendaftaran: statusPendaftaran,
       tagihan_per_menit : tagihanMnt,
-      biaya_pendaftaran : biayaPendaftaran,
-      biaya_pendaftaran_dibayar: realisasiBp
+      tagihan_biaya_pendaftaran : biayaPendaftaran,
+      biaya_pendaftaran_dibayar: realisasiBp,
+      biaya_les: biayaLes
     };
     console.log(updateData);
     axios
@@ -445,6 +447,18 @@ const DetailStudent = () => {
                             className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 text-base"
                           />
                         </div>
+
+                        <div className="w-full">
+                          <div className="italic  text-sky-500 text-sm mt-3">
+                            Biaya Les
+                          </div>
+                          <input
+                            onChange={(e) => setBiayaLes(e.target.value)}
+                            type="text"
+                            defaultValue={dataSiswa.biaya_les}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 text-base"
+                          />
+                        </div>
                       </div>
                     </div>
 
@@ -647,7 +661,7 @@ const DetailStudent = () => {
                             Biaya Pendaftaran
                           </div>
                           <div className={`dark:text-white  text-sm`}>
-                            {dataSiswa.tagihan_per_menit}
+                            {dataSiswa.tagihan_biaya_pendaftaran}
                           </div>
                         </div>
 
@@ -657,6 +671,14 @@ const DetailStudent = () => {
                           </div>
                           <div className={`dark:text-white  text-sm`}>
                             {dataSiswa.biaya_pendaftaran_dibayar}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="italic  text-sky-500 text-sm mt-3">
+                            Biaya Les
+                          </div>
+                          <div className={`dark:text-white  text-sm`}>
+                            {dataSiswa.biaya_les}
                           </div>
                         </div>
 

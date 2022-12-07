@@ -23,6 +23,7 @@ const Home = () => {
   const [totalBiaya, setTotalBiaya] = useState([]);
   const [dataRealisasi, setDataRealisasi] = useState([]);
   const [dataPengeluaran, setDataPengeluaran] = useState([]);
+  const [dataSiswa, setDataSiswa] = useState([])
 
   // add pengeluaran
   const [isModalAdd, setIsModalAdd] = useState(false);
@@ -87,19 +88,29 @@ const Home = () => {
     }
 
     axios
-          .get(`${url}/biaya`, {
-            headers: {
+      .get(`${url}/biaya`, {
+          headers: {
               Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((res) => {
+          },
+        })
+      .then((res) => {
             // dispatch({
             //   type: "GET_DATA_BIAYA",
             //   payload: res.data,
             // });
             // setDataBiaya(res.data) 
-            setData(res.data);
-          });
+        setData(res.data);
+      });
+
+    axios
+    .get(`${url}/dataortusiswa`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(res => {
+      setDataSiswa(res.data)
+    })
 
     // get detail data
     async function getPengeluaran() {
@@ -228,9 +239,10 @@ const Home = () => {
     }
 
     let bp = 0;
-    for (let i = 0; i < data.length; i++) {
-      bp += +data[i].biaya_pendaftaran;
-    }
+    for (let i = 0; i < dataSiswa.length; i++) {
+      bp += +dataSiswa[i].tagihan_biaya_pendaftaran;
+    } 
+
 
     let ftcp = 0;
     for (let i = 0; i < data.length; i++) {
@@ -251,6 +263,7 @@ const Home = () => {
       hal: "Biaya Pendaftaran",
       nominal: bp,
     };
+ 
 
     let dataUpdateFtcp = {
       hal: "Biaya Fotokopi",
@@ -306,8 +319,8 @@ const Home = () => {
     }
 
     let rbp = 0;
-    for (let i = 0; i < data.length; i++) {
-      rbp += +data[i].realisasi_biaya_pendaftaran;
+    for (let i = 0; i < dataSiswa.length; i++) {
+      rbp += +dataSiswa[i].biaya_pendaftaran_dibayar;
     }
 
     let dataUpdateRfp = {
@@ -324,6 +337,8 @@ const Home = () => {
       hal: "Biaya Pendaftaran",
       nominal: rbp,
     };
+
+    
 
     axios
       .put(`${url}/realisasi/1/update`, dataUpdateRfp, {
@@ -649,8 +664,7 @@ const Home = () => {
                             >
                               <span className="material-symbols-rounded"> edit_square </span>
                           </button>
-                          }
-                          
+                          } 
                         </td>
                       </tr>
                     ))

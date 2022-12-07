@@ -126,8 +126,8 @@ const DataKeuangan = () => {
   let refEditFeePengajar = useRef();
   let refTagihanSiswa = useRef();
   let refRealisasiTs = useRef();
-  let refBiayaPendaftaran = useRef();
-  let refRealisasiBp = useRef();
+  // let refBiayaPendaftaran = useRef();
+  // let refRealisasiBp = useRef();
 
   const onEditDataRincian = (id) => {
     
@@ -135,13 +135,13 @@ const DataKeuangan = () => {
     let fee_pengajar = refEditFeePengajar.current.value;
     let tagihan_siswa = refTagihanSiswa.current.value
     let realisasi_tagihan_siswa = refRealisasiTs.current.value
-    let biaya_pendaftaran = refBiayaPendaftaran.current.value
-    let realisasi_biaya_pendaftaran = refRealisasiBp.current.value
+    // let biaya_pendaftaran = refBiayaPendaftaran.current.value
+    // let realisasi_biaya_pendaftaran = refRealisasiBp.current.value
     
     axios
       .put(
         `${url}/biaya/${id}/update`,
-        { realisasi_fee_pengajar, fee_pengajar, tagihan_siswa, realisasi_tagihan_siswa, biaya_pendaftaran, realisasi_biaya_pendaftaran},
+        { realisasi_fee_pengajar, fee_pengajar, tagihan_siswa, realisasi_tagihan_siswa},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -228,8 +228,8 @@ const DataKeuangan = () => {
                     <th className="font-medium w-32">Regional</th> 
                     <th className="font-medium w-32">Tagihan Siswa</th> 
                     <th className="font-medium w-32">Realisasi TS</th> 
-                    <th className="font-medium w-32">Biaya Pendaftaran</th> 
-                    <th className="font-medium w-32">Realisasi BP</th> 
+                    {/* <th className="font-medium w-32">Biaya Pendaftaran</th> 
+                    <th className="font-medium w-32">Realisasi BP</th>  */}
                     <th className="font-medium w-32 ">Action</th>
                   </tr>
                 </thead>
@@ -326,8 +326,7 @@ const DataKeuangan = () => {
                                 <div> Rp {parseInt(item.tagihan_siswa).toLocaleString()}</div>
                               )}
                             </td>
-                            <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right">
-                              {/* Rp {parseInt(item.realisasi_tagihan_siswa).toLocaleString()} */}
+                            <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right"> 
                               {isIndexEdit === index ? (
                                 <>
                                   <input
@@ -341,8 +340,9 @@ const DataKeuangan = () => {
                                 <div> Rp {parseInt(item.realisasi_tagihan_siswa).toLocaleString()}</div>
                               )}
                             </td>
-                            <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right">
-                              {/* Rp {parseInt(item.biaya_pendaftaran).toLocaleString()} */}
+                            
+                            {/* <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right">
+                              
                               {isIndexEdit === index ? (
                                 <>
                                   <input
@@ -355,9 +355,9 @@ const DataKeuangan = () => {
                               ) : (
                                 <div> Rp {parseInt(item.biaya_pendaftaran).toLocaleString()}</div>
                               )}
-                            </td>
-                            <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right">
-                              {/* Rp {parseInt(item.realisasi_biaya_pendaftaran).toLocaleString()} */}
+                            </td> */}
+                            {/* <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right">
+                             
                               {isIndexEdit === index ? (
                                 <>
                                   <input
@@ -370,7 +370,7 @@ const DataKeuangan = () => {
                               ) : (
                                 <div> Rp {parseInt(item.realisasi_biaya_pendaftaran).toLocaleString()}</div>
                               )}
-                            </td>
+                            </td> */}
                             
                             <td className="flex justify-center items-center h-8 ">
                               {isIndexEdit === index ? (
