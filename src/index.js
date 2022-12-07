@@ -12,11 +12,17 @@ import allReducer from './reducer'
 
 const globalState = createStore(allReducer, applyMiddleware(ReduxThunk))
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <Provider store={globalState}> 
-        <App /> 
-    </Provider>
-  </React.StrictMode>
-);
+// const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(
+//   <React.StrictMode>
+//     <Provider store={globalState}> 
+//         <App /> 
+//     </Provider>
+//   </React.StrictMode>
+// );
+
+ReactDOM.render( 
+  <Provider store={globalState}>
+    <App/>
+  </Provider>, 
+document.getElementById('root') );

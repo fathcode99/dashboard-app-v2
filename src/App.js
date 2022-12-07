@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
 
 // import pages
-import Home from "./pages/home";
-import Tutors from "./pages/tutors";
-import Students from "./pages/students";
-import DetailTutor from "./pages/detailTutor";
-import Login from "./pages/login";
-import Apply from "./pages/apply";
+import Home from "./pages/home.jsx";
+import Tutors from "./pages/tutors.jsx";
+import Students from "./pages/students.jsx";
+import DetailTutor from "./pages/detailTutor.jsx";
+import Login from "./pages/login.jsx";
+import Apply from "./pages/apply.jsx";
 // import FeePengajar from "./pages/feePengajar";
-import DetailStudent from "./pages/detailStudent";
+import DetailStudent from "./pages/detailStudent.jsx";
 // import KeuanganSiswa from "./pages/keuanganSiswa";
-import NotifyAdmin from "./pages/notifyAdmin";
-import Picture from "./pages/picture";
-import DataKeuangan from "./pages/datakeuangan";
-import Catatan from "./pages/catatan";
+import NotifyAdmin from "./pages/notifyAdmin.jsx";
+import Picture from "./pages/picture.jsx";
+import DataKeuangan from "./pages/datakeuangan.jsx";
+import Catatan from "./pages/catatan.jsx";
 
 import axios from "axios";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
