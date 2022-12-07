@@ -28,6 +28,7 @@ const Tutors = () => {
         const matchDatas = dataMembers.filter((item) => {
           return item.nama_pengajar.toLowerCase().includes(value.toLowerCase()) ||
           item.no_telp.toLowerCase().includes(value.toLowerCase())
+          
         })
         setDataRenders(matchDatas)
       } else if(!value) {

@@ -134,32 +134,32 @@ const DetailStudent = () => {
 
   //edit data rincian
   let refEditRealisasi = useRef();
-  const onEditDataRincian = (id) => {
-    let dataEdit = refEditRealisasi.current.value;
-    axios
-      .put(
-        `${url}/biaya/${id}/update`,
-        { realisasi_fee_pengajar: dataEdit },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => {
-        axios
-          .get(`${url}/biaya`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((res) => {
-            setDataBiaya(res.data);
-          });
-      });
-    setIsIndexEdit(null);
-    setDataBiaya(dataBiaya);
-  };
+  // const onEditDataRincian = (id) => {
+  //   let dataEdit = refEditRealisasi.current.value;
+  //   axios
+  //     .put(
+  //       `${url}/biaya/${id}/update`,
+  //       { realisasi_fee_pengajar: dataEdit },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       axios
+  //         .get(`${url}/biaya`, {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         })
+  //         .then((res) => {
+  //           setDataBiaya(res.data);
+  //         });
+  //     });
+  //   setIsIndexEdit(null);
+  //   setDataBiaya(dataBiaya);
+  // };
 
   // modal delete
   const onValidDeleteYes = () => {
@@ -179,10 +179,10 @@ const DetailStudent = () => {
   // delete data biaya / rincian
   const [idRincian, setIdRincian] = useState("");
   const [isModalDeleteRincian, setIsModalDeleteRincian] = useState(false);
-  const onDeleteRincian = (id) => {
-    setIdRincian(id);
-    setIsModalDeleteRincian(true);
-  };
+  // const onDeleteRincian = (id) => {
+  //   setIdRincian(id);
+  //   setIsModalDeleteRincian(true);
+  // };
 
   // modal delete biaya / rincian
   const onValidDeleteRincian = () => {
@@ -719,7 +719,7 @@ const DetailStudent = () => {
                     <th className="font-medium hidden md:table-cell">
                       Realisasi BP
                     </th>
-                    <th className="font-medium hidden md:table-cell">Action</th>
+                    {/* <th className="font-medium hidden md:table-cell">Action</th> */}
                   </tr>
                 </thead>
 
@@ -783,7 +783,7 @@ const DetailStudent = () => {
                                 item.realisasi_biaya_pendaftaran
                               )}
                             </td>
-                            <td className="hidden justify-center items-center h-8 md:table-cell">
+                            {/* <td className="hidden justify-center items-center h-8 md:table-cell">
                               {isIndexEdit === index ? (
                                 <button
                                   onClick={() => onEditDataRincian(item.id)}
@@ -809,7 +809,7 @@ const DetailStudent = () => {
                                   </button>
                                 </div>
                               )}
-                            </td>
+                            </td> */}
                           </tr>
                         </tbody>
                       );

@@ -518,9 +518,9 @@ const DetailTutor = () => {
                     <th className="font-medium hidden md:table-cell">
                       Realisasi Fee
                     </th>
-                    <th className="font-medium w-32 hidden md:table-cell">
+                    {/* <th className="font-medium w-32 hidden md:table-cell">
                       Action
-                    </th>
+                    </th> */}
                   </tr>
                 </thead>
 
@@ -594,7 +594,7 @@ const DetailTutor = () => {
                               <div>Rp {item.realisasi_fee_pengajar}</div>
                             )}
                           </td>
-                          <td className="hidden justify-center items-center h-8 md:table-cell">
+                          {/* <td className="hidden justify-center items-center h-8 md:table-cell">
                             {isIndexEdit === index ? (
                               <div className="flex gap-2">
                               <button
@@ -628,7 +628,7 @@ const DetailTutor = () => {
                                 </button>
                               </div>
                             )}
-                          </td>
+                          </td> */}
                         </tr>
                       </tbody>
                     );

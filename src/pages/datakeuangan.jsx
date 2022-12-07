@@ -66,7 +66,8 @@ const DataKeuangan = () => {
     let value = e.target.value;
     if (value) {
       const matchDatas = dataBiaya.filter((item) => {
-        return item.nama_pengajar.toLowerCase().includes(value.toLowerCase());
+        return item.nama_pengajar.toLowerCase().includes(value.toLowerCase()) ||
+        item.nama_siswa.toLowerCase().includes(value.toLowerCase())
       });
       setDataRenders(matchDatas);
     } else if (!value) {
