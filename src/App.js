@@ -52,7 +52,7 @@ const App = () => {
   return (
     <div className="dark:bg-neutral-900 font-rubik bg-slate-100">
       <BrowserRouter>
-        <Routes>
+        <Routes basename="/">
           <Route path="/">
               <Route index element={<Home />} />
               <Route path="login" element={<Login />} />
