@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import Sidebar from "../component/sidebar";
@@ -12,10 +12,8 @@ const DetailStudent = () => {
   let token = localStorage.getItem("token");
   const { id } = useParams();
 
-  const [dataSiswa, setDataSiswa] = useState({});
-  const [dataBiaya, setDataBiaya] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
-  const [isIndexEdit, setIsIndexEdit] = useState(null);
+  const [dataSiswa, setDataSiswa] = useState({}); 
+  const [isEdit, setIsEdit] = useState(false); 
   
   const [filterDataBiaya, setFilterDataBiaya] =  useState([])
 
@@ -41,9 +39,10 @@ const DetailStudent = () => {
   const [program, setProgram] = useState(dataSiswa.program);
   const [statusSiswa, setStatusSiswa] = useState(dataSiswa.status_siswa);
   const [regional, setRegional] = useState(dataSiswa.regional);
-  const [statusPendaftaran, setStatusPendaftaran] = useState(
-    dataSiswa.status_pendaftaran
-  );
+  const [statusPendaftaran, setStatusPendaftaran] = useState(dataSiswa.status_pendaftaran);
+  const [biayaPendaftaran, setBiayaPendaftaran] = useState(dataSiswa.biaya_pendaftaran);
+  const [tagihanMnt, setTagihanMnt] = useState(dataSiswa.tagihan_per_menit);
+  const [realisasiBp,, setRealisasiBp] = useState(dataSiswa.biaya_pendaftaran_dibayar)
 
   useEffect(() => {
     axios
@@ -64,8 +63,7 @@ const DetailStudent = () => {
               Authorization: `Bearer ${token}`,
             },
           })
-          .then((res) => {
-            setDataBiaya(res.data); 
+          .then((res) => { 
             let filter = res.data.filter((data) => data.id_siswa === id); 
             setFilterDataBiaya(filter)
           });
@@ -110,6 +108,9 @@ const DetailStudent = () => {
       status_siswa: statusSiswa,
       regional: regional,
       status_pendaftaran: statusPendaftaran,
+      tagihan_per_menit : tagihanMnt,
+      biaya_pendaftaran : biayaPendaftaran,
+      biaya_pendaftaran_dibayar: realisasiBp
     };
     console.log(updateData);
     axios
@@ -132,34 +133,7 @@ const DetailStudent = () => {
     setIsEdit(!isEdit);
   };
 
-  //edit data rincian
-  let refEditRealisasi = useRef();
-  // const onEditDataRincian = (id) => {
-  //   let dataEdit = refEditRealisasi.current.value;
-  //   axios
-  //     .put(
-  //       `${url}/biaya/${id}/update`,
-  //       { realisasi_fee_pengajar: dataEdit },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       axios
-  //         .get(`${url}/biaya`, {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         })
-  //         .then((res) => {
-  //           setDataBiaya(res.data);
-  //         });
-  //     });
-  //   setIsIndexEdit(null);
-  //   setDataBiaya(dataBiaya);
-  // };
+  
 
   // modal delete
   const onValidDeleteYes = () => {
@@ -174,38 +148,6 @@ const DetailStudent = () => {
         setIsModalDelete(false);
       });
   };
-
-  // DELETE RINCIAN
-  // delete data biaya / rincian
-  const [idRincian, setIdRincian] = useState("");
-  const [isModalDeleteRincian, setIsModalDeleteRincian] = useState(false);
-  // const onDeleteRincian = (id) => {
-  //   setIdRincian(id);
-  //   setIsModalDeleteRincian(true);
-  // };
-
-  // modal delete biaya / rincian
-  const onValidDeleteRincian = () => {
-    axios
-      .delete(`${url}/biaya/${idRincian}/delete`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        axios
-          .get(`${url}/biaya`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((res) => {
-            setDataBiaya(res.data);
-          });
-      });
-    setIsModalDeleteRincian(false);
-  };
-  
  
   return (
     <div className="flex bg-slate-200  min-h-screen">
@@ -252,7 +194,7 @@ const DetailStudent = () => {
                         <input
                           type="text"
                           onChange={(e) => setIdSiswa(e.target.value)}
-                          defaultValue={dataSiswa.id_siswa}
+                          defaultValue={dataSiswa.id}
                           className="outline-none bg-transparent border border-sky-500 rounded-sm px-2 dark:text-white  text-base"
                         />
                       </div>
@@ -452,7 +394,7 @@ const DetailStudent = () => {
                             }
                             type="text"
                             defaultValue={dataSiswa.status_pendaftaran}
-                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white  text-base"
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 text-base"
                           />
                         </div>
 
@@ -464,7 +406,43 @@ const DetailStudent = () => {
                             onChange={(e) => setRegional(e.target.value)}
                             type="text"
                             defaultValue={dataSiswa.regional}
-                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 dark:text-white  text-base"
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 text-base"
+                          />
+                        </div>
+
+                        <div className="w-full">
+                          <div className="italic  text-sky-500 text-sm mt-3">
+                            Tagihan/mnt
+                          </div>
+                          <input
+                            onChange={(e) => setTagihanMnt(e.target.value)}
+                            type="text"
+                            defaultValue={dataSiswa.tagihan_per_menit}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 text-base"
+                          />
+                        </div>
+
+                        <div className="w-full">
+                          <div className="italic  text-sky-500 text-sm mt-3">
+                            Biaya Pendaftaran
+                          </div>
+                          <input
+                            onChange={(e) => setBiayaPendaftaran(e.target.value)}
+                            type="text"
+                            defaultValue={dataSiswa.tagihan_biaya_pendaftaran}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 text-base"
+                          />
+                        </div>
+
+                        <div className="w-full">
+                          <div className="italic  text-sky-500 text-sm mt-3">
+                            Realisasi BP
+                          </div>
+                          <input
+                            onChange={(e) => setRealisasiBp(e.target.value)}
+                            type="text"
+                            defaultValue={dataSiswa.biaya_pendaftaran_dibayar}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 text-base"
                           />
                         </div>
                       </div>
@@ -654,6 +632,34 @@ const DetailStudent = () => {
                             {dataSiswa.regional}
                           </div>
                         </div>
+
+                        <div>
+                          <div className="italic  text-sky-500 text-sm mt-3">
+                            Tagihan/mnt
+                          </div>
+                          <div className={`dark:text-white  text-sm`}>
+                            {dataSiswa.tagihan_per_menit}
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="italic  text-sky-500 text-sm mt-3">
+                            Biaya Pendaftaran
+                          </div>
+                          <div className={`dark:text-white  text-sm`}>
+                            {dataSiswa.tagihan_per_menit}
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="italic  text-sky-500 text-sm mt-3">
+                            Realisasi BP
+                          </div>
+                          <div className={`dark:text-white  text-sm`}>
+                            {dataSiswa.biaya_pendaftaran_dibayar}
+                          </div>
+                        </div>
+
                       </div>
                     </div>
 
@@ -770,46 +776,9 @@ const DetailStudent = () => {
                               Rp {item.biaya_pendaftaran}
                             </td>
                             <td className="text-center border-r dark:border-white hidden md:table-cell">
-                              {isIndexEdit === index ? (
-                                <>
-                                  <input
-                                    ref={refEditRealisasi}
-                                    type="text"
-                                    defaultValue={item.realisasi_fee_pengajar}
-                                    className="w-20 break-words text-center dark:text-white  text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
-                                  />
-                                </>
-                              ) : (
-                                item.realisasi_biaya_pendaftaran
-                              )}
-                            </td>
-                            {/* <td className="hidden justify-center items-center h-8 md:table-cell">
-                              {isIndexEdit === index ? (
-                                <button
-                                  onClick={() => onEditDataRincian(item.id)}
-                                  className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
-                                >
-                                  Done
-                                </button>
-                              ) : (
-                                <div className="flex gap-2 justify-center">
-                                  <button
-                                    onClick={() => setIsIndexEdit(index)}
-                                    className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
-                                  >
-                                    {" "}
-                                    Edit
-                                  </button>
-                                  <button
-                                    onClick={() => onDeleteRincian(item.id)}
-                                    className="hover:bg-slate-200 transition duration-300 bg-rose-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
-                                  >
-                                    {" "}
-                                    Delete
-                                  </button>
-                                </div>
-                              )}
-                            </td> */}
+                              
+                                Rp {item.realisasi_biaya_pendaftaran}
+                            </td> 
                           </tr>
                         </tbody>
                       );
@@ -862,38 +831,7 @@ const DetailStudent = () => {
           ""
         )}
 
-        {/* modal delete rincian */}
-        {isModalDeleteRincian ? (
-          <div className="absolute backdrop-blur-sm w-full h-full dark:bg-neutral-700 bg-slate-200 bg-opacity-70 flex justify-center items-center">
-            <div className="flex flex-col w-[45%] dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] py-3 gap-4 items-center">
-              <div className="flex justify-between">
-                <div className=" text-rose-500">Delete Data</div>
-              </div>
-              <div className="flex justify-between">
-                <div className="dark:text-white  text-sm">
-                  Are you sure ?
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <button
-                  onClick={onValidDeleteRincian}
-                  className="drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] hover:bg-sky-500 dark:hover:bg-sky-500 dark:text-white dark:bg-neutral-800 bg-slate-300 text-sm flex justify-center items-center h-8 border dark:border-sky-500 rounded-md px-2 w-fit mt-2"
-                >
-                  Yes
-                </button>
-                <button
-                  onClick={() => setIsModalDeleteRincian(false)}
-                  className="drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] hover:bg-sky-500 dark:hover:bg-sky-500 dark:text-white dark:bg-neutral-800 bg-slate-300 text-sm flex justify-center items-center h-8 border dark:border-sky-500 rounded-md px-2 w-fit mt-2"
-                >
-                  No
-                </button>
-              </div>
-            </div>
-          </div>
-        ) : (
-          ""
-        )}
+        
       </div>
     </div>
   );

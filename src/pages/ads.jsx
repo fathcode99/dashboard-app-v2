@@ -7,7 +7,7 @@ import Sidebar from "../component/sidebar";
 
 const url = "https://admin.menujudigital.com/api";
 
-const Picture = () => {
+const Ads = () => {
   const [dataTeks, setDataTeks] = useState([]);
 
   let token = localStorage.getItem("token");
@@ -28,9 +28,13 @@ const Picture = () => {
   // const [teksA, setTeksA] = useState();
   const [indexEdit, setIndexEdit] = useState(null);
   const teksIklanRef = useRef();
+  const judulIklanRef = useRef();
+
   const onUpload = async (id) => {
     let teksA = teksIklanRef.current.value;
+    let judulA = judulIklanRef.current.value;
     let teks = {
+      judul : judulA,
       teks: teksA,
     };
     await axios
@@ -73,11 +77,11 @@ const Picture = () => {
                     <>
                       <div>Judul</div>
                       <textarea
-                        ref={teksIklanRef}
+                        ref={judulIklanRef}
                         name="iklan"
                         id="teksiklan" 
-                        rows="3"
-                        defaultValue={item.teks}
+                        rows="1"
+                        defaultValue={item.judul}
                         className="w-full"
                       />
                       <div>Contain</div>
@@ -141,4 +145,4 @@ const Picture = () => {
   );
 };
 
-export default Picture;
+export default Ads;

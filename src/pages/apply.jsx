@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRef } from "react";
 import axios from "axios";
 
 import Sidebar from "../component/sidebar";
@@ -13,6 +14,7 @@ const Tutors = () => {
   const stateTutors = useSelector((state) => state.applyReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   // default data
   const [dataMembers, setDataMembers] = useState(stateTutors.data);
 
@@ -51,7 +53,8 @@ const Tutors = () => {
       const matchDatas = dataMembers.filter((item) => {
         return (
           item.nama_pengajar.toLowerCase().includes(value.toLowerCase()) ||
-          item.no_telp.toLowerCase().includes(value.toLowerCase())
+          item.no_telp.toLowerCase().includes(value.toLowerCase()) ||
+          item.id_pengajar.toString().includes(value.toLowerCase())  
         );
       });
       setDataRenders(matchDatas);
@@ -114,12 +117,51 @@ const Tutors = () => {
       });
   };
 
+  // modal message for apply
+  const [modalMessage, setModalMessage] = useState(false)
+  const [idApply, setIdApply] = useState(null)
+  const [nmPengajar, setNmPengajar] = useState('')
+
+  const onApply = (id, name) => {
+    setModalMessage(true)
+    setIdApply(id)
+    setNmPengajar(name)
+  }
+
+  // modal message
+  let defaultMessage = "Anda mendapatkan siswa bernama ...";
+  let refMessage = useRef();
+  const closeModal = () => {
+    setModalMessage(false);
+  };
+
+  const onMessage = async () => {
+    let messageNotif = refMessage.current.value;
+
+    let message = {
+      id_pengajar: idApply,
+      nama_pengajar: nmPengajar,
+      pesan: messageNotif,
+    };
+    await axios
+      .post(`${url}/notifypengajar`, message, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setModalMessage(false)
+        setIdApply(null)
+        setNmPengajar('')
+      }); 
+  };
+
   return (
     <div className="flex bg-slate-200  min-h-screen">
       <div className='min-w-[50px] lg:w-[300px]'>
         <Sidebar />
       </div>
-      <div className='flex flex-col md:mb-8 md:mx-8 w-full m-2'>
+      <div className='flex flex-col md:mb-8 md:mx-8 w-full m-2 relative'>
         <Navbar />
         <div className="main-title">Data Apply</div>
         <div>
@@ -131,15 +173,10 @@ const Tutors = () => {
                 <input
                   onChange={(e) => onSearch(e)}
                   type="text"
-                  placeholder="Search..."
+                  placeholder="Search by Id/Name"
                   className="outline-none bg-transparent w-full ml-2 dark:text-white  text-sm border-b border-sky-500"
                 />
-              </div>
-
-              {/* <div className="flex mb-3 items-center">
-                <span className="dark:text-white mr-2">Export to Excel:</span>
-                <ExportExcel data={dataMembers} />
-              </div> */}
+              </div> 
             </div>
 
             {/* TABLE START */}
@@ -147,12 +184,14 @@ const Tutors = () => {
               <thead className="h-8">
                 <tr className="text-sm text-white  dark:bg-sky-500 bg-slate-900 h-full">
                   <th className="font-medium w-8 cursor-pointer border-r">No.</th>
+                  <th className="font-medium w-12 cursor-pointer border-r">Tanggal</th>
+                  <th className="font-medium w-8 cursor-pointer border-r">Waktu</th>
                   <th className="font-medium w-24 cursor-pointer border-r">ID Pengajar</th>
                   <th className="font-medium w-36 border-r"> Nama </th>
                   <th className="font-medium hidden md:table-cell cursor-pointer border-r">Mapel</th>
                   <th className="font-medium hidden md:table-cell border-r cursor-pointer"> Asal Kampus </th>
                   <th className="font-medium cursor-pointer border-r">Telp</th>
-                  <th className="font-medium hidden md:table-cell cursor-pointer border-r">Email</th>
+                  {/* <th className="font-medium hidden md:table-cell cursor-pointer border-r">Email</th> */}
                   <th className="font-medium">Action</th>
                 </tr>
               </thead>
@@ -165,7 +204,7 @@ const Tutors = () => {
                 </tbody>
               ) : (
                 sliceTable
-                .sort((a, b) => (a.nama_pengajar > b.nama_pengajar ? 1 : -1))
+                // .sort((a, b) => (a.nama_pengajar > b.nama_pengajar ? 1 : -1))
                 .map((item, index) => {
                   return (
                     <tbody
@@ -180,6 +219,12 @@ const Tutors = () => {
                         }
                       >
                         <td className="text-center border-r">{nomer++}</td>
+                        <td className="whitespace-nowrap border-r px-2">
+                              {item.created_at.slice(0, 10)}
+                        </td>
+                        <td className="whitespace-nowrap border-r px-2">
+                              {item.created_at.slice(11, 16)}
+                        </td>
 
                         <td className="border-r px-2 text-center">
                           {item.id_pengajar}
@@ -192,8 +237,14 @@ const Tutors = () => {
                           {item.asal_kampus}
                         </td>
                         <td className="border-r text-center">{item.no_telp}</td>
-                        <td className="border-r px-2 hidden md:table-cell">{item.email}</td>
-                        <td className="flex justify-center items-center h-8 ">
+                        {/* <td className="border-r px-2 hidden md:table-cell">{item.email}</td> */}
+                        <td className="flex justify-center items-center h-8 gap-2 ">
+                          <button
+                            onClick={() => onApply(item.id_pengajar, item.nama_pengajar)}
+                            className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
+                          >
+                            Reply
+                          </button>
                           <button
                             onClick={() => deleteApply(item.id)}
                             className="hover:bg-slate-200 transition duration-300 bg-rose-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
@@ -225,6 +276,39 @@ const Tutors = () => {
             </div>
           </div>
         </div>
+      
+         {/* modal message */}
+         {modalMessage ? (
+          <div className="absolute backdrop-blur-sm w-full h-full bg-transparent bg-opacity-20 flex justify-center items-center">
+            <div className="flex flex-col w-[75%] dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] py-3">
+              <div className="flex justify-between">
+                <div className="dark:text-white">Send Message</div>
+                <button onClick={closeModal}>
+                  <span className="hover:text-rose-500 material-symbols-rounded dark:text-white">
+                    close
+                  </span>
+                </button>
+              </div>
+
+              <textarea
+                ref={refMessage}
+                type="text"
+                className=" break-words dark:text-white  text-sm rounded-md p-2 bg-transparent outline-none border dark:border-sky-500 border-slate-900 "
+                defaultValue={defaultMessage}
+              />
+
+              <button
+                onClick={onMessage}
+                className="hover:bg-sky-500 dark:hover:bg-sky-500 dark:text-white dark:bg-neutral-800 bg-slate-300 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-md px-2 w-fit mt-2"
+              >
+                Send
+              </button>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
+
       </div>
     </div>
   );

@@ -76,7 +76,10 @@ const Students = () => {
     let value = e.target.value;
     if (value) {
       const matchDatas = dataMembers.filter((item) => {
-        return item.nama_pengajar.toLowerCase().includes(value.toLowerCase());
+        return item.nama_siswa.toLowerCase().includes(value.toLowerCase()) ||
+        item.nama_orangtua.toLowerCase().includes(value.toLowerCase()) ||
+        item.id.toString().includes(value.toLowerCase())  
+        ;
       });
       setDataRenders(matchDatas);
     } else if (!value) {
@@ -100,7 +103,7 @@ const Students = () => {
                 <input
                   onChange={(e) => onSearch(e)}
                   type="text"
-                  placeholder="Search..."
+                  placeholder="Search by Id/Name"
                   className="outline-none bg-transparent w-full ml-2 dark:text-white  text-sm border-b border-sky-500"
                 />
               </div>
@@ -201,14 +204,14 @@ const Students = () => {
               <button
                 onClick={onPrev}
                 disabled={page === 1 ? true : false}
-                className="dark:text-white bg-slate-200 dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-l-md px-2"
+                className="bg-slate-200  text-sm flex justify-center items-center h-8 border border-slate-900 rounded-l-md px-2"
               >
                 Prev
               </button>
               <button
                 onClick={onNext}
                 disabled={page === maxPage ? true : false}
-                className="dark:text-white dark:bg-neutral-800 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-r-md px-2"
+                className=" text-sm flex justify-center items-center h-8 border border-slate-900 rounded-r-md px-2"
               >
                 Next
               </button>

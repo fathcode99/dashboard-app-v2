@@ -12,10 +12,8 @@ const DetailTutor = () => {
   let token = localStorage.getItem("token");
   const { id } = useParams();
 
-  const [dataTutor, setDataTutor] = useState({});
-  const [dataBiaya, setDataBiaya] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
-  const [isIndexEdit, setIsIndexEdit] = useState(null);
+  const [dataTutor, setDataTutor] = useState({}); 
+  const [isEdit, setIsEdit] = useState(false); 
   const [filterDataBiaya, setFilterDataBiaya] =  useState([])
 
   const [isModalMessage, setIsModalMessage] = useState(false);
@@ -59,8 +57,7 @@ const DetailTutor = () => {
             Authorization: `Bearer ${token}`,
           },
         })
-        .then((res) => {
-          setDataBiaya(res.data); 
+        .then((res) => { 
           let filter = res.data.filter((data) => data.id_pengajar === id); 
           setFilterDataBiaya(filter)
           // console.log(filter)
@@ -112,41 +109,6 @@ const DetailTutor = () => {
     setIsEdit(!isEdit);
   };
 
-  //edit data rincian
-  let refEditRealisasi = useRef();
-  let refEditFeePengajar = useRef();
-  const onEditDataRincian = async (id) => {
-    let dataEditRealisasi = refEditRealisasi.current.value;
-    let dataEditFeePengajar = refEditFeePengajar.current.value;
-
-    await axios
-      .put(
-        `${url}/biaya/${id}/update`,
-        {
-          realisasi_fee_pengajar: dataEditRealisasi,
-          fee_pengajar: dataEditFeePengajar,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => {
-        axios
-          .get(`${url}/biaya`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((res) => {
-            setDataBiaya(res.data);
-          });
-      });
-    setIsIndexEdit(null);
-    setDataBiaya(dataBiaya);
-  };
-
   // modal message
   let defaultMessage = "Anda mendapatkan siswa bernama ...";
   let refMessage = useRef();
@@ -192,44 +154,6 @@ const DetailTutor = () => {
       });
   };
 
-  // DELETE RINCIAN
-  // delete data biaya / rincian
-  const [idRincian, setIdRincian] = useState("");
-  const [isModalDeleteRincian, setIsModalDeleteRincian] = useState(false);
-  const onDeleteRincian = (id) => {
-    setIdRincian(id);
-    setIsModalDeleteRincian(true);
-  };
-
-  // modal delete biaya / rincian
-  const onValidDeleteRincian = async () => {
-    await axios
-      .delete(`${url}/biaya/${idRincian}/delete`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        axios
-          .get(`${url}/biaya`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((res) => {
-            setDataBiaya(res.data);
-          });
-      });
-    setIsModalDeleteRincian(false);
-  };
-
-  //modal post data fee pengajar, realisasi fee
-  // const [isModalPost, setIsModalPost] = useState(false);
-  // const [feePengajar, setFeePengajar] = useState(null)
-  // const [realFee, setRealFee] = useState(null)
-  // const onPostData = () => {
-
-  // };
 
   return (
     <div className="flex bg-slate-200  min-h-screen">
@@ -273,7 +197,7 @@ const DetailTutor = () => {
                         <input
                           type="text"
                           onChange={(e) => setIdPengajar(e.target.value)}
-                          defaultValue={dataTutor.id_pengajar}
+                          defaultValue={dataTutor.id}
                           className="outline-none bg-transparent border border-sky-500 rounded-sm px-2 dark:text-white  text-base"
                         />
                       </div>
@@ -564,71 +488,15 @@ const DetailTutor = () => {
                             {item.durasi_lembur} jam
                           </td>
                           <td className="text-center border-r dark:border-white">
-                            {isIndexEdit === index ? (
-                              <>
-                                <input
-                                  ref={refEditFeePengajar}
-                                  type="text"
-                                  defaultValue={item.fee_pengajar}
-                                  className="w-20 break-words text-center dark:text-white  text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
-                                />
-                              </>
-                            ) : (
-                              <div>Rp {item.fee_pengajar}</div>
-                            )}
+                            
+                            Rp {item.fee_pengajar}
                           </td>
                           <td className="text-center border-r dark:border-white">
                             Rp {item.biaya_fotokopi}
                           </td>
-                          <td className="text-center border-r dark:border-white hidden md:table-cell">
-                            {isIndexEdit === index ? (
-                              <>
-                                <input
-                                  ref={refEditRealisasi}
-                                  type="text"
-                                  defaultValue={item.realisasi_fee_pengajar}
-                                  className="w-20 break-words text-center dark:text-white  text-sm px-2 bg-transparent outline-none border-b dark:border-sky-500 border-slate-900 "
-                                />
-                              </>
-                            ) : (
-                              <div>Rp {item.realisasi_fee_pengajar}</div>
-                            )}
-                          </td>
-                          {/* <td className="hidden justify-center items-center h-8 md:table-cell">
-                            {isIndexEdit === index ? (
-                              <div className="flex gap-2">
-                              <button
-                                onClick={() => onEditDataRincian(item.id)}
-                                className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
-                              >
-                                Done
-                              </button>
-                              <button
-                              onClick={() => setIsIndexEdit(null)}
-                              className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
-                            >
-                              Cancel
-                            </button>
-                              </div>
-                            ) : (
-                              <div className="flex gap-2 justify-center">
-                                <button
-                                  onClick={() => setIsIndexEdit(index)}
-                                  className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
-                                >
-                                  {" "}
-                                  Edit
-                                </button>
-                                <button
-                                  onClick={() => onDeleteRincian(item.id)}
-                                  className="hover:bg-slate-200 transition duration-300 bg-rose-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2"
-                                >
-                                  {" "}
-                                  Delete
-                                </button>
-                              </div>
-                            )}
-                          </td> */}
+                          <td className="text-center border-r dark:border-white hidden md:table-cell"> 
+                            Rp {item.realisasi_fee_pengajar}
+                          </td> 
                         </tr>
                       </tbody>
                     );
@@ -713,77 +581,7 @@ const DetailTutor = () => {
           ""
         )}
 
-        {/* modal delete rincian */}
-        {isModalDeleteRincian ? (
-          <div className="absolute backdrop-blur-sm w-full h-full dark:bg-neutral-700 bg-slate-200 bg-opacity-70 flex justify-center items-center">
-            <div className="flex flex-col w-[45%] dark:bg-neutral-800 bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] py-3 gap-4 items-center">
-              <div className="flex justify-between">
-                <div className=" text-rose-500">Delete Data</div>
-              </div>
-              <div className="flex justify-between">
-                <div className="dark:text-white  text-sm">
-                  Are you sure ?
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <button
-                  onClick={onValidDeleteRincian}
-                  className="drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] hover:bg-sky-500 dark:hover:bg-sky-500 dark:text-white dark:bg-neutral-800 bg-slate-300 text-sm flex justify-center items-center h-8 border dark:border-sky-500 rounded-md px-2 w-fit mt-2"
-                >
-                  Yes
-                </button>
-                <button
-                  onClick={() => setIsModalDeleteRincian(false)}
-                  className="drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] hover:bg-sky-500 dark:hover:bg-sky-500 dark:text-white dark:bg-neutral-800 bg-slate-300 text-sm flex justify-center items-center h-8 border dark:border-sky-500 rounded-md px-2 w-fit mt-2"
-                >
-                  No
-                </button>
-              </div>
-            </div>
-          </div>
-        ) : (
-          ""
-        )}
-
-        {/* modal post data */}
-        {/* {isModalPost ? (
-          <div className="absolute backdrop-blur-sm w-full h-full bg-transparent bg-opacity-20 flex justify-center items-center">
-            <div className="flex flex-col w-[75%] bg-slate-200 rounded-md overflow-hidden drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
-              <div className="flex justify-between bg-indigo-900 p-2">
-                <div className="text-white">Send Message</div>
-                <button onClick={() => setIsModalPost(false)}>
-                  <span class="hover:text-rose-500 text-white material-symbols-rounded ">
-                    close
-                  </span>
-                </button>
-              </div>
-
-              <div className="p-2">
-                <div className="flex flex-col gap-3">
-                  <div className="flex flex-col">
-                    <label>Fee Pengajar</label>
-                    <input onChange={(e) => setFeePengajar(e.target.value)} type="text" placeholder="Number" className="px-2 py-1 rounded-md"/>
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label>Realisasi Fee Pengajar</label>
-                    <input onChange={(e) => setRealFee(e.target.value)} type="text" placeholder="Number" className="px-2 py-1 rounded-md" />
-                  </div>
-                </div>
-
-                <button
-                  onClick={onPostData}
-                  className="hover:bg-sky-500 dark:hover:bg-sky-500 dark:text-white dark:bg-neutral-800 bg-slate-300 text-sm flex justify-center items-center h-8 border dark:border-sky-500 border-slate-900 rounded-md px-2 w-fit mt-2"
-                >
-                  Post Data
-                </button>
-              </div>
-            </div>
-          </div>
-        ) : (
-          ""
-        )} */}
+        
       </div>
     </div>
   );

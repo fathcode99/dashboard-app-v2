@@ -27,8 +27,7 @@ const Tutors = () => {
       if(value) {
         const matchDatas = dataMembers.filter((item) => {
           return item.nama_pengajar.toLowerCase().includes(value.toLowerCase()) ||
-          item.no_telp.toLowerCase().includes(value.toLowerCase())
-          
+          item.id.toString().includes(value.toLowerCase())  
         })
         setDataRenders(matchDatas)
       } else if(!value) {
@@ -72,6 +71,7 @@ const Tutors = () => {
           // });
           setDataMembers(res.data)
           setDataRenders(res.data); 
+          setMaxPage(Math.ceil(res.data.length / rowPerPage));
         });
       } catch (err) {
         console.log("Error when fetching data - Pengajar");
@@ -81,7 +81,6 @@ const Tutors = () => {
 
     // setDataMembers(stateTutors.data);
     
-    setMaxPage(Math.ceil(dataRenders.length / rowPerPage));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowPerPage,]);
 
@@ -103,7 +102,7 @@ const Tutors = () => {
       <div className="className='flex flex-col md:mb-8 md:mx-8 w-full m-2">
         <Navbar />
         <div className="main-title">
-          Data Tutors
+          Data Pengajar
         </div>
         <div>
           <div className="flex flex-col dark:bg-neutral-800 bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.2)]">
@@ -114,7 +113,7 @@ const Tutors = () => {
                 <input
                   onChange={(e) => onSearch(e)}
                   type="text"
-                  placeholder="Search..."
+                  placeholder="Search by Id/Name "
                   className="outline-none bg-transparent w-full ml-2  text-sm border-b border-sky-500"
                 />
               </div>
@@ -130,12 +129,12 @@ const Tutors = () => {
               <thead className="h-8">
                 <tr className="text-sm text-white  dark:bg-sky-500 bg-slate-900 h-full">
                   <th className="font-medium w-8 border-r">No.</th>
-                  <th className="font-medium w-12 border-r">ID Pengajar</th>
-                  <th className="font-medium w-36 border-r"> Nama </th>
-                  <th className="font-medium hidden md:table-cell cursor-pointer border-r"> Mapel </th>
+                  <th className="font-medium w-24 border-r">ID Pengajar</th>
+                  <th className="font-medium w-64 border-r"> Nama </th>
+                  <th className="font-medium w-12 hidden md:table-cell cursor-pointer border-r"> Mapel </th>
                   <th className="font-medium hidden md:table-cell cursor-pointer border-r"> Asal Kampus </th>
-                  <th className="font-medium cursor-pointer border-r">Telp</th>
-                  <th className="font-medium hidden md:table-cell w-56 cursor-pointer border-r">Email</th>
+                  <th className="font-medium w-32 cursor-pointer border-r">Telp</th>
+                  {/* <th className="font-medium hidden md:table-cell w-56 cursor-pointer border-r">Email</th> */}
                   <th className="font-medium w-20 border-r">Action</th>
                 </tr>
               </thead>
@@ -179,8 +178,8 @@ const Tutors = () => {
                           <td className="border-r text-center">
                             {item.no_telp}
                           </td>
-                          <td className="border-r text-center hidden md:table-cell">{item.email}</td>
-                          <td className="flex justify-center items-center h-8 ">
+                          {/* <td className="border-r text-center hidden md:table-cell">{item.email}</td> */}
+                          <td className="flex justify-center items-center h-8">
                             <Link to={`/tutors/${item.id}`}>
                               <button className="hover:bg-slate-200 transition duration-300 bg-sky-500 text-sm font-normal flex justify-center items-center h-6 border border-slate-900 rounded-md px-2">
                                 View

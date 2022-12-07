@@ -11,7 +11,7 @@ import Apply from "./pages/apply";
 import DetailStudent from "./pages/detailStudent";
 // import KeuanganSiswa from "./pages/keuanganSiswa";
 import NotifyAdmin from "./pages/notifyAdmin";
-import Picture from "./pages/picture";
+import Ads from "./pages/ads";
 import DataKeuangan from "./pages/datakeuangan";
 import Catatan from "./pages/catatan";
 
@@ -58,7 +58,7 @@ const App = () => {
               <Route path="login" element={<Login />} />
               <Route path="students/:id" element={<DetailStudent />} /> 
               <Route path="notifadmin" element={<NotifyAdmin />} />
-              <Route path="picture" element={<Picture />} />
+              <Route path="ads" element={<Ads />} />
               <Route path="catatan" element={<Catatan />} />
               <Route path="tutors" element={<Tutors />} />
               <Route path="tutors/:id" element={<DetailTutor />} />

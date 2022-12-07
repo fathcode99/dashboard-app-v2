@@ -70,11 +70,11 @@ const ExcelExportTutor = ({ data }) => {
 
             table1.push({
                 A: "",
-                B: dataTutors.id_pengajar,
+                B: dataTutors.id,
                 C: dataTutors.nama_pengajar,
                 D: dataTutors.mapel,
                 E: dataTutors.asal_kampus,
-                F: dataTutors.telp,
+                F: dataTutors.no_telp,
                 G: dataTutors.email,
                 H: dataTutors.nama_bank,
                 I: dataTutors.rek_bank

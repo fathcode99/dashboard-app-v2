@@ -95,7 +95,7 @@ const Sidebar = () => {
               </div>
             </div>
           </Link>
-          <Link to="/picture">
+          <Link to="/ads">
             <div className="sidebar-btn uppercase">
               <span className="material-symbols-rounded "> storefront </span>
               <span className="hidden lg:block  ml-4">Advertising</span>

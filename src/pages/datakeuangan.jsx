@@ -84,11 +84,17 @@ const DataKeuangan = () => {
   }, [navigate]);
 
   // menghapus data pembiayaan
+  const [isModalDelete, setIsModalDelete] = useState(false);
+  const [idDelete, setIdDelete] = useState(null)
 
-  const onDelete = async (id) => {
-    console.log(id);
+  const onDelete = (id) => {
+    setIsModalDelete(true)
+    setIdDelete(id)
+  }
+
+  const onValidDeleteYes = async () => { 
     await axios
-      .delete(`${url}/biaya/${id}/delete`, {
+      .delete(`${url}/biaya/${idDelete}/delete`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -105,7 +111,10 @@ const DataKeuangan = () => {
             //   type: "GET_DATA_BIAYA",
             //   payload: res.data,
             // });
-            setDataBiaya(res.data)
+            setDataBiaya(res.data) 
+            setDataRenders(res.data);
+            setIsModalDelete(false)
+            setIdDelete(null)
           });
       });
   };
@@ -129,7 +138,6 @@ const DataKeuangan = () => {
     let biaya_pendaftaran = refBiayaPendaftaran.current.value
     let realisasi_biaya_pendaftaran = refRealisasiBp.current.value
     
-    console.log(realisasi_fee_pengajar, fee_pengajar, tagihan_siswa, realisasi_tagihan_siswa, biaya_pendaftaran, realisasi_biaya_pendaftaran)
     axios
       .put(
         `${url}/biaya/${id}/update`,
@@ -165,7 +173,7 @@ const DataKeuangan = () => {
       <div className='min-w-[50px] lg:min-w-[230px]'>
         <Sidebar />
       </div>
-      <div className="className='flex flex-col md:mb-8 md:mx-8 max-w-full m-2">
+      <div className="className='flex flex-col md:mb-8 md:mx-8 max-w-full m-2 relative">
         <Navbar />
         <div className="main-title">
           Data Keuangan (Absensi)
@@ -194,20 +202,23 @@ const DataKeuangan = () => {
               <table className="min-w-max">
                 <thead className="h-8">
                   <tr className="text-sm text-white  bg-slate-900 h-full">
-                    <th className="font-medium border-r w-8">No.</th>
-                    <th className="font-medium border-r w-32 cursor-pointer">
+                    <th className="font-medium w-8">No.</th>
+                    <th className="font-medium w-32 cursor-pointer">
                       ID Pengajar
                     </th>
-                    <th className="font-medium border-r w-32 cursor-pointer">
+                    <th className="font-medium w-32 cursor-pointer">
                       Tanggal
                     </th>
-                    <th className="font-medium flex items-center h-8 w-52 justify-center border-r cursor-pointer">
+                    <th className="font-medium w-32 cursor-pointer">
+                      Waktu
+                    </th>
+                    <th className="font-medium flex items-center h-8 w-52 justify-center cursor-pointer">
                       Nama Pengajar
                     </th>
-                    <th className="font-medium border-r w-16">Lembur</th>
-                    <th className="font-medium border-r w-32">Fee Pengajar</th>
-                    <th className="font-medium border-r w-32">Realisasi FP</th>
-                    <th className="font-medium border-r w-32">
+                    <th className="font-medium w-16">Lembur</th>
+                    <th className="font-medium w-32">Fee Pengajar</th>
+                    <th className="font-medium w-32">Realisasi FP</th>
+                    <th className="font-medium w-32">
                       Biaya Fotocopy
                     </th>
 
@@ -219,13 +230,13 @@ const DataKeuangan = () => {
                     <th className="font-medium w-32">Realisasi TS</th> 
                     <th className="font-medium w-32">Biaya Pendaftaran</th> 
                     <th className="font-medium w-32">Realisasi BP</th> 
-                    <th className="font-medium w-32">Action</th>
+                    <th className="font-medium w-32 ">Action</th>
                   </tr>
                 </thead>
 
                 {dataBiaya.length === 0 ? (
                   <tbody>
-                    <tr className="dark:text-white  w-full">
+                    <tr className="w-full">
                       <td style={{ colSpan: "8" }}>No Data Found</td>
                     </tr>
                   </tbody>
@@ -238,7 +249,7 @@ const DataKeuangan = () => {
                       return (
                         <tbody
                           key={index}
-                          className="dark:text-white  text-sm "
+                          className="text-sm "
                         >
                           <tr
                             className={
@@ -247,21 +258,24 @@ const DataKeuangan = () => {
                                 : " bg-slate-200 h-8"
                             }
                           >
-                            <td className="whitespace-nowrap text-center border-r">
+                            <td className="whitespace-nowrap text-center border-r border-slate-600">
                               {nomer++}
                             </td>
 
-                            <td className="whitespace-nowrap border-r px-2">
+                            <td className="whitespace-nowrap border-r border-slate-600 px-2">
                               {item.id_pengajar}
                             </td>
-                            <td className="whitespace-nowrap border-r px-2">
+                            <td className="whitespace-nowrap border-r border-slate-600 px-2">
                               {item.created_at.slice(0, 10)}
                             </td>
-                            <td className="whitespace-nowrap border-r px-2">
+                            <td className="whitespace-nowrap border-r border-slate-600 px-2">
+                              {item.created_at.slice(11, 16)}
+                            </td>
+                            <td className="whitespace-nowrap border-r border-slate-600 px-2">
                               {item.nama_pengajar}
                             </td>
-                            <td className="text-center px-2">{item.durasi_lembur}</td>
-                            <td className="whitespace-nowrap border-r px-2 text-right">
+                            <td className="text-center px-2 border-r border-slate-600">{item.durasi_lembur}</td>
+                            <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right">
                               {/* Rp {item.fee_pengajar}{" "} */}
                               {isIndexEdit === index ? (
                                 <>
@@ -276,7 +290,7 @@ const DataKeuangan = () => {
                                 <div> Rp {parseInt(item.fee_pengajar).toLocaleString()}</div>
                               )}
                             </td>
-                            <td className="whitespace-nowrap border-r px-2 text-right">
+                            <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right">
                               {isIndexEdit === index ? (
                                 <>
                                   <input
@@ -290,14 +304,14 @@ const DataKeuangan = () => {
                                 <div> Rp {parseInt(item.realisasi_fee_pengajar).toLocaleString()}</div>
                               )}
                             </td>
-                            <td className="whitespace-nowrap border-r px-2 text-right">
+                            <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right">
                               Rp {parseInt(item.biaya_fotokopi).toLocaleString()}{" "}
                             </td>
-                            <td className="whitespace-nowrap ">{item.id_siswa}</td>
-                            <td className="whitespace-nowrap ">{item.nama_siswa}</td>
-                            <td className="whitespace-nowrap ">{item.nama_orang_tua}</td>
-                            <td className="whitespace-nowrap text-center ">{item.regional}</td>
-                            <td className="whitespace-nowrap ">
+                            <td className="whitespace-nowrap border-r border-slate-600 px-2 ">{item.id_siswa}</td>
+                            <td className="whitespace-nowrap border-r border-slate-600 px-2">{item.nama_siswa}</td>
+                            <td className="whitespace-nowrap border-r border-slate-600 px-2">{item.nama_orang_tua}</td>
+                            <td className="whitespace-nowrap border-r border-slate-600 px-2 text-center ">{item.regional}</td>
+                            <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right">
                               {/* Rp {parseInt(item.tagihan_siswa).toLocaleString()} */}
                               {isIndexEdit === index ? (
                                 <>
@@ -312,7 +326,7 @@ const DataKeuangan = () => {
                                 <div> Rp {parseInt(item.tagihan_siswa).toLocaleString()}</div>
                               )}
                             </td>
-                            <td className="whitespace-nowrap ">
+                            <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right">
                               {/* Rp {parseInt(item.realisasi_tagihan_siswa).toLocaleString()} */}
                               {isIndexEdit === index ? (
                                 <>
@@ -327,7 +341,7 @@ const DataKeuangan = () => {
                                 <div> Rp {parseInt(item.realisasi_tagihan_siswa).toLocaleString()}</div>
                               )}
                             </td>
-                            <td className="whitespace-nowrap ">
+                            <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right">
                               {/* Rp {parseInt(item.biaya_pendaftaran).toLocaleString()} */}
                               {isIndexEdit === index ? (
                                 <>
@@ -342,7 +356,7 @@ const DataKeuangan = () => {
                                 <div> Rp {parseInt(item.biaya_pendaftaran).toLocaleString()}</div>
                               )}
                             </td>
-                            <td className="whitespace-nowrap ">
+                            <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right">
                               {/* Rp {parseInt(item.realisasi_biaya_pendaftaran).toLocaleString()} */}
                               {isIndexEdit === index ? (
                                 <>
@@ -411,6 +425,40 @@ const DataKeuangan = () => {
             </div>
           </div>
         </div>
+      
+      {/* modal delete */}
+      {isModalDelete ? (
+              <div className="absolute top-0 right-0 backdrop-blur-sm w-full h-full bg-slate-200 bg-opacity-70 flex justify-center items-center">
+                <div className="flex flex-col w-[45%] bg-slate-200 rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] py-3 gap-4 items-center">
+                  <div className="flex justify-between">
+                    <div className=" text-rose-500">Delete Data</div>
+                  </div>
+                  <div className="flex justify-between">
+                    <div className="dark:text-white  text-sm">
+                      Are you sure ?
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button
+                      onClick={onValidDeleteYes}
+                      className="drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] hover:bg-sky-500 dark:hover:bg-sky-500 dark:text-white dark:bg-neutral-800 bg-slate-300 text-sm flex justify-center items-center h-8 border dark:border-sky-500 rounded-md px-2 w-fit mt-2"
+                    >
+                      Yes
+                    </button>
+                    <button
+                      onClick={() => setIsModalDelete(false)}
+                      className="drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] hover:bg-sky-500 dark:hover:bg-sky-500 dark:text-white dark:bg-neutral-800 bg-slate-300 text-sm flex justify-center items-center h-8 border dark:border-sky-500 rounded-md px-2 w-fit mt-2"
+                    >
+                      No
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+
       </div>
     </div>
   );
