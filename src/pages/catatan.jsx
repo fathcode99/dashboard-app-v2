@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../component/navbar";
 import Sidebar from "../component/sidebar"; 
 
@@ -8,10 +9,16 @@ const Catatan = () => {
   const [dataTeks, setDataTeks] = useState([]);
 
   let teks = localStorage.getItem("note");
+  const navigate = useNavigate()
+  let token = localStorage.getItem("token");
 
   useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+
     setDataTeks(teks)
-  }, [teks]);
+  }, [teks, navigate, token]);
 
   // upload teks id 1
   const noteRef = useRef()

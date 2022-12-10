@@ -14,6 +14,7 @@ import NotifyAdmin from "./pages/notifyAdmin";
 import Ads from "./pages/ads";
 import DataKeuangan from "./pages/datakeuangan";
 import Catatan from "./pages/catatan";
+import RegistrasiSiswa from "./pages/registrasiSiswa";
 
 import axios from "axios";
 import { Routes, Route, BrowserRouter } from "react-router-dom"; 
@@ -50,7 +51,7 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <div className="dark:bg-neutral-900 font-rubik bg-slate-100">
+    <div className="font-rubik bg-slate-100">
       <BrowserRouter>
         <Routes basename="/">
           <Route path="/">
@@ -65,22 +66,8 @@ const App = () => {
               <Route path="apply" element={<Apply />} />
               <Route path="pay" element={<DataKeuangan />} />
               <Route path="students" element={<Students />} /> 
-          </Route>
-          {/* <Route path="/" element={<Home />} />
-          <Route path="/tutors" element={<Tutors />} />
-          <Route path="/tutors/:id" element={<DetailTutor />} />
-          <Route path="/apply" element={<Apply />} />
-          <Route path="/pay" element={<DataKeuangan />} />
-
-          <Route path="/students" element={<Students />} /> */}
-          {/* <Route path="/keuangansiswa" element={<KeuanganSiswa />} /> */}
-
-          {/* <Route path="/students/:id" element={<DetailStudent />} />
-
-          <Route path="/notifadmin" element={<NotifyAdmin />} />
-          <Route path="/picture" element={<Picture />} />
-          <Route path="/catatan" element={<Catatan />} />
-          <Route path="/login" element={<Login />} /> */}
+              <Route path="register" element={<RegistrasiSiswa />} /> 
+          </Route> 
         </Routes>
       </BrowserRouter>
     </div>

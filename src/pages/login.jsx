@@ -65,7 +65,7 @@ const Login = () => {
           <div className="flex flex-col mt-4">
             <label className=" text-xs">Password ID</label>
             <input
-              type="text"
+              type="password"
               placeholder="Input password Id"
               ref={refPassword}
               className="mt-2 outline-none bg-transparent border-b border-sky-500  text-sm "

@@ -66,6 +66,9 @@ const Tutors = () => {
   // proteksi login
   useEffect(() => {
     const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+    }
 
     async function getApply() {
       try {

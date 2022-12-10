@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 // import { useSelector } from "react-redux";
 import axios from "axios";
 // import { useDispatch } from "react-redux";
-
+import { useNavigate } from "react-router-dom";
 const url = "https://admin.menujudigital.com/api";
 
 const Students = () => {
@@ -16,7 +16,7 @@ const Students = () => {
 
   // default data
   const [dataMembers, setDataMembers] = useState([]);
-
+  const navigate = useNavigate()
   // data renders
   const [dataRenders, setDataRenders] = useState([]);
 
@@ -39,7 +39,11 @@ const Students = () => {
   };
 
   useEffect(() => {
-    let token = localStorage.getItem("token");
+    let token = localStorage.getItem("token"); 
+    
+    if (!token) {
+      navigate("/login");
+    }
 
     async function getDataOrtuSiswa() {
       try {

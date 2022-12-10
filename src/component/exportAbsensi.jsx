@@ -82,16 +82,16 @@ const ExcelExportAbsensi = ({ data }) => {
                 D: dataBiaya.nama_pengajar,
                 E: dataBiaya.durasi_lembur,
                 F: dataBiaya.fee_pengajar,
-                G: dataBiaya.realisasi_fee_pengajar,
-                H: dataBiaya.biaya_fotokopi,
-                I: dataBiaya.id_siswa,
-                J: dataBiaya.nama_siswa,
-                K: dataBiaya.nama_orang_tua,
-                L: dataBiaya.regional,
-                M: dataBiaya.tagihan_siswa,
-                N: dataBiaya.realisasi_tagihan_siswa,
-                O: dataBiaya.biaya_pendaftaran,
-                P: dataBiaya.realisasi_biaya_pendaftaran
+                // G: dataBiaya.realisasi_fee_pengajar,
+                G: dataBiaya.biaya_fotokopi,
+                H: dataBiaya.id_siswa,
+                I: dataBiaya.nama_siswa,
+                J: dataBiaya.nama_orang_tua,
+                K: dataBiaya.regional,
+                L: dataBiaya.tagihan_siswa,
+                // N: dataBiaya.realisasi_tagihan_siswa,
+                M: dataBiaya.biaya_pendaftaran,
+                // P: dataBiaya.realisasi_biaya_pendaftaran
                 
             });
         });
@@ -122,11 +122,11 @@ const ExcelExportAbsensi = ({ data }) => {
 
         const dataInfo = {
             titleCell: "A2",
-            titleRange: "A1:P2",
+            titleRange: "A1:M2",
             tbodyRange: `A3:P${finalData.length}`,
             theadRange:
                 headerIndexes?.length >= 1
-                    ? `A${headerIndexes[0] + 1}:P${headerIndexes[0] + 1}`
+                    ? `A${headerIndexes[0] + 1}:M${headerIndexes[0] + 1}`
                     : null,
             tFirstColumnRange:
                 headerIndexes?.length >= 1
@@ -134,7 +134,7 @@ const ExcelExportAbsensi = ({ data }) => {
                     : null,
             tLastColumnRange:
                 headerIndexes?.length >= 1
-                    ? `P${headerIndexes[0] + 1}:P${totalRecords + headerIndexes[0] + 1}`
+                    ? `M${headerIndexes[0] + 1}:M${totalRecords + headerIndexes[0] + 1}`
                     : null,
         };
 
@@ -163,9 +163,9 @@ const ExcelExportAbsensi = ({ data }) => {
                 sheet.column("K").width(30);
                 sheet.column("L").width(15);
                 sheet.column("M").width(20);
-                sheet.column("N").width(30);
-                sheet.column("O").width(20);
-                sheet.column("P").width(30); 
+                // sheet.column("N").width(30);
+                // sheet.column("O").width(20);
+                // sheet.column("P").width(30); 
 
                 // TITLE
                 sheet.range(dataInfo.titleRange).merged(true).style({

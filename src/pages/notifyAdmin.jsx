@@ -4,6 +4,7 @@ import axios from "axios";
 
 import Navbar from "../component/navbar";
 import Sidebar from "../component/sidebar";
+import { useNavigate } from "react-router-dom";
 
 const url = "https://admin.menujudigital.com/api";
 
@@ -18,8 +19,13 @@ const NotifyAdmin = () => {
   let token = localStorage.getItem("token");
   
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
+  
   useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+
     function getNotify() {
       try {
         axios

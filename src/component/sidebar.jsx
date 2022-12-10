@@ -75,6 +75,13 @@ const Sidebar = () => {
             </div>
           </Link>
 
+          <Link to="/register">
+            <div className="sidebar-btn uppercase">
+              <span className="material-symbols-rounded "> groups </span>
+              <span className="hidden lg:block  ml-4">Registrasi Siswa</span>
+            </div>
+          </Link>
+
           <span className="hidden lg:block text-xs text-left pl-4 mt-5">
             Admin
           </span>

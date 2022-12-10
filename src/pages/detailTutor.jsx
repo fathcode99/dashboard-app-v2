@@ -3,7 +3,7 @@ import axios from "axios";
 
 import Sidebar from "../component/sidebar";
 import Navbar from "../component/navbar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const url = "https://admin.menujudigital.com/api";
@@ -30,7 +30,12 @@ const DetailTutor = () => {
   const [rekBank, setRekBank] = useState(dataTutor.rek_bank);
   const [anBank, setAnBank] = useState(dataTutor.an_rek_bank);
 
+  const navigate = useNavigate()
+
   useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
 
     async function getDataPengajar() {
       try {
@@ -68,7 +73,7 @@ const DetailTutor = () => {
     }
     getBiaya()
     
-  }, [id, token]);
+  }, [id, token, navigate]);
 
   //menghitung total fee
   let totalFee = 0;
@@ -182,7 +187,7 @@ const DetailTutor = () => {
             <div className="grid grid-cols-1 md:flex gap-4">
               {/* data tutor */}
               {isEdit ? (
-                <div className="flex flex-col w-full md:w=3/4 dark:bg-neutral-800 bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
+                <div className="flex flex-col w-full md:w=3/4 bg-white rounded-md p-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]">
                   <div className="flex gap-3 relative">
                     <div className="flex flex-col w-full justify-center">
                       <input

@@ -122,26 +122,26 @@ const DataKeuangan = () => {
   // edit data realisasi
   const [isIndexEdit, setIsIndexEdit] = useState();
   
-  let refEditRealisasi = useRef();
+  // let refEditRealisasi = useRef();
   let refEditFeePengajar = useRef();
   let refTagihanSiswa = useRef();
-  let refRealisasiTs = useRef();
+  // let refRealisasiTs = useRef();
   // let refBiayaPendaftaran = useRef();
   // let refRealisasiBp = useRef();
 
   const onEditDataRincian = (id) => {
     
-    let realisasi_fee_pengajar = refEditRealisasi.current.value;
+    // let realisasi_fee_pengajar = refEditRealisasi.current.value;
     let fee_pengajar = refEditFeePengajar.current.value;
     let tagihan_siswa = refTagihanSiswa.current.value
-    let realisasi_tagihan_siswa = refRealisasiTs.current.value
+    // let realisasi_tagihan_siswa = refRealisasiTs.current.value
     // let biaya_pendaftaran = refBiayaPendaftaran.current.value
     // let realisasi_biaya_pendaftaran = refRealisasiBp.current.value
     
     axios
       .put(
         `${url}/biaya/${id}/update`,
-        { realisasi_fee_pengajar, fee_pengajar, tagihan_siswa, realisasi_tagihan_siswa},
+        { fee_pengajar, tagihan_siswa},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -217,7 +217,7 @@ const DataKeuangan = () => {
                     </th>
                     <th className="font-medium w-16">Lembur</th>
                     <th className="font-medium w-32">Fee Pengajar</th>
-                    <th className="font-medium w-32">Realisasi FP</th>
+                    {/* <th className="font-medium w-32">Realisasi FP</th> */}
                     <th className="font-medium w-32">
                       Biaya Fotocopy
                     </th>
@@ -227,7 +227,7 @@ const DataKeuangan = () => {
                     <th className="font-medium w-32">Nama Orangtua</th>
                     <th className="font-medium w-32">Regional</th> 
                     <th className="font-medium w-32">Tagihan Siswa</th> 
-                    <th className="font-medium w-32">Realisasi TS</th> 
+                    {/* <th className="font-medium w-32">Realisasi TS</th>  */}
                     {/* <th className="font-medium w-32">Biaya Pendaftaran</th> 
                     <th className="font-medium w-32">Realisasi BP</th>  */}
                     <th className="font-medium w-32 ">Action</th>
@@ -290,7 +290,8 @@ const DataKeuangan = () => {
                                 <div> Rp {parseInt(item.fee_pengajar).toLocaleString()}</div>
                               )}
                             </td>
-                            <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right">
+
+                            {/* <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right">
                               {isIndexEdit === index ? (
                                 <>
                                   <input
@@ -303,7 +304,8 @@ const DataKeuangan = () => {
                               ) : (
                                 <div> Rp {parseInt(item.realisasi_fee_pengajar).toLocaleString()}</div>
                               )}
-                            </td>
+                            </td> */}
+
                             <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right">
                               Rp {parseInt(item.biaya_fotokopi).toLocaleString()}{" "}
                             </td>
@@ -326,7 +328,8 @@ const DataKeuangan = () => {
                                 <div> Rp {parseInt(item.tagihan_siswa).toLocaleString()}</div>
                               )}
                             </td>
-                            <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right"> 
+
+                            {/* <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right"> 
                               {isIndexEdit === index ? (
                                 <>
                                   <input
@@ -339,7 +342,7 @@ const DataKeuangan = () => {
                               ) : (
                                 <div> Rp {parseInt(item.realisasi_tagihan_siswa).toLocaleString()}</div>
                               )}
-                            </td>
+                            </td> */}
                             
                             {/* <td className="whitespace-nowrap border-r border-slate-600 px-2 text-right">
                               

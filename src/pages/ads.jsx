@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../component/navbar";
 import Sidebar from "../component/sidebar";
 
@@ -11,8 +12,13 @@ const Ads = () => {
   const [dataTeks, setDataTeks] = useState([]);
 
   let token = localStorage.getItem("token");
+  const navigate = useNavigate()
 
   useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+
     axios
       .get(`${url}/teks`, {
         headers: {
@@ -22,7 +28,7 @@ const Ads = () => {
       .then((res) => {
         setDataTeks(res.data);
       });
-  }, [token]);
+  }, [token, navigate]);
 
   // upload teks id 1
   // const [teksA, setTeksA] = useState();

@@ -3,7 +3,7 @@ import axios from "axios";
 
 import Sidebar from "../component/sidebar";
 import Navbar from "../component/navbar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const url = "https://admin.menujudigital.com/api"; 
@@ -44,8 +44,20 @@ const DetailStudent = () => {
   const [tagihanMnt, setTagihanMnt] = useState(dataSiswa.tagihan_per_menit);
   const [realisasiBp, setRealisasiBp] = useState(dataSiswa.biaya_pendaftaran_dibayar)
   const [biayaLes, setBiayaLes] = useState(dataSiswa.biaya_les)
+  const [feePengajar, setFeePengajar] = useState(dataSiswa.fee_pengajar)
+
+  const [month, setMonth] = useState('')
+  const [year, setYear] = useState('')
+  // let month = 
+  let total = filterDataBiaya.length * parseInt(dataSiswa.biaya_les)
+
+  const navigate = useNavigate()
 
   useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+
     axios
       .get(`${url}/dataortusiswa/${id}`, {
         headers: {
@@ -67,13 +79,18 @@ const DetailStudent = () => {
           .then((res) => { 
             let filter = res.data.filter((data) => data.id_siswa === id); 
             setFilterDataBiaya(filter)
+            setMonth(res.data[0].created_at.slice(5,7))
+            setYear(res.data[0].created_at.slice(0,4)) 
           });
         } catch (err) {
           console.log("Error when fetching data - Biaya");
         }
       }
       getBiaya()
-  }, [id, token]);
+
+    
+    
+  }, [id, token, navigate, month]);
 
   // // filter data rincian
   // let filterDataBiaya;
@@ -112,7 +129,8 @@ const DetailStudent = () => {
       tagihan_per_menit : tagihanMnt,
       tagihan_biaya_pendaftaran : biayaPendaftaran,
       biaya_pendaftaran_dibayar: realisasiBp,
-      biaya_les: biayaLes
+      biaya_les: biayaLes,
+      fee_pengajar: feePengajar
     };
     console.log(updateData);
     axios
@@ -135,8 +153,6 @@ const DetailStudent = () => {
     setIsEdit(!isEdit);
   };
 
-  
-
   // modal delete
   const onValidDeleteYes = () => {
     axios
@@ -149,7 +165,8 @@ const DetailStudent = () => {
         setDataSiswa({});
         setIsModalDelete(false);
       });
-  };
+  }; 
+  
  
   return (
     <div className="flex bg-slate-200  min-h-screen">
@@ -158,16 +175,46 @@ const DetailStudent = () => {
       </div>
       <div className='flex flex-col md:mb-8 md:mx-8 w-full m-2 relative'>
         <Navbar />
-        <div className="main-title flex justify-between">
-          <div>
+        <div className="flex justify-between">
+          <div className="main-title w-full mr-3">
             Detail Data Siswa
           </div>
-          <a
-              href={`https://api.whatsapp.com/send?phone=${dataSiswa.no_telp}&text=*INVOICE*%0ATagihan+Bulan+ini+untuk+Ananda+${dataSiswa.nama_siswa}%0Aadalah+Rp+${totalTagihanSiswa.toLocaleString()}+%0A%0ATerimakasih+%0AAdmin+Cendikia`} 
-              target='_blank'
-              rel='noreferrer'
-               > Send Invoice via WA 
-          </a>
+          
+          <div className="flex gap-3 items-center my-2">
+            <button title="Kirim Tagihan Pendaftaran" className="bg-sky-500 hover:bg-sky-400 rounded-md w-fit h-full px-2 flex items-center whitespace-nowrap">
+              <a
+                href={`https://api.whatsapp.com/send?phone=6285721560142&text=Assalamu'alaikum+Wr.+Wb.%0AKepada+orang+tua+dari+ananda+${dataSiswa.nama_siswa}+yang+terhormat.+Perlu+kami+informasikan,+bahwa+biaya+pendaftaran+belum+dibayarkan+senilai+Rp+${dataSiswa.tagihan_biaya_pendaftaran}.%0A%0ATerimakasih,+salam+mendidik.%0A%0ALBB+Cendikia%0ATeman+suksesmu.%0AFor+your+kids+success+and+morality.`} 
+                target='_blank'
+                rel='noreferrer'
+                > 
+                <div className="flex items-center gap-2">
+                  <span className="material-symbols-rounded">
+                  outgoing_mail
+                  </span>  
+                  <span>
+                    Pendaftaran 
+                  </span>
+                </div>
+              </a>
+            </button>
+
+            <button title="Kirim Tagihan Les" className="bg-lime-400 hover:bg-lime-500 rounded-md w-fit h-full px-2 flex items-center whitespace-nowrap">
+              <a
+                href={`https://api.whatsapp.com/send?phone=6285721560142&text=Assalamu'alaikum+Wr.+Wb.%0AKepada+orang+tua+dari+ananda+${dataSiswa.nama_siswa}+yang+terhormat.+Perlu+kami+sampaikan,+terhitung+dari+mulai+tanggal+1+Bulan+${month}+Tahun+${year}+kemarin.%0A%0ATotal+pertemuan+yang+diadakan+adalah+5+kali+(bisa+dikoreksi+jika+salah).%0A%0AMaka+rincian+total+biaya+adalah%0ABiaya+les+${filterDataBiaya.length}+x+Rp+${dataSiswa.biaya_les}+=+Rp+${total}%0A%0A*Sehingga,+total+adalah+Rp+${total}*%0A%0AMohon+ditransfer+kepada+bank+cendikia+sebelum+tgl+5.+Terimakasih,+salam+mendidik.%0A%0ALBB+Cendikia%0ATeman+suksesmu.%0AFor+your+kids+success+and+morality.`} 
+                target='_blank'
+                rel='noreferrer'
+                > 
+                <div className="flex items-center gap-2">
+                  <span className="material-symbols-rounded">
+                  outgoing_mail
+                  </span>  
+                  <span>
+                    Tagihan
+                  </span>
+                </div>
+              </a>
+            </button>
+          </div>
         </div>
         {dataSiswa.nama_orangtua ? (
           <>
@@ -459,6 +506,18 @@ const DetailStudent = () => {
                             className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 text-base"
                           />
                         </div>
+
+                        <div className="w-full">
+                          <div className="italic  text-sky-500 text-sm mt-3">
+                            Fee Pengajar
+                          </div>
+                          <input
+                            onChange={(e) => setFeePengajar(e.target.value)}
+                            type="text"
+                            defaultValue={dataSiswa.fee_pengajar}
+                            className="outline-none bg-transparent border border-sky-500 rounded-sm w-full px-2 text-base"
+                          />
+                        </div>
                       </div>
                     </div>
 
@@ -652,7 +711,7 @@ const DetailStudent = () => {
                             Tagihan/mnt
                           </div>
                           <div className={`dark:text-white  text-sm`}>
-                            {dataSiswa.tagihan_per_menit}
+                            Rp {dataSiswa.tagihan_per_menit}
                           </div>
                         </div>
 
@@ -661,7 +720,7 @@ const DetailStudent = () => {
                             Biaya Pendaftaran
                           </div>
                           <div className={`dark:text-white  text-sm`}>
-                            {dataSiswa.tagihan_biaya_pendaftaran}
+                            Rp {dataSiswa.tagihan_biaya_pendaftaran.toLocaleString()}
                           </div>
                         </div>
 
@@ -670,7 +729,7 @@ const DetailStudent = () => {
                             Realisasi BP
                           </div>
                           <div className={`dark:text-white  text-sm`}>
-                            {dataSiswa.biaya_pendaftaran_dibayar}
+                            Rp {dataSiswa.biaya_pendaftaran_dibayar.toLocaleString()}
                           </div>
                         </div>
                         <div>
@@ -678,7 +737,15 @@ const DetailStudent = () => {
                             Biaya Les
                           </div>
                           <div className={`dark:text-white  text-sm`}>
-                            {dataSiswa.biaya_les}
+                            Rp {dataSiswa.biaya_les.toLocaleString()}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="italic  text-sky-500 text-sm mt-3">
+                            Fee Pengajar
+                          </div>
+                          <div className={`dark:text-white  text-sm`}>
+                            Rp {dataSiswa.fee_pengajar.toLocaleString()}
                           </div>
                         </div>
 
@@ -729,16 +796,23 @@ const DetailStudent = () => {
               <table className="w-full">
                 <thead className="h-8">
                   <tr className="text-sm text-white  bg-slate-900 dark:bg-sky-500 h-full">
-                    <th className="font-medium">No.</th>
-                    <th className="font-medium hidden md:table-cell">Tanggal</th>
-                    <th className="font-medium hidden md:table-cell">ID</th>
-                    <th className="font-medium px-2 flex items-center h-8 justify-between">
+                    <th className="font-medium w-12">No.</th>
+                    <th className="font-medium w-24 hidden md:table-cell">Tanggal</th>
+                    <th className="font-medium w-16 hidden md:table-cell">Waktu</th>
+                    <th className="font-medium w-12 hidden md:table-cell">ID</th>
+                    <th className="font-medium w-52 px-2 flex items-center h-8 justify-between">
                       Nama Siswa
+                    </th>
+                    <th className="font-medium hidden md:table-cell">
+                      Durasi Lembur
+                    </th>
+                    <th className="font-medium hidden md:table-cell">
+                      Biaya Lembur
                     </th>
                     <th className="font-medium hidden md:table-cell">
                       Tagihan Siswa
                     </th>
-                    <th className="font-medium hidden md:table-cell">
+                    {/* <th className="font-medium hidden md:table-cell">
                       Realisasi TS
                     </th>
                     <th className="font-medium md:table-cell">
@@ -746,7 +820,7 @@ const DetailStudent = () => {
                     </th>
                     <th className="font-medium hidden md:table-cell">
                       Realisasi BP
-                    </th>
+                    </th> */}
                     {/* <th className="font-medium hidden md:table-cell">Action</th> */}
                   </tr>
                 </thead>
@@ -782,6 +856,9 @@ const DetailStudent = () => {
                             <td className="whitespace-nowrap border-r px-2">
                               {item.created_at.slice(0, 10)}
                             </td>
+                            <td className="whitespace-nowrap border-r px-2">
+                              {item.created_at.slice(11, 16)}
+                            </td>
                             <td className="text-center border-r dark:border-white hidden md:table-cell">
                               {item.id_siswa}
                             </td>
@@ -789,9 +866,15 @@ const DetailStudent = () => {
                               {item.nama_siswa}
                             </td>
                             <td className="text-center border-r dark:border-white hidden md:table-cell">
-                              Rp {item.tagihan_siswa}
+                              {item.durasi_lembur}
                             </td>
-                            <td className="text-center border-r dark:border-white">
+                            <td className="text-right border-r dark:border-white hidden md:table-cell px-2">
+                              Rp {(parseInt(item.durasi_lembur)*parseInt(dataSiswa.tagihan_per_menit)).toLocaleString()}
+                            </td>
+                            <td className="text-right border-r dark:border-white hidden md:table-cell px-2">
+                              Rp {item.tagihan_siswa.toLocaleString()}
+                            </td>
+                            {/* <td className="text-center border-r dark:border-white">
                               Rp {item.realisasi_tagihan_siswa}
                             </td>
                             <td className="text-center border-r dark:border-white">
@@ -800,7 +883,7 @@ const DetailStudent = () => {
                             <td className="text-center border-r dark:border-white hidden md:table-cell">
                               
                                 Rp {item.realisasi_biaya_pendaftaran}
-                            </td> 
+                            </td>  */}
                           </tr>
                         </tbody>
                       );
